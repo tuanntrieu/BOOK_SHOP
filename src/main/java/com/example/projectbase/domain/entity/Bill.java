@@ -43,5 +43,10 @@ public class Bill extends DateAuditing {
     @JsonIgnore
     private List<BillDetail> billDetail;
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinColumn(name = "customer_id",foreignKey = @ForeignKey(name = "FK_CUSTOMER_BILL"),referencedColumnName = "customer_id")
+    private Customer customer;
+
 
 }

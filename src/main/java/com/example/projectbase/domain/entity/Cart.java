@@ -24,8 +24,8 @@ public class Cart extends DateAuditing {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_USER_CART"))
-    private User user;
+    @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "FK_CUSTOMER_CART"))
+    private Customer customer;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
             @JsonIgnore

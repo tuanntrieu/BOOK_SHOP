@@ -30,21 +30,13 @@ public class User extends DateAuditing {
   @JsonIgnore
   private String password;
 
-  @Nationalized
-  @Column(nullable = false)
-  private String name;
-
-  @ManyToOne
-  @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_USER_ROLE"))
-  private Role role;
-
-  private String phonenumber;
-
-  private String address;
-
   private String email;
 
-  @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-  @JsonIgnore
-  private Cart cart;
+  @ManyToOne
+  @JoinColumn(name = "role_id",foreignKey = @ForeignKey(name="FK_USER_ROLE"),referencedColumnName = "id")
+  private Role role;
+
+  @OneToOne
+  @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "FK_USER_CUSTOMER"), referencedColumnName = "customer_id")
+  private Customer customer;
 }
