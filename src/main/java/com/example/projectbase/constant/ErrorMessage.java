@@ -18,14 +18,18 @@ public class ErrorMessage {
   public static final String INVALID_DATE = "invalid.date-format";
   public static final String INVALID_DATE_FEATURE = "invalid.date-future";
   public static final String INVALID_DATETIME = "invalid.datetime-format";
+  public static final String INVALID_REPEAT_PASSWORD="invalid.password-repeat";
 
   public static class Auth {
     public static final String ERR_INCORRECT_USERNAME = "exception.auth.incorrect.username";
     public static final String ERR_INCORRECT_PASSWORD = "exception.auth.incorrect.password";
+    public static final String ERR_INCORRECT_EMAIL = "exception.auth.incorrect.password";
     public static final String ERR_ACCOUNT_NOT_ENABLED = "exception.auth.account.not.enabled";
     public static final String ERR_ACCOUNT_LOCKED = "exception.auth.account.locked";
     public static final String INVALID_REFRESH_TOKEN = "exception.auth.invalid.refresh.token";
     public static final String EXPIRED_REFRESH_TOKEN = "exception.auth.expired.refresh.token";
+    public static final String ERR_DUPLICATE_USERNAME = "exception.auth.duplicate.username";
+    public static final String ERR_DUPLICATE_EMAIL = "exception.auth.duplicate.email";
   }
 
   public static class User {

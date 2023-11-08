@@ -17,6 +17,7 @@ public class UserPrincipal implements UserDetails {
   @JsonIgnore
   private final String username;
 
+
   @JsonIgnore
   private String password;
 

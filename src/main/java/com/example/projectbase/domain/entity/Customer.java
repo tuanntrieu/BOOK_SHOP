@@ -2,6 +2,10 @@ package com.example.projectbase.domain.entity;
 
 import com.example.projectbase.domain.entity.common.DateAuditing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -9,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "customers")
 public class Customer extends DateAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +27,7 @@ public class Customer extends DateAuditing {
     @Nationalized
     @Column(nullable = false)
     private String name;
-    
+
     private String phonenumber;
 
     private String address;

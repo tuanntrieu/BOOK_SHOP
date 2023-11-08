@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        b{
+            color:red;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 10px;
+            }
+
+            .footer {
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Xác Nhận Đăng Ký Thành Công</h1>
+    </div>
+    <div class="content">
+        <p>Xin chào,</p>
+        <p>Cám ơn bạn đã đăng ký tài khoản <b th:text="${username}"></b> với mật khẩu <b th:text="${password}"> </b> tại trang web của chúng tôi.</p>
+        <p>Hãy nhớ giữ bí mật mật khẩu của mình và không chia sẻ nó với người khác.</p>
+        <p>Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ thêm, vui lòng liên hệ với chúng tôi.</p>
+        <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+    </div>
+    <div class="footer">
+        &copy; 2023 BOOK360 đã xác nhận.
+    </div>
+</div>
+</body>
+</html>

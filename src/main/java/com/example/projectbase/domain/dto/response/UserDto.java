@@ -20,15 +20,13 @@ public class UserDto extends DateAuditingDto {
 
     private String username;
 
-
-
     private String roleName;
-
-
 
     @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$",message = ErrorMessage.INVALID_FORMAT_EMAIL)
     private String email;
+
+    private int customerId;
 
 }
 

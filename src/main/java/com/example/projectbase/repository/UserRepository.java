@@ -16,16 +16,26 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-  @Query("SELECT u FROM User u WHERE u.id = ?1")
-  Optional<User> findById(String id);
+    boolean existsAllByUsername(String username);
 
-  @Query("SELECT u FROM User u WHERE u.username = ?1")
-  Optional<User> findByUsername(String username);
+    boolean existsByEmail(String email);
 
-  default User getUser(UserPrincipal currentUser) {
-    return findByUsername(currentUser.getUsername())
-        .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
-            new String[]{currentUser.getUsername()}));
-  }
+    @Query("SELECT  u FROM User u WHERE u.email = ?1")
+    Optional<User> findByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.id = ?1")
+    Optional<User> findById(String id);
+
+    @Query("SELECT u FROM User u WHERE u.username = ?1")
+    Optional<User> findByUsername(String username);
+
+    @Query("SELECT u FROM User u WHERE u.username = ?1 OR u.email=?2")
+    Optional<User> fidByUsernameOrEmail(String username, String email);
+
+    default User getUser(UserPrincipal currentUser) {
+        return findByUsername(currentUser.getUsername())
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
+                        new String[]{currentUser.getUsername()}));
+    }
 
 }
