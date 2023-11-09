@@ -35,6 +35,7 @@ public class Product extends DateAuditing {
     @Column(nullable = false)
     private int price;
 
+    @Lob
     private String description;
 
     private float discount;

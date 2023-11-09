@@ -37,4 +37,11 @@ public class ErrorMessage {
     public static final String ERR_NOT_FOUND_ID = "exception.user.not.found.id";
   }
 
+  public static class Customer{
+    public static final String ERR_NOT_FOUND_ID="exception.customer.not.found.id";
+
+  }
+
+
+
 }
