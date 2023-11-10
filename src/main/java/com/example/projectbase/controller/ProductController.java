@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import javax.validation.Valid;
 
@@ -22,5 +24,11 @@ public class ProductController {
     @GetMapping(UrlConstant.Product.GET_PRODUCTS)
     public ResponseEntity<?> getProducts(@Valid @ParameterObject PaginationFullRequestDto requestDto) {
         return VsResponseUtil.success(productService.getProducts(requestDto));
+    }
+
+    @Operation(summary = "API get product detail")
+    @GetMapping(UrlConstant.Product.GET_PRODUCT_DETAIL)
+    public ResponseEntity<?> getProductDetai(@PathVariable int productId){
+        return VsResponseUtil.success(productService.getProductDetail(productId));
     }
 }

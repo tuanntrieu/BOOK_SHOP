@@ -42,6 +42,11 @@ public class ErrorMessage {
 
   }
 
+  public static class Product{
+    public static final String ERR_NOT_FOUND_ID="exception.product.not.found.id";
+  }
+
+
 
 
 }

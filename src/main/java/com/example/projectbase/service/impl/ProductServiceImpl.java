@@ -1,10 +1,13 @@
 package com.example.projectbase.service.impl;
 
+import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
+import com.example.projectbase.domain.entity.Product;
+import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.ProductRepository;
 import com.example.projectbase.service.ProductService;
 import com.example.projectbase.util.PaginationUtil;
@@ -12,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,4 +38,14 @@ public class ProductServiceImpl implements ProductService {
         return responseDto;
 
     }
+
+    @Override
+    public Product getProductDetail(int productId) {
+        Product product=productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));;
+
+        return product;
+    }
+
+
 }

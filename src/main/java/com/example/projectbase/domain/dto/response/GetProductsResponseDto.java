@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+
+
 
 @Getter
 @Setter
@@ -32,9 +32,7 @@ public class GetProductsResponseDto {
 
     private String size;
 
-    private LocalDateTime created_date;
 
-    private LocalDateTime last_modified_date;
 
     public GetProductsResponseDto(int productID, String name, String image, int price, float discount) {
         this.productID = productID;
@@ -43,4 +41,6 @@ public class GetProductsResponseDto {
         this.price = price;
         this.discount = discount;
     }
+
+
 }

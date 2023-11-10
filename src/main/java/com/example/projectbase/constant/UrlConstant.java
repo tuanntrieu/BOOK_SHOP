@@ -36,14 +36,17 @@ public class UrlConstant {
 
         public static final String PLACE_ORDER = PRE_FIX + "/{customerId}" + "/bill";
         public static final String BUY = PRE_FIX + "/{customerId}" + "/bill" + "/{billId}";
+
         private Customer() {
         }
     }
-    public static class Product{
-        private static final String PRE_FIX="/product";
-        public static final String GET_PRODUCTS=PRE_FIX+"/get-products";
 
-        private Product(){
+    public static class Product {
+        private static final String PRE_FIX = "/product";
+        public static final String GET_PRODUCTS = PRE_FIX + "/get-products";
+        public static final String GET_PRODUCT_DETAIL = PRE_FIX + "/get-product-detail/{productId}";
+
+        private Product() {
 
         }
     }
