@@ -16,4 +16,14 @@ public enum SortByDataConstant implements SortByInterface {
     }
   },
 
+  PRODUCT {
+    @Override
+    public String getSortBy(String sortBy) {
+      if ("name".equals(sortBy)) {
+        return "name";
+      }
+      return "price";
+    }
+  },
+
 }

@@ -39,5 +39,13 @@ public class UrlConstant {
         private Customer() {
         }
     }
+    public static class Product{
+        private static final String PRE_FIX="/product";
+        public static final String GET_PRODUCTS=PRE_FIX+"/get-products";
+
+        private Product(){
+
+        }
+    }
 
 }
