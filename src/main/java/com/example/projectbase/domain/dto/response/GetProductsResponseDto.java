@@ -34,12 +34,13 @@ public class GetProductsResponseDto {
 
 
 
-    public GetProductsResponseDto(int productID, String name, String image, int price, float discount) {
+    public GetProductsResponseDto(int productID, String name, String image, int price, float discount,int quantity) {
         this.productID = productID;
         this.name = name;
         this.image = image;
         this.price = price;
         this.discount = discount;
+        this.quantity=quantity;
     }
 
 
