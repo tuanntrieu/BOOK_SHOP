@@ -1,5 +1,7 @@
 package com.example.projectbase.constant;
 
+import com.example.projectbase.domain.entity.Category;
+
 public class UrlConstant {
 
     public static class Auth {
@@ -47,6 +49,17 @@ public class UrlConstant {
         public static final String GET_PRODUCT_DETAIL = PRE_FIX + "/get-product-detail/{productId}";
 
         private Product() {
+
+        }
+    }
+    public static class Category{
+        private static final String PRE_FIX = "/category";
+        public static final String CREATE_CATEGORY=PRE_FIX+"/create-category";
+        public static final String UPDATE_CATEGORY=PRE_FIX+"update-category/{categoryId}";
+        public static final String DELETE_CATEGORY=PRE_FIX+"/delete-category/{categoryId}";
+        public static final String GET_CATEGORIES=PRE_FIX+"/get-categories";
+
+        private Category(){
 
         }
     }

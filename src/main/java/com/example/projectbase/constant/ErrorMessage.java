@@ -46,6 +46,10 @@ public class ErrorMessage {
     public static final String ERR_NOT_FOUND_ID="exception.product.not.found.id";
   }
 
+  public static class Category{
+    public static final String ERR_NOT_FOUND_ID="exception.category.not.found.id";
+  }
+
 
 
 
