@@ -25,6 +25,9 @@ public class Category extends DateAuditing {
     @Column(name = "cate_name",nullable = false)
     private String name;
 
+    @Column(name = "cate_image")
+    private String image;
+
     @JsonIgnore
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<Product>products ;

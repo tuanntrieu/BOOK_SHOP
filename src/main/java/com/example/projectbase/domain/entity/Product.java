@@ -42,6 +42,7 @@ public class Product extends DateAuditing {
 
     private String size;
 
+    @Column(columnDefinition = "INTEGER DEFAULT 0")
     private int selled;
 
 

@@ -9,6 +9,7 @@ import com.example.projectbase.domain.entity.Category;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.CategoryRepository;
 import com.example.projectbase.service.CategoryService;
+import com.example.projectbase.util.UploadFileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final UploadFileUtil uploadFileUtil;
 
     @Override
     public Category createCategory(CategoryDto categoryDto) {
@@ -32,17 +34,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CommonResponseDto updateCategory(int categoryId, CategoryDto categoryDto) {
-        Category category=categoryRepository.findById(categoryId)
-                .orElseThrow(()->new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID,new String[]{String.valueOf(categoryId)}));
-        categoryRepository.updateCategory(categoryId,categoryDto.getName());
-        return new CommonResponseDto(true,SuccessMessage.UPDATE);
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(categoryId)}));
+        String image = uploadFileUtil.uploadFile(categoryDto.getMultipartFile());
+        categoryRepository.updateCategory(categoryId, categoryDto.getName(), image);
+        return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
 
     @Override
     public CommonResponseDto deleteCategory(int categoryId) {
-        Category category=categoryRepository.findById(categoryId)
-                .orElseThrow(()->new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID,new String[]{String.valueOf(categoryId)}));
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(categoryId)}));
         categoryRepository.delete(category);
-        return new CommonResponseDto(true,SuccessMessage.DELETE);
+        return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
 }
