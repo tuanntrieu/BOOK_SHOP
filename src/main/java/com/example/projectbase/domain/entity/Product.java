@@ -42,6 +42,8 @@ public class Product extends DateAuditing {
 
     private String size;
 
+    private int selled;
+
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     @JsonIgnore

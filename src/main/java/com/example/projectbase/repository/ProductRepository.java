@@ -2,6 +2,7 @@ package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Product;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productID,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p WHERE p.category.id=?1")
     Page<GetProductsResponseDto> getProductsByCategoryId(int categoryId,Pageable pageable);
+
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productID,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p WHERE (p.name LIKE %:keyword%) OR (p.category.name LIKE %:keyword%)")
+    Page<GetProductsResponseDto> findProduct(@Param("keyword") String keyword, Pageable pageable);
+
+
+
 }

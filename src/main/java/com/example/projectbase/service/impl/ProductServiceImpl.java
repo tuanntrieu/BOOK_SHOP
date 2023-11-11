@@ -3,6 +3,7 @@ package com.example.projectbase.service.impl;
 import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
+import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
@@ -59,6 +60,19 @@ public class ProductServiceImpl implements ProductService {
 
         Page<GetProductsResponseDto> page = productRepository.getProductsByCategoryId(categoryID,pageable);
 
+        PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), request.getSortBy(), request.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
+    }
+
+    @Override
+    public PaginationResponseDto<GetProductsResponseDto> findProduct(PaginationFullRequestDto request) {
+        Pageable pageable =PaginationUtil.buildPageable(request);
+
+        Page<GetProductsResponseDto> page=productRepository.findProduct(request.getKeyword(),pageable);
         PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());
 

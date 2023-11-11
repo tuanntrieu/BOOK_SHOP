@@ -38,4 +38,10 @@ public class ProductController {
     public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId,@ParameterObject @Valid PaginationFullRequestDto requestDto){
         return VsResponseUtil.success(productService.getProductsByCategoryId(categoryId,requestDto));
     }
+
+    @Operation(summary = "API find product")
+    @GetMapping(UrlConstant.Product.FIND_PRODUCT)
+    public ResponseEntity<?> findProduct(@ParameterObject PaginationFullRequestDto requestDto){
+        return VsResponseUtil.success(productService.findProduct(requestDto));
+    }
 }

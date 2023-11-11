@@ -32,6 +32,8 @@ public class GetProductsResponseDto {
 
     private String size;
 
+    private int selled;
+
 
 
     public GetProductsResponseDto(int productID, String name, String image, int price, float discount,int quantity) {
