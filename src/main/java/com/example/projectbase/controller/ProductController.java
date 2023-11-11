@@ -6,6 +6,7 @@ import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,11 @@ public class ProductController {
     @GetMapping(UrlConstant.Product.GET_PRODUCT_DETAIL)
     public ResponseEntity<?> getProductDetai(@PathVariable int productId){
         return VsResponseUtil.success(productService.getProductDetail(productId));
+    }
+
+    @Operation(summary = "API get products by categoryId")
+    @GetMapping(UrlConstant.Product.GET_PRODUCTS_BY_CATEGORY_ID)
+    public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId,@ParameterObject @Valid PaginationFullRequestDto requestDto){
+        return VsResponseUtil.success(productService.getProductsByCategoryId(categoryId,requestDto));
     }
 }

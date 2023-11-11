@@ -7,4 +7,7 @@ public class SuccessMessage {
 
     public static final String GENERATE_CART = "Generate cart successfully";
 
+    public static final String UPDATE="Update successfully";
+    public static final String DELETE="Delete successfully";
+
 }
