@@ -25,6 +25,12 @@ public class CategoryController {
         return VsResponseUtil.success(categoryService.getCategories());
     }
 
+    @Operation(summary = "API create category")
+    @PostMapping(UrlConstant.Category.CREATE_CATEGORY)
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto){
+        return VsResponseUtil.success(categoryService.createCategory(categoryDto));
+    }
+
     @Operation(summary = "API update category")
     @PutMapping(value=UrlConstant.Category.UPDATE_CATEGORY , consumes = "multipart/form-data")
     public ResponseEntity<?> updateCustomer(@PathVariable int categoryId, @Valid @ModelAttribute CategoryDto categoryDto) {

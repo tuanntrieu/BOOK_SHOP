@@ -3,6 +3,7 @@ package com.example.projectbase.controller;
 import com.example.projectbase.base.RestApiV1;
 import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
+import com.example.projectbase.domain.dto.ProductDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,8 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
@@ -43,5 +43,22 @@ public class ProductController {
     @GetMapping(UrlConstant.Product.FIND_PRODUCT)
     public ResponseEntity<?> findProduct(@ParameterObject PaginationFullRequestDto requestDto){
         return VsResponseUtil.success(productService.findProduct(requestDto));
+    }
+
+    @Operation(summary = "API create product")
+    @PostMapping(UrlConstant.Product.CREATE_PRODUCT)
+    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDto productDto){
+        return VsResponseUtil.success(productService.createProduct(productDto));
+    }
+
+    @Operation(summary = "API update product")
+    @PutMapping(value = UrlConstant.Product.UPDATE_PRODUCT,consumes = "multipart/form-data")
+    public ResponseEntity<?> updateProduct(@PathVariable int productId,@Valid @ModelAttribute ProductDto productDto){
+        return VsResponseUtil.success(productService.updateProduct(productId,productDto));
+    }
+    @Operation(summary = "API delete product")
+    @DeleteMapping(UrlConstant.Product.DELETE_PRODUCT)
+    public ResponseEntity<?> deleteProduct(@PathVariable int productId){
+        return VsResponseUtil.success(productService.deleteProduct(productId));
     }
 }
