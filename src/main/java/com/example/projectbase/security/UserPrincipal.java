@@ -30,7 +30,7 @@ public class UserPrincipal implements UserDetails {
   public UserPrincipal(String id, String name, String username, String password,
                        Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
-   this.name=name;
+    this.name=name;
     this.username = username;
     this.password = password;
 

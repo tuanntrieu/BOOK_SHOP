@@ -20,6 +20,7 @@ public class ErrorMessage {
   public static final String INVALID_DATETIME = "invalid.datetime-format";
   public static final String INVALID_REPEAT_PASSWORD="invalid.password-repeat";
 
+
   public static class Auth {
     public static final String ERR_INCORRECT_USERNAME = "exception.auth.incorrect.username";
     public static final String ERR_INCORRECT_PASSWORD = "exception.auth.incorrect.password";
@@ -44,10 +45,14 @@ public class ErrorMessage {
 
   public static class Product{
     public static final String ERR_NOT_FOUND_ID="exception.product.not.found.id";
+    public static final String ERR_INSUFFICIENT_STOCK="exception.product.insufficient.stock";
   }
 
   public static class Category{
     public static final String ERR_NOT_FOUND_ID="exception.category.not.found.id";
+  }
+  public static class Cart{
+    public static final String ERR_NOT_FOUND_ID="exception.cart.not.found.id";
   }
 
 

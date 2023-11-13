@@ -6,6 +6,7 @@ public class SuccessMessage {
     public static final String CHANGE_PASSWORD = "Change password successfully";
 
     public static final String GENERATE_CART = "Generate cart successfully";
+    public static final String ADD_PRODUCT_TO_CART="Add product to cart successfully";
 
     public static final String UPDATE="Update successfully";
     public static final String DELETE="Delete successfully";

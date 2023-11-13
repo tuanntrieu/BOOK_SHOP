@@ -34,9 +34,16 @@ public class GetProductsResponseDto {
 
     private int selled;
 
+    public GetProductsResponseDto(int productID, String name, String image, int quantity, int price, float discount) {
+        this.productID = productID;
+        this.name = name;
+        this.image = image;
+        this.quantity = quantity;
+        this.price = price;
+        this.discount = discount;
+    }
 
-
-    public GetProductsResponseDto(int productID, String name, String image, int price, float discount,int quantity) {
+    public GetProductsResponseDto(int productID, String name, String image, int price, float discount, int quantity) {
         this.productID = productID;
         this.name = name;
         this.image = image;

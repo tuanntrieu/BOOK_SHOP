@@ -70,4 +70,18 @@ public class UrlConstant {
         }
     }
 
+    public static class Cart{
+        private static final String PRE_FIX = "/cart";
+        public static final String GET_CART_INFOR=PRE_FIX+"/get-cart-infor/{userId}";
+        public static final String UPDATE_CART_INFOR=PRE_FIX+"/update-cart-infor/{userId}";
+        public static final String DELETE_PRODUCT_FROM_CART=PRE_FIX+"/delete-product-from-cart/{userId}/{productId}";
+
+    }
+
+    public static class CartDetail{
+        private static final String PRE_FIX = "/cart-detail";
+        public static final String ADD_PRODUCT_TO_CART=PRE_FIX+"/add-product-to-cart/{userId}";
+
+    }
+
 }

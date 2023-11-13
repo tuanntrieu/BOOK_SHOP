@@ -6,4 +6,6 @@ import com.example.projectbase.domain.entity.Cart;
 
 public interface CartService {
     CommonResponseDto createCartForCustomer(CartDto cartDto);
+
+
 }

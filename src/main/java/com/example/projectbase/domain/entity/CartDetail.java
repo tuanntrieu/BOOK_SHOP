@@ -16,6 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 public class CartDetail {
+    public CartDetail(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="cart_detail_id")
@@ -28,5 +33,7 @@ public class CartDetail {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="cart_id",foreignKey = @ForeignKey(name="FK_CART_PRODUCT1"),referencedColumnName = "cart_id")
     private Cart cart;
+
+    private int quantity;
 
 }
