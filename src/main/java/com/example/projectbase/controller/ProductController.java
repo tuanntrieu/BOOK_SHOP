@@ -5,6 +5,7 @@ import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.ProductDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
+import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,11 +28,18 @@ public class ProductController {
         return VsResponseUtil.success(productService.getProducts(requestDto));
     }
 
+    @Operation(summary = "API get product sort by total")
+    @GetMapping(UrlConstant.Product.GET_PRODUCTS_SORT_BY_TOTAL)
+    public ResponseEntity<?> getProductSort(@Valid @ParameterObject PaginationRequestDto requestDto){
+        return VsResponseUtil.success(productService.getProductsSortByTotal(requestDto));
+    }
+
     @Operation(summary = "API get product detail")
     @GetMapping(UrlConstant.Product.GET_PRODUCT_DETAIL)
     public ResponseEntity<?> getProductDetai(@PathVariable int productId){
         return VsResponseUtil.success(productService.getProductDetail(productId));
     }
+
 
     @Operation(summary = "API get products by categoryId")
     @GetMapping(UrlConstant.Product.GET_PRODUCTS_BY_CATEGORY_ID)

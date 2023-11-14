@@ -13,6 +13,8 @@ public interface ProductService {
 
     PaginationResponseDto<GetProductsResponseDto> getProducts(PaginationFullRequestDto request);
 
+    PaginationResponseDto<GetProductsResponseDto> getProductsSortByTotal(PaginationRequestDto request);
+
     Product getProductDetail(int productId);
 
     PaginationResponseDto<GetProductsResponseDto> getProductsByCategoryId(int categoryId,PaginationFullRequestDto request);
