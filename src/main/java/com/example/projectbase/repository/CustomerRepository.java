@@ -2,6 +2,8 @@ package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.dto.CustomerDto;
 import com.example.projectbase.domain.entity.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     void  updateCustomer(int id,String name,String phoneNumber,String address );
 
 
+    @Query("SELECT c FROM Customer c")
+    Page<Customer> getCustomers(Pageable pageable);
 }

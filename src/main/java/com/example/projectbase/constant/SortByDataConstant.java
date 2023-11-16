@@ -37,5 +37,11 @@ public enum SortByDataConstant implements SortByInterface {
             return "price";
         }
     },
+    CUSTOMER{
+      @Override
+      public String getSortBy(String sortBy){
+          return "name";
+      }
+    },
 
 }
