@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface BannerRepository extends JpaRepository<Banner,Integer> {
 
-    @Query("SELECT  b FROM Banner b ORDER BY b.createdDate ")
+    @Query("SELECT b FROM Banner b ORDER BY b.createdDate ")
     List<Banner> getBanners();
 
 }

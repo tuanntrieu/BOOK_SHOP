@@ -54,8 +54,8 @@ public class ProductController {
     }
 
     @Operation(summary = "API create product")
-    @PostMapping(UrlConstant.Product.CREATE_PRODUCT)
-    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDto productDto){
+    @PostMapping(value=UrlConstant.Product.CREATE_PRODUCT,consumes = "multipart/form-data")
+    public ResponseEntity<?> createProduct(@Valid @ModelAttribute ProductDto productDto){
         return VsResponseUtil.success(productService.createProduct(productDto));
     }
 
