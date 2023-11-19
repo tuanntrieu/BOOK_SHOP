@@ -55,6 +55,9 @@ public class ErrorMessage {
     public static final String ERR_NOT_FOUND_ID="exception.cart.not.found.id";
   }
 
+  public static class Banner{
+    public static final String ERR_NOT_FOUND_ID="exception.banner.not.found.id";
+  }
 
 
 

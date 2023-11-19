@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,17 +19,21 @@ import javax.validation.Valid;
 public class CartController {
     private final CartDetailService cartDetailService;
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @Operation(summary = "API get cart infor")
     @GetMapping(UrlConstant.Cart.GET_CART_INFOR)
     public ResponseEntity<?> getCartInfor(@PathVariable String userId){
         return VsResponseUtil.success(cartDetailService.getCartInfor(userId));
     }
 
+    @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API update cart infor")
     @PutMapping(UrlConstant.Cart.UPDATE_CART_INFOR)
     public ResponseEntity<?> updateCartInfor(@PathVariable String userId, @Valid @RequestBody CartDetailDto cartDetailDto){
         return VsResponseUtil.success(cartDetailService.updateCartInfor(userId,cartDetailDto));
     }
+
+    @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API delete product from cart")
     @DeleteMapping(UrlConstant.Cart.DELETE_PRODUCT_FROM_CART)
     public ResponseEntity<?>deleteProductFromCart(@PathVariable String userId,@PathVariable int productId){

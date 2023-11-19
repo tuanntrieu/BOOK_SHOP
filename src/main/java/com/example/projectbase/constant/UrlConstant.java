@@ -77,11 +77,23 @@ public class UrlConstant {
         public static final String UPDATE_CART_INFOR=PRE_FIX+"/update-cart-infor/{userId}";
         public static final String DELETE_PRODUCT_FROM_CART=PRE_FIX+"/delete-product-from-cart/{userId}/{productId}";
 
+        private Cart(){}
+
     }
 
     public static class CartDetail{
         private static final String PRE_FIX = "/cart-detail";
         public static final String ADD_PRODUCT_TO_CART=PRE_FIX+"/add-product-to-cart/{userId}";
+
+        private CartDetail(){}
+    }
+
+    public static class Banner{
+        private static final String PRE_FIX="/banner";
+        public static final String GET_BANNERS=PRE_FIX+"/get-banners";
+        public static final String UPDATE_BANNER=PRE_FIX+"/update-banner/{bannerId}";
+        public static final String DELETE_BANNER=PRE_FIX+"/delete-banner/{bannerId}";
+        private Banner(){}
 
     }
 

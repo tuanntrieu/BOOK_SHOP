@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -53,17 +54,21 @@ public class ProductController {
         return VsResponseUtil.success(productService.findProduct(requestDto));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create product")
     @PostMapping(value=UrlConstant.Product.CREATE_PRODUCT,consumes = "multipart/form-data")
     public ResponseEntity<?> createProduct(@Valid @ModelAttribute ProductDto productDto){
         return VsResponseUtil.success(productService.createProduct(productDto));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API update product")
     @PutMapping(value = UrlConstant.Product.UPDATE_PRODUCT,consumes = "multipart/form-data")
     public ResponseEntity<?> updateProduct(@PathVariable int productId,@Valid @ModelAttribute ProductDto productDto){
         return VsResponseUtil.success(productService.updateProduct(productId,productDto));
     }
+
+    @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API delete product")
     @DeleteMapping(UrlConstant.Product.DELETE_PRODUCT)
     public ResponseEntity<?> deleteProduct(@PathVariable int productId){

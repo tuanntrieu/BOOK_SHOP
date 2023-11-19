@@ -9,6 +9,7 @@ import com.example.projectbase.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,19 +26,21 @@ public class CategoryController {
         return VsResponseUtil.success(categoryService.getCategories());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create category")
     @PostMapping(UrlConstant.Category.CREATE_CATEGORY)
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto){
         return VsResponseUtil.success(categoryService.createCategory(categoryDto));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API update category")
     @PutMapping(value=UrlConstant.Category.UPDATE_CATEGORY , consumes = "multipart/form-data")
     public ResponseEntity<?> updateCustomer(@PathVariable int categoryId, @Valid @ModelAttribute CategoryDto categoryDto) {
         return VsResponseUtil.success(categoryService.updateCategory(categoryId, categoryDto));
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API delete category")
     @DeleteMapping(UrlConstant.Category.DELETE_CATEGORY)
     public ResponseEntity<?> deleteCategory(@PathVariable int categoryId){
