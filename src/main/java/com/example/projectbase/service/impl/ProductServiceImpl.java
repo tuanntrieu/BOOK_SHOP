@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PaginationResponseDto<GetProductsResponseDto> findProduct(PaginationFullRequestDto request) {
-        Pageable pageable = PaginationUtil.buildPageable(request);
+        Pageable pageable = PaginationUtil.buildPageable(request,SortByDataConstant.PRODUCT);
 
         Page<GetProductsResponseDto> page = productRepository.findProduct(request.getKeyword(), pageable);
         PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
