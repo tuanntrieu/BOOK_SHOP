@@ -25,7 +25,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CartDetailServiceImpl implements CartDetailService {
 
-    private final CustomerRepository customerRepository;
+
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final CartDetailRepository cartDetailRepository;
@@ -47,6 +47,17 @@ public class CartDetailServiceImpl implements CartDetailService {
         Product product = productRepository.findById(cartDetailDto.getProductId())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(cartDetailDto.getProductId())}));
 
+        List<GetProductsResponseDto> cartInfo=cartDetailRepository.getCartInfor(cart.get().getId());
+
+        for(GetProductsResponseDto tmp: cartInfo){
+            if(tmp.getProductID()==cartDetailDto.getProductId()){
+                if(tmp.getQuantity()+cartDetailDto.getQuantity()>product.getQuantity()){
+                    throw new InsufficientStockException(ErrorMessage.Product.ERR_INSUFFICIENT_STOCK);
+                }
+                cartDetailRepository.updateCartInfor(cart.get().getId(),product.getProductID(),cartDetailDto.getQuantity()+tmp.getQuantity());
+                return new CommonResponseDto(true, SuccessMessage.ADD_PRODUCT_TO_CART);
+            }
+        }
         if (cartDetailDto.getQuantity() > product.getQuantity()) {
             throw new InsufficientStockException(ErrorMessage.Product.ERR_INSUFFICIENT_STOCK);
         }
