@@ -36,8 +36,8 @@ public class AuthController {
   }
 
   @Operation(summary = "API test")
-  @PostMapping("auth/test")
-  public ResponseEntity<?>  lein(@Valid @RequestBody TokenRefreshRequestDto requestDto) {
+  @PostMapping("auth/refresh-token")
+  public ResponseEntity<?>  refreshToken(@Valid @RequestBody TokenRefreshRequestDto requestDto) {
     return VsResponseUtil.success(authService.refresh(requestDto));
   }
 
