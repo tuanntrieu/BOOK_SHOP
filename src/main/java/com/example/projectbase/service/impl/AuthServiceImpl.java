@@ -71,7 +71,15 @@ public class AuthServiceImpl implements AuthService {
             UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
             String accessToken = jwtTokenProvider.generateToken(userPrincipal, Boolean.FALSE);
             String refreshToken = jwtTokenProvider.generateToken(userPrincipal, Boolean.TRUE);
-            return new LoginResponseDto(accessToken, refreshToken, userPrincipal.getId(),userPrincipal.getUsername(), authentication.getAuthorities());
+            Optional<User> user = userRepository.fidByUsernameOrEmail(request.getEmailOrUsername(), request.getEmailOrUsername());
+            if (user.isEmpty()) {
+                throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
+                        new String[]{request.getEmailOrUsername()});
+            }
+            user.get().setAccessToken(accessToken);
+            user.get().setRefreshToken(refreshToken);
+            userRepository.save(user.get());
+            return new LoginResponseDto(accessToken, refreshToken, userPrincipal.getId(), userPrincipal.getUsername(), authentication.getAuthorities());
         } catch (InternalAuthenticationServiceException e) {
             throw new UnauthorizedException(ErrorMessage.Auth.ERR_INCORRECT_USERNAME);
         } catch (BadCredentialsException e) {
@@ -80,8 +88,29 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenRefreshResponseDto refresh(TokenRefreshRequestDto request) {
-        return null;
+    public TokenRefreshResponseDto refresh(TokenRefreshRequestDto refreshTokenRequestDto) {
+        String refreshToken = refreshTokenRequestDto.getRefreshToken();
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new InvalidException(ErrorMessage.Auth.INVALID_REFRESH_TOKEN);
+        }
+        String username = jwtTokenProvider.extractClaimUsername(refreshToken);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
+                        new String[]{username}));
+        // Check if the provided refresh token matches the one stored in the database
+        if (!refreshToken.equals(user.getRefreshToken())) {
+            throw new InvalidException(ErrorMessage.Auth.INVALID_REFRESH_TOKEN);
+        }
+        UserPrincipal userPrincipal = UserPrincipal.create(user);
+        // Generate a new access token
+        String newAccessToken = jwtTokenProvider.generateToken(userPrincipal, Boolean.FALSE);
+        // Generate a new refresh token
+        String newRefreshToken = jwtTokenProvider.generateToken(userPrincipal, Boolean.TRUE);
+
+        // Update the user's refresh token in the database
+        user.setRefreshToken(newRefreshToken);
+        userRepository.save(user);
+        return new TokenRefreshResponseDto(newAccessToken, newRefreshToken);
     }
 
     @Override
@@ -171,17 +200,16 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
                         new String[]{username}));
-        boolean isCorrectPassword = passwordEncoder.matches(requestDto.getOldPassword(),user.getPassword());
-        if(!isCorrectPassword){
+        boolean isCorrectPassword = passwordEncoder.matches(requestDto.getOldPassword(), user.getPassword());
+        if (!isCorrectPassword) {
             throw new UnauthorizedException(ErrorMessage.Auth.ERR_INCORRECT_PASSWORD);
-        }
-        else{
-            if(!requestDto.getPassword().equals(requestDto.getRepeatPassword())){
+        } else {
+            if (!requestDto.getPassword().equals(requestDto.getRepeatPassword())) {
                 throw new InvalidException(ErrorMessage.INVALID_REPEAT_PASSWORD);
             }
             user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
             userRepository.save(user);
-            return new CommonResponseDto(true,SuccessMessage.CHANGE_PASSWORD);
+            return new CommonResponseDto(true, SuccessMessage.CHANGE_PASSWORD);
         }
     }
 

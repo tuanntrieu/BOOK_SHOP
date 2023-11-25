@@ -3,10 +3,7 @@ package com.example.projectbase.controller;
 import com.example.projectbase.base.RestApiV1;
 import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
-import com.example.projectbase.domain.dto.request.ChangePasswordRequestDto;
-import com.example.projectbase.domain.dto.request.ForgetPasswordRequestDto;
-import com.example.projectbase.domain.dto.request.LoginRequestDto;
-import com.example.projectbase.domain.dto.request.RegisterRequestDto;
+import com.example.projectbase.domain.dto.request.*;
 import com.example.projectbase.service.AuthService;
 import com.example.projectbase.validator.annotation.ValidFileImage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,8 +37,8 @@ public class AuthController {
 
   @Operation(summary = "API test")
   @PostMapping("auth/test")
-  public String login(@ValidFileImage MultipartFile multipartFile) {
-    return multipartFile.getContentType();
+  public ResponseEntity<?>  lein(@Valid @RequestBody TokenRefreshRequestDto requestDto) {
+    return VsResponseUtil.success(authService.refresh(requestDto));
   }
 
   @Operation(summary = "API Register")
@@ -68,5 +65,6 @@ public class AuthController {
   public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
     return VsResponseUtil.success(authService.logout(request, response, authentication));
   }
+
 
 }

@@ -1,11 +1,13 @@
 package com.example.projectbase.domain.dto.request;
 
 import com.example.projectbase.constant.ErrorMessage;
+import com.example.projectbase.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

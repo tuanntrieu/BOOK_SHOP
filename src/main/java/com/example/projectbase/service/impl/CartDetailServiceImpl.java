@@ -7,6 +7,7 @@ import com.example.projectbase.domain.dto.CartDetailDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
+import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.*;
 import com.example.projectbase.domain.mapper.CartDetailMapper;
 import com.example.projectbase.exception.NotFoundException;
@@ -47,10 +48,10 @@ public class CartDetailServiceImpl implements CartDetailService {
         Product product = productRepository.findById(cartDetailDto.getProductId())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(cartDetailDto.getProductId())}));
 
-        List<GetProductsResponseDto> cartInfo=cartDetailRepository.getCartInfor(cart.get().getId());
+        List<ProductFromCartResponseDto> cartInfo=cartDetailRepository.getCartInfor(cart.get().getId());
 
-        for(GetProductsResponseDto tmp: cartInfo){
-            if(tmp.getProductID()==cartDetailDto.getProductId()){
+        for(ProductFromCartResponseDto tmp: cartInfo){
+            if(tmp.getProductId()==cartDetailDto.getProductId()){
                 if(tmp.getQuantity()+cartDetailDto.getQuantity()>product.getQuantity()){
                     throw new InsufficientStockException(ErrorMessage.Product.ERR_INSUFFICIENT_STOCK);
                 }
@@ -69,7 +70,7 @@ public class CartDetailServiceImpl implements CartDetailService {
     }
 
     @Override
-    public List<GetProductsResponseDto> getCartInfor(String userId) {
+    public List<ProductFromCartResponseDto> getCartInfor(String userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId});

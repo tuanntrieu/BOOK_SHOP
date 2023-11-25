@@ -32,6 +32,10 @@ public class User extends DateAuditing {
 
   private String email;
 
+  private String accessToken;
+
+  private String refreshToken;
+
   @ManyToOne
   @JoinColumn(name = "role_id",foreignKey = @ForeignKey(name="FK_USER_ROLE"),referencedColumnName = "id")
   private Role role;

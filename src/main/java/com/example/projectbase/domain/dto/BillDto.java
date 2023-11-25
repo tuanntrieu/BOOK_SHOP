@@ -29,7 +29,6 @@ public class BillDto {
     @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
     private String status;
 
-    private int payment;
 
     @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
     private int customerId;
