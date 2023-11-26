@@ -27,22 +27,20 @@ import java.util.Optional;
 public class CartDetailServiceImpl implements CartDetailService {
 
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final CartRepository cartRepository;
     private final CartDetailRepository cartDetailRepository;
     private final ProductRepository productRepository;
 
     @Override
-    public CommonResponseDto addProductToCart(String userId, CartDetailDto cartDetailDto) {
+    public CommonResponseDto addProductToCart(int customerId, CartDetailDto cartDetailDto) {
 
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId});
-        }
+        Customer customer =customerRepository.findById(customerId)
+                .orElseThrow(()-> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
 
-        Optional<Cart> cart = cartRepository.findById(user.get().getCustomer().getCart().getId());
+        Optional<Cart> cart = cartRepository.findById(customer.getCart().getId());
         if (cart.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(user.get().getCustomer().getCart().getId())});
+            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customer.getCart().getId())});
         }
 
         Product product = productRepository.findById(cartDetailDto.getProductId())
@@ -70,28 +68,25 @@ public class CartDetailServiceImpl implements CartDetailService {
     }
 
     @Override
-    public List<ProductFromCartResponseDto> getCartInfor(String userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId});
-        }
+    public List<ProductFromCartResponseDto> getCartInfor(int customerId) {
+        Customer customer =customerRepository.findById(customerId)
+                .orElseThrow(()-> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
 
-        Optional<Cart> cart = cartRepository.findById(user.get().getCustomer().getCart().getId());
+        Optional<Cart> cart = cartRepository.findById(customer.getCart().getId());
         if (cart.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(user.get().getCustomer().getCart().getId())});
+            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customer.getCart().getId())});
         }
         return cartDetailRepository.getCartInfor(cart.get().getId());
     }
 
     @Override
-    public CommonResponseDto updateCartInfor(String userId, CartDetailDto cartDetailDto) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId});
-        }
-        Optional<Cart> cart = cartRepository.findById(user.get().getCustomer().getCart().getId());
+    public CommonResponseDto updateCartInfor(int customerId, CartDetailDto cartDetailDto) {
+        Customer customer =customerRepository.findById(customerId)
+                .orElseThrow(()-> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
+
+        Optional<Cart> cart = cartRepository.findById(customer.getCart().getId());
         if (cart.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(user.get().getCustomer().getCart().getId())});
+            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customer.getCart().getId())});
         }
         Product product = productRepository.findById(cartDetailDto.getProductId())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(cartDetailDto.getProductId())}));
@@ -107,14 +102,13 @@ public class CartDetailServiceImpl implements CartDetailService {
     }
 
     @Override
-    public CommonResponseDto deleteProductFromCart(String userId, int productId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId});
-        }
-        Optional<Cart> cart = cartRepository.findById(user.get().getCustomer().getCart().getId());
+    public CommonResponseDto deleteProductFromCart(int customerId, int productId) {
+        Customer customer =customerRepository.findById(customerId)
+                .orElseThrow(()-> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
+
+        Optional<Cart> cart = cartRepository.findById(customer.getCart().getId());
         if (cart.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(user.get().getCustomer().getCart().getId())});
+            throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customer.getCart().getId())});
         }
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));

@@ -25,15 +25,6 @@ public class Bill extends DateAuditing {
     private int id;
 
     @Column(nullable = false)
-    private String nameCustomer;
-
-    @Column(nullable = false)
-    private String phoneNumber;
-
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
     private String status;
 
     @Column(nullable = false)

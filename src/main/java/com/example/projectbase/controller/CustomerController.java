@@ -41,4 +41,9 @@ public class CustomerController {
         return VsResponseUtil.success(customerService.deleteCustomer(customerId));
     }
 
+    @Operation(summary = "API get customer by userId")
+    @GetMapping(UrlConstant.Customer.GET_CUSTOMER_BY_USER)
+    public ResponseEntity<?> getCustomerByUser(@PathVariable String userId){
+        return VsResponseUtil.success(customerService.getCustomerByUser(userId));
+    }
 }

@@ -17,4 +17,6 @@ public interface CustomerService {
     PaginationResponseDto<Customer> getCustomers(PaginationFullRequestDto requestDto);
 
     CommonResponseDto deleteCustomer(int customerId);
+
+    Customer getCustomerByUser(String userId);
 }

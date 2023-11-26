@@ -8,13 +8,13 @@ import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import java.util.List;
 
 public interface CartDetailService {
-    CommonResponseDto addProductToCart(String userId, CartDetailDto cartDetailDto);
+    CommonResponseDto addProductToCart(int customerId, CartDetailDto cartDetailDto);
 
-    List<ProductFromCartResponseDto> getCartInfor(String userId);
+    List<ProductFromCartResponseDto> getCartInfor(int customerId);
 
-    CommonResponseDto updateCartInfor(String userId,CartDetailDto cartDetailDto);
+    CommonResponseDto updateCartInfor(int customerId,CartDetailDto cartDetailDto);
 
-    CommonResponseDto deleteProductFromCart(String userId,int productId);
+    CommonResponseDto deleteProductFromCart(int customerId,int productId);
 
 
 }

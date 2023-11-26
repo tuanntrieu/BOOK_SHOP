@@ -23,7 +23,7 @@ public class CartDetailController {
     @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API add product to cart")
     @PostMapping(UrlConstant.CartDetail.ADD_PRODUCT_TO_CART)
-    public ResponseEntity<?> addProductToCart(@PathVariable String userId, @Valid @RequestBody CartDetailDto cartDetailDto) {
-        return VsResponseUtil.success(cartDetailService.addProductToCart(userId, cartDetailDto));
+    public ResponseEntity<?> addProductToCart(@PathVariable int customerId, @Valid @RequestBody CartDetailDto cartDetailDto) {
+        return VsResponseUtil.success(cartDetailService.addProductToCart(customerId, cartDetailDto));
     }
 }

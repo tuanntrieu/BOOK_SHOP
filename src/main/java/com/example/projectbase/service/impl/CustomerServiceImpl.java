@@ -70,4 +70,13 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.delete(customer);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
+
+    @Override
+    public Customer getCustomerByUser(String userId) {
+        Optional<Customer> customer=customerRepository.getCustomerByUserId(userId);
+        if(customer.isEmpty()){
+            throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{userId});
+        }
+        return customer.get();
+    }
 }

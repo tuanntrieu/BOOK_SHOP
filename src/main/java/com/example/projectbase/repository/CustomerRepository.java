@@ -23,4 +23,8 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Query("SELECT c FROM Customer c")
     Page<Customer> getCustomers(Pageable pageable);
+
+    @Query("SELECT c FROM Customer c WHERE c.user.id=?1 ")
+    Optional<Customer> getCustomerByUserId(String userId);
+
 }

@@ -53,10 +53,15 @@ public class ErrorMessage {
   }
   public static class Cart{
     public static final String ERR_NOT_FOUND_ID="exception.cart.not.found.id";
+    public static final String ERR_NOT_FOUND_PRODUCT="exception.product.not.found.from.cart";
   }
 
   public static class Banner{
     public static final String ERR_NOT_FOUND_ID="exception.banner.not.found.id";
+  }
+
+  public static class Bill{
+    public static final String ERR_NOT_FOUND_ID="exception.bill.not.found.id";
   }
 
 

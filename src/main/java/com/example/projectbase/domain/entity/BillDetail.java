@@ -30,7 +30,9 @@ public class BillDetail {
     @Column(nullable = false)
     private int quantity;
 
-
-
-
+    public BillDetail(Product product, Bill bill, int quantity) {
+        this.product = product;
+        this.bill = bill;
+        this.quantity = quantity;
+    }
 }

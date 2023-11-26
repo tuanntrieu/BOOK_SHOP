@@ -45,4 +45,5 @@ public class Customer extends DateAuditing {
     @JsonIgnore
     private List<Bill> bill = new ArrayList<>();
 
+
 }

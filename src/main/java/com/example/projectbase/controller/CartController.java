@@ -22,21 +22,21 @@ public class CartController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @Operation(summary = "API get cart infor")
     @GetMapping(UrlConstant.Cart.GET_CART_INFOR)
-    public ResponseEntity<?> getCartInfor(@PathVariable String userId){
-        return VsResponseUtil.success(cartDetailService.getCartInfor(userId));
+    public ResponseEntity<?> getCartInfor(@PathVariable int customerId){
+        return VsResponseUtil.success(cartDetailService.getCartInfor(customerId));
     }
 
     @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API update cart infor")
     @PutMapping(UrlConstant.Cart.UPDATE_CART_INFOR)
-    public ResponseEntity<?> updateCartInfor(@PathVariable String userId, @Valid @RequestBody CartDetailDto cartDetailDto){
-        return VsResponseUtil.success(cartDetailService.updateCartInfor(userId,cartDetailDto));
+    public ResponseEntity<?> updateCartInfor(@PathVariable int customerId, @Valid @RequestBody CartDetailDto cartDetailDto){
+        return VsResponseUtil.success(cartDetailService.updateCartInfor(customerId,cartDetailDto));
     }
 
     @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API delete product from cart")
     @DeleteMapping(UrlConstant.Cart.DELETE_PRODUCT_FROM_CART)
-    public ResponseEntity<?>deleteProductFromCart(@PathVariable String userId,@PathVariable int productId){
-        return VsResponseUtil.success(cartDetailService.deleteProductFromCart(userId,productId));
+    public ResponseEntity<?>deleteProductFromCart(@PathVariable int customerId,@PathVariable int productId){
+        return VsResponseUtil.success(cartDetailService.deleteProductFromCart(customerId,productId));
     }
 }

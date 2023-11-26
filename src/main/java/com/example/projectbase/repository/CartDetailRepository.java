@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartDetailRepository extends JpaRepository<CartDetail, Integer> {
@@ -27,6 +28,6 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Integer>
     @Query("DELETE FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productID=?2")
     void deleteCartDetail(int cartId, int productId);
 
-//    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productID,cd.product.name,cd.product.image,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productID=?2")
-//    ProductFromCartResponseDto getProductFromCart(int cartId, int productId);
+    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productID,cd.product.name,cd.product.image,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productID=?2")
+    Optional<ProductFromCartResponseDto> getProductFromCart(int cartId, int productId);
 }
