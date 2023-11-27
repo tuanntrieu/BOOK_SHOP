@@ -19,7 +19,6 @@ public class BannerController {
 
     private final BannerService bannerService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API get banners")
     @GetMapping(UrlConstant.Banner.GET_BANNERS)
     public ResponseEntity<?>getBanners(){
