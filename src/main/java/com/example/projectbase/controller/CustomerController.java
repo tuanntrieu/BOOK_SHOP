@@ -7,6 +7,7 @@ import com.example.projectbase.domain.dto.CustomerDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,11 @@ public class CustomerController {
     @GetMapping(UrlConstant.Customer.GET_CUSTOMER_BY_USER)
     public ResponseEntity<?> getCustomerByUser(@PathVariable String userId){
         return VsResponseUtil.success(customerService.getCustomerByUser(userId));
+    }
+
+    @Operation(summary = "API get customer by id")
+    @GetMapping(UrlConstant.Customer.GET_CUSTOMER)
+    public ResponseEntity<?> getCustomerById(@PathVariable int customerId){
+        return VsResponseUtil.success(customerService.getById(customerId));
     }
 }

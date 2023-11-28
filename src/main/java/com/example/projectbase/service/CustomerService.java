@@ -19,4 +19,6 @@ public interface CustomerService {
     CommonResponseDto deleteCustomer(int customerId);
 
     Customer getCustomerByUser(String userId);
+
+    Customer getById(int customerId);
 }

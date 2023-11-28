@@ -32,7 +32,7 @@ public class UrlConstant {
         private static final String PRE_FIX = "/customer";
 
         public static final String GET_CUSTOMERS = PRE_FIX;
-        public static final String GET_CUSTOMER = PRE_FIX + "/{customerId}";
+        public static final String GET_CUSTOMER = PRE_FIX + "/get-customer/{customerId}";
         public static final String GET_CUSTOMER_BY_USER = PRE_FIX + "/get-by-user/{userId}";
         public static final String UPDATE_CUSTOMER = PRE_FIX + "/{customerId}";
         public static final String DELETE_CUSTOMER = PRE_FIX + "/{customerId}";
@@ -77,8 +77,7 @@ public class UrlConstant {
         private static final String PRE_FIX = "/cart";
         public static final String GET_CART_INFOR = PRE_FIX + "/get-cart-infor/{customerId}";
         public static final String UPDATE_CART_INFOR = PRE_FIX + "/update-cart-infor/{customerId}";
-        public static final String DELETE_PRODUCT_FROM_CART = PRE_FIX + "/delete-product-from-cart/{userId}/{productId}";
-
+        public static final String DELETE_PRODUCT_FROM_CART = PRE_FIX + "/delete-product-from-cart/{customerId}/{productId}";
         private Cart() {
         }
 

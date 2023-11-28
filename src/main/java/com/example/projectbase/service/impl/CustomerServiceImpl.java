@@ -79,4 +79,12 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return customer.get();
     }
+
+    @Override
+    public Customer getById(int customerId) {
+        Customer customer=customerRepository.findById(customerId)
+                .orElseThrow(()->new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
+
+        return customer;
+    }
 }

@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
             user.get().setAccessToken(accessToken);
             user.get().setRefreshToken(refreshToken);
             userRepository.save(user.get());
-            return new LoginResponseDto(accessToken, refreshToken, userPrincipal.getId(), userPrincipal.getUsername(), authentication.getAuthorities());
+            return new LoginResponseDto(accessToken, refreshToken, userPrincipal.getId(), userPrincipal.getUsername(),user.get().getCustomer().getId(), authentication.getAuthorities());
         } catch (InternalAuthenticationServiceException e) {
             throw new UnauthorizedException(ErrorMessage.Auth.ERR_INCORRECT_USERNAME);
         } catch (BadCredentialsException e) {
