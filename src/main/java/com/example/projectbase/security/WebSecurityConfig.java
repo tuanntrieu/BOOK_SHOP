@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
             .antMatchers("/api/v1/auth/**").permitAll()
             //.antMatchers(HttpMethod.GET, "/api/v1/product/**", "/api/v1/category/**").permitAll()
-            .antMatchers("/api/v1/product/get-products", "/api/v1/product/get-product-detail/**","/api/v1/category/get-categories","/api/v1/product/find-product/**","/api/v1/get-products-sort-by-total/**","/api/v1/banner/get-banners/**","/api/v1/customer/get-by-user/**","/api/v1/customer/get-customer/**","/api/v1/product/get-products-same-author/**").permitAll()
+            .antMatchers("/api/v1/product/get-products","/api/v1/product/get-products-by-categoryId/**", "/api/v1/product/get-product-detail/**","/api/v1/category/get-categories","/api/v1/product/find-product/**","/api/v1/get-products-sort-by-total/**","/api/v1/banner/get-banners/**","/api/v1/customer/get-by-user/**","/api/v1/customer/get-customer/**","/api/v1/product/get-products-same-author/**").permitAll()
             .anyRequest().authenticated()
 
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
