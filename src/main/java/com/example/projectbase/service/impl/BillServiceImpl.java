@@ -64,6 +64,9 @@ public class BillServiceImpl implements BillService {
                 throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_PRODUCT, new String[]{String.valueOf(productId)});
             }
             BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill, product.get().getQuantity());
+            Product product1 = productRepository.findById(productId)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+            productRepository.updateQuantity(productId,product1.getQuantity()-product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
         }
@@ -93,6 +96,7 @@ public class BillServiceImpl implements BillService {
         bill.setCustomer(customer);
         billRepository.save(bill);
 
+        productRepository.updateQuantity(product.getProductID(),product.getQuantity()- requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, product.getQuantity());
         billDetailRepository.save(billDetail);
 

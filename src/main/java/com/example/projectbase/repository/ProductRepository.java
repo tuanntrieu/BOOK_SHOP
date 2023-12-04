@@ -6,9 +6,11 @@ import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +32,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productID,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p ORDER BY (p.price-p.discount*p.price/100) ASC")
     Page<GetProductsResponseDto> getProductsSortByTotal(Pageable pageable);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Product p SET p.quantity=?2 WHERE p.productID=?1 ")
+    void updateQuantity(int productId,int quantity);
 }
