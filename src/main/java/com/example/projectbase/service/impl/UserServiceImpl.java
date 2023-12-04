@@ -4,6 +4,7 @@ import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.response.CurrentUserResponseDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.domain.mapper.UserMapper;
@@ -40,9 +41,10 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDto getCurrentUser(UserPrincipal principal) {
+  public CurrentUserResponseDto getCurrentUser(UserPrincipal principal) {
     User user = userRepository.getUser(principal);
-    return userMapper.toUserDto(user);
+    CurrentUserResponseDto currentUser=new CurrentUserResponseDto(user.getId(),user.getUsername(),user.getRole().getName(),user.getEmail(),user.getCustomer().getId(),user.getCustomer().getName(),user.getCustomer().getPhonenumber(),user.getCustomer().getAddress());
+    return currentUser;
   }
 
 }
