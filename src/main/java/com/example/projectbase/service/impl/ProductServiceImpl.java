@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -123,6 +124,14 @@ public class ProductServiceImpl implements ProductService {
         ;
         productRepository.delete(product);
         return new CommonResponseDto(true,SuccessMessage.DELETE);
+    }
+
+    @Override
+    public List<Product> getProductsSameAuthor(int productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+        ;
+        return productRepository.getProductSameAuthor(product.getAuthor());
     }
 
 

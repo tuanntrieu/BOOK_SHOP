@@ -8,6 +8,8 @@ import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Product;
 
+import java.util.List;
+
 
 public interface ProductService {
 
@@ -26,4 +28,6 @@ public interface ProductService {
     CommonResponseDto updateProduct(int productId, ProductDto productDto);
 
     CommonResponseDto deleteProduct(int productId);
+
+    List<Product> getProductsSameAuthor(int productId);
 }

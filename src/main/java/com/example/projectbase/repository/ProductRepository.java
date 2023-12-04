@@ -36,4 +36,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Query("UPDATE Product p SET p.quantity=?2 WHERE p.productID=?1 ")
     void updateQuantity(int productId,int quantity);
+
+    @Query("SELECT p FROM Product p WHERE p.author LIKE %?1%")
+    List<Product>getProductSameAuthor(String author);
 }

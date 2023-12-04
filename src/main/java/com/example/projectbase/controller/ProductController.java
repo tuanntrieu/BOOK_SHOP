@@ -74,4 +74,9 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable int productId){
         return VsResponseUtil.success(productService.deleteProduct(productId));
     }
+    @Operation(summary = "API get products same author")
+    @GetMapping(UrlConstant.Product.GET_PRODUCTS_SAME_AUTHOR)
+    public ResponseEntity<?> getProductSameAuthor(@PathVariable int productId){
+        return VsResponseUtil.success(productService.getProductsSameAuthor(productId));
+    }
 }
