@@ -1,6 +1,8 @@
 package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.entity.Bill;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +17,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Modifying
     @Query("UPDATE Bill b SET b.status=?2 WHERE b.id=?1 ")
     void updateStatus(int billId, String status);
+
+    @Query("SELECT b FROM Bill b WHERE b.customer.id=?1")
+    Page<Bill> getBills(int customerId, Pageable pageable);
 }

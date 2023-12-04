@@ -31,13 +31,13 @@ public class Bill extends DateAuditing {
     private int feeShip;
 
     @OneToMany(mappedBy = "bill",cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<BillDetail> billDetail;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id",foreignKey = @ForeignKey(name = "FK_CUSTOMER_BILL"),referencedColumnName = "customer_id")
     private Customer customer;
+
+
 
 
 }

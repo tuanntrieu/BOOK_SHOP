@@ -45,5 +45,12 @@ public enum SortByDataConstant implements SortByInterface {
             return "name";
         }
     },
+    BILL{
+        @Override
+        public String getSortBy(String sortBy) {
+            return "createdDate";
+        }
+    }
+
 
 }

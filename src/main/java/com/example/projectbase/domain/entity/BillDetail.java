@@ -1,5 +1,6 @@
 package com.example.projectbase.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class BillDetail {
 
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnore
     @JoinColumn(name = "bill_id",foreignKey = @ForeignKey(name = "FK_BILL_PRODUCT"),referencedColumnName = "bill_id")
     private Bill bill;
 

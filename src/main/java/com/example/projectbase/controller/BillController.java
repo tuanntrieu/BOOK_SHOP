@@ -4,18 +4,17 @@ import com.example.projectbase.base.RestApiV1;
 import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.BillDto;
+import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.request.BuyNowRequestDto;
 import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.service.BillService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,6 +49,20 @@ public class BillController {
     @PutMapping(UrlConstant.Bill.BUY_AGAIN)
     public ResponseEntity<?> buyAgain(@PathVariable int billId) {
         return VsResponseUtil.success(billService.buyAgain(billId));
+    }
+
+    @PreAuthorize(value = "hasAnyRole('USER')")
+    @Operation(summary = "API get bills")
+    @GetMapping(UrlConstant.Bill.GET_BILLS)
+    public ResponseEntity<?> getBills(@PathVariable int customerId, @ParameterObject PaginationFullRequestDto requestDto) {
+        return VsResponseUtil.success(billService.getBills(customerId,requestDto));
+    }
+
+    @PreAuthorize(value = "hasAnyRole('USER')")
+    @Operation(summary = "API get bill infor")
+    @GetMapping(UrlConstant.Bill.GET_Bill_INFOR)
+    public ResponseEntity<?>getBillInfor(@PathVariable int billId){
+        return VsResponseUtil.success(billService.getBillInfor(billId));
     }
 
 }

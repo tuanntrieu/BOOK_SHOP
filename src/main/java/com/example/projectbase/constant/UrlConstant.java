@@ -80,6 +80,7 @@ public class UrlConstant {
         public static final String GET_CART_INFOR = PRE_FIX + "/get-cart-infor/{customerId}";
         public static final String UPDATE_CART_INFOR = PRE_FIX + "/update-cart-infor/{customerId}";
         public static final String DELETE_PRODUCT_FROM_CART = PRE_FIX + "/delete-product-from-cart/{customerId}/{productId}";
+
         private Cart() {
         }
 
@@ -112,6 +113,9 @@ public class UrlConstant {
         public static final String CANCEL_ORDER = PRE_FIX + "/cancel-order/{billId}";
 
         public static final String BUY_AGAIN = PRE_FIX + "/buy-again/{billId}";
+
+        public static final String GET_BILLS = PRE_FIX + "/get-bills/{customerId}";
+        public static final String GET_Bill_INFOR = PRE_FIX + "/get-bill-infor/{billId}";
     }
 
 }

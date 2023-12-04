@@ -1,12 +1,17 @@
 package com.example.projectbase.service.impl;
 
 import com.example.projectbase.constant.ErrorMessage;
+import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.constant.StatusConstant;
 import com.example.projectbase.constant.SuccessMessage;
 import com.example.projectbase.domain.dto.BillDto;
+import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
+import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.request.BuyNowRequestDto;
 import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
+import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.*;
 import com.example.projectbase.domain.mapper.BillMapper;
@@ -14,7 +19,10 @@ import com.example.projectbase.exception.InsufficientStockException;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.*;
 import com.example.projectbase.service.BillService;
+import com.example.projectbase.util.PaginationUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -66,7 +74,7 @@ public class BillServiceImpl implements BillService {
             BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill, product.get().getQuantity());
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-            productRepository.updateQuantity(productId,product1.getQuantity()-product.get().getQuantity());
+            productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
         }
@@ -96,7 +104,7 @@ public class BillServiceImpl implements BillService {
         bill.setCustomer(customer);
         billRepository.save(bill);
 
-        productRepository.updateQuantity(product.getProductID(),product.getQuantity()- requestDto.getQuantity());
+        productRepository.updateQuantity(product.getProductID(), product.getQuantity() - requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, product.getQuantity());
         billDetailRepository.save(billDetail);
 
@@ -120,4 +128,28 @@ public class BillServiceImpl implements BillService {
         return new CommonResponseDto(true, SuccessMessage.ORDER);
 
     }
+
+    @Override
+    public PaginationResponseDto<Bill> getBills(int customerId, PaginationFullRequestDto request) {
+        Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.BILL);
+
+        Page<Bill> page = billRepository.getBills(customerId, pageable);
+
+        PaginationResponseDto<Bill> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), request.getSortBy(), request.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
+
+    }
+
+    @Override
+    public Bill getBillInfor(int billId) {
+        Bill bill = billRepository.findById(billId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
+        return bill;
+    }
+
+
 }
