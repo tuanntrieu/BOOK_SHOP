@@ -65,6 +65,7 @@ public class BillController {
         return VsResponseUtil.success(billService.getBillInfor(billId));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API confirm order")
     @PatchMapping(UrlConstant.Bill.CONFIRM_ORDER)
     public ResponseEntity<?> confirmOrder(@PathVariable int billId){
