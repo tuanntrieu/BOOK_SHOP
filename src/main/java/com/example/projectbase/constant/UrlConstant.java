@@ -110,12 +110,12 @@ public class UrlConstant {
         public static final String ORDER_FROM_CART = PRE_FIX + "/order-from-cart/{customerId}";
         public static final String BUY_NOW = PRE_FIX + "/buy-now/{customerId}";
 
-        public static final String CANCEL_ORDER = PRE_FIX + "/cancel-order/{billId}";
-
-        public static final String BUY_AGAIN = PRE_FIX + "/buy-again/{billId}";
+        public static final String CANCEL_ORDER = PRE_FIX + "/cancel-order/{customerId}/{billId}";
+        public static final String CONFIRM_ORDER=PRE_FIX+"/confirm-order/{billId}";
+        public static final String BUY_AGAIN = PRE_FIX + "/buy-again/{customerId}/{billId}";
 
         public static final String GET_BILLS = PRE_FIX + "/get-bills/{customerId}";
-        public static final String GET_Bill_INFOR = PRE_FIX + "/get-bill-infor/{billId}";
+        public static final String GET_BILL_INFOR = PRE_FIX + "/get-bill-infor/{billId}";
     }
 
 }

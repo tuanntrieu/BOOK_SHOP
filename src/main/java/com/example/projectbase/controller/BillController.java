@@ -40,15 +40,15 @@ public class BillController {
 
     @PreAuthorize(value = "hasAnyRole('USER')")
     @Operation(summary = "API cancel order")
-    @PutMapping(UrlConstant.Bill.CANCEL_ORDER)
-    public ResponseEntity<?> cancelOrder(@PathVariable int billId) {
-        return VsResponseUtil.success(billService.cancelOrder(billId));
+    @PatchMapping(UrlConstant.Bill.CANCEL_ORDER)
+    public ResponseEntity<?> cancelOrder(@PathVariable int customerId,@PathVariable int billId) {
+        return VsResponseUtil.success(billService.cancelOrder(customerId,billId));
     }
     @PreAuthorize(value = "hasAnyRole('USER')")
     @Operation(summary = "API buy again")
-    @PutMapping(UrlConstant.Bill.BUY_AGAIN)
-    public ResponseEntity<?> buyAgain(@PathVariable int billId) {
-        return VsResponseUtil.success(billService.buyAgain(billId));
+    @PatchMapping(UrlConstant.Bill.BUY_AGAIN)
+    public ResponseEntity<?> buyAgain(@PathVariable int customerId,@PathVariable int billId) {
+        return VsResponseUtil.success(billService.buyAgain(customerId,billId));
     }
 
     @PreAuthorize(value = "hasAnyRole('USER')")
@@ -60,9 +60,18 @@ public class BillController {
 
     @PreAuthorize(value = "hasAnyRole('USER')")
     @Operation(summary = "API get bill infor")
-    @GetMapping(UrlConstant.Bill.GET_Bill_INFOR)
+    @GetMapping(UrlConstant.Bill.GET_BILL_INFOR)
     public ResponseEntity<?>getBillInfor(@PathVariable int billId){
         return VsResponseUtil.success(billService.getBillInfor(billId));
     }
+
+    @Operation(summary = "API confirm order")
+    @PatchMapping(UrlConstant.Bill.CONFIRM_ORDER)
+    public ResponseEntity<?> confirmOrder(@PathVariable int billId){
+        return VsResponseUtil.success(billService.comfirmOrder(billId));
+    }
+
+
+
 
 }

@@ -30,6 +30,8 @@ public class Bill extends DateAuditing {
     @Column(nullable = false)
     private int feeShip;
 
+    private int total;
+
     @OneToMany(mappedBy = "bill",cascade = CascadeType.ALL)
     private List<BillDetail> billDetail;
 

@@ -63,24 +63,28 @@ public class BillServiceImpl implements BillService {
 
         Bill bill = new Bill();
         bill.setFeeShip(30000);
-        bill.setStatus(StatusConstant.ORDERED);
+        bill.setStatus(StatusConstant.TO_PAY);
         bill.setCustomer(customer);
         billRepository.save(bill);
+        int total = bill.getFeeShip();
         for (int productId : requestDto.getListProductId()) {
             Optional<ProductFromCartResponseDto> product = cartDetailRepository.getProductFromCart(cart.get().getId(), productId);
             if (product.isEmpty()) {
                 throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_PRODUCT, new String[]{String.valueOf(productId)});
             }
-            BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill, product.get().getQuantity());
+            BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill,product.get().getQuantity());
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+            total += (product.get().getPrice() - product.get().getDiscount());
             productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
         }
+        bill.setTotal(total);
+        billRepository.save(bill);
 
 
-        return new CommonResponseDto(true, SuccessMessage.ORDER);
+        return new CommonResponseDto(true, SuccessMessage.TO_PAY);
     }
 
     @Override
@@ -100,33 +104,58 @@ public class BillServiceImpl implements BillService {
         }
         Bill bill = new Bill();
         bill.setFeeShip(30000);
-        bill.setStatus(StatusConstant.ORDERED);
+        bill.setStatus(StatusConstant.TO_PAY);
         bill.setCustomer(customer);
         billRepository.save(bill);
+        int total = bill.getFeeShip();
 
         productRepository.updateQuantity(product.getProductID(), product.getQuantity() - requestDto.getQuantity());
-        BillDetail billDetail = new BillDetail(product, bill, product.getQuantity());
+        BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
+        total += (product.getPrice() - product.getDiscount());
 
-        return new CommonResponseDto(true, SuccessMessage.ORDER);
+        bill.setTotal(total);
+        billRepository.save(bill);
+        return new CommonResponseDto(true, SuccessMessage.TO_PAY);
     }
 
     @Override
-    public CommonResponseDto cancelOrder(int billId) {
+    public CommonResponseDto cancelOrder(int customerId,int billId) {
 
         Bill bill = billRepository.findById(billId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
-        billRepository.updateStatus(billId, StatusConstant.CANCELLED);
-        return new CommonResponseDto(true, SuccessMessage.CANCEL);
+        if(bill.getStatus().equals(StatusConstant.TO_PAY))
+        {
+            billRepository.updateStatus(customerId,billId, StatusConstant.CANCELLED);
+            for(BillDetail bt : bill.getBillDetail()){
+                productRepository.updateQuantity(bt.getProduct().getProductID(),bt.getProduct().getQuantity()+bt.getQuantity());
+            }
+            return new CommonResponseDto(true, SuccessMessage.CANCEL);
+        }
+        else{
+            return new CommonResponseDto(false,ErrorMessage.Bill.NOT_ALLOW_TO_CANCEL);
+        }
     }
 
     @Override
-    public CommonResponseDto buyAgain(int billId) {
+    public CommonResponseDto buyAgain(int customerId, int billId) {
         Bill bill = billRepository.findById(billId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
-        billRepository.updateStatus(billId, StatusConstant.ORDERED);
+        billRepository.updateStatus(customerId,billId, StatusConstant.ORDERED);
+        for(BillDetail bt : bill.getBillDetail()){
+            productRepository.updateQuantity(bt.getProduct().getProductID(),bt.getProduct().getQuantity()-bt.getQuantity());
+        }
         return new CommonResponseDto(true, SuccessMessage.ORDER);
 
+    }
+
+    @Override
+    public CommonResponseDto comfirmOrder(int billId) {
+        Bill bill = billRepository.findById(billId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
+        bill.setStatus(StatusConstant.ORDERED);
+        billRepository.save(bill);
+        return new CommonResponseDto(true,SuccessMessage.ORDER);
     }
 
     @Override

@@ -14,9 +14,11 @@ public interface BillService {
 
     CommonResponseDto buyNow(int customerId, BuyNowRequestDto requestDto);
 
-    CommonResponseDto cancelOrder(int billId);
+    CommonResponseDto cancelOrder(int customerId,int billId);
 
-    CommonResponseDto buyAgain(int billId);
+    CommonResponseDto buyAgain(int customerId,int billId);
+
+    CommonResponseDto comfirmOrder(int billId);
 
     PaginationResponseDto<Bill> getBills(int customerId,PaginationFullRequestDto request);
 

@@ -11,6 +11,8 @@ public class SuccessMessage {
     public static final String UPDATE="Update successfully";
     public static final String DELETE="Delete successfully";
 
+    public static final String TO_PAY="Wait for confirmation";
+
     public static final String ORDER="Order successfully";
 
     public static final String CANCEL="Cancel successfully";
