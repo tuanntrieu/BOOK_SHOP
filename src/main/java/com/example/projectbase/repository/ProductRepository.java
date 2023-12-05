@@ -1,6 +1,7 @@
 package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
+import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.Product;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("UPDATE Product p SET p.quantity=?2 WHERE p.productID=?1 ")
     void updateQuantity(int productId,int quantity);
 
-    @Query("SELECT p FROM Product p WHERE p.author LIKE %?1%")
-    List<Product>getProductSameAuthor(String author);
+    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productID,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p WHERE p.productID <> ?1 AND p.author LIKE %?2% " )
+    List<ProductFromCartResponseDto>getProductSameAuthor(int productId,String author);
 }

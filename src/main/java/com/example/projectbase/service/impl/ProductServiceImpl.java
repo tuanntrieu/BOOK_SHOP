@@ -10,6 +10,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
+import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.Category;
 import com.example.projectbase.domain.entity.Product;
 import com.example.projectbase.domain.mapper.ProductMapper;
@@ -127,11 +128,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsSameAuthor(int productId) {
+    public List<ProductFromCartResponseDto> getProductsSameAuthor(int productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
         ;
-        return productRepository.getProductSameAuthor(product.getAuthor());
+        return productRepository.getProductSameAuthor(productId,product.getAuthor());
     }
 
 

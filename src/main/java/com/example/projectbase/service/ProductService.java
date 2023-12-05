@@ -6,6 +6,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
+import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.Product;
 
 import java.util.List;
@@ -29,5 +30,5 @@ public interface ProductService {
 
     CommonResponseDto deleteProduct(int productId);
 
-    List<Product> getProductsSameAuthor(int productId);
+    List<ProductFromCartResponseDto> getProductsSameAuthor(int productId);
 }
