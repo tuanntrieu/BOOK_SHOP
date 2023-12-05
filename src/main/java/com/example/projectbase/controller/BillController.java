@@ -72,7 +72,4 @@ public class BillController {
         return VsResponseUtil.success(billService.comfirmOrder(billId));
     }
 
-
-
-
 }

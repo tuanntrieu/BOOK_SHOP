@@ -38,4 +38,11 @@ public class BannerController {
     public ResponseEntity<?>deleteProductFromCart(@PathVariable int bannerId){
         return VsResponseUtil.success(bannerService.deleteBanner(bannerId));
     }
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API create banner")
+    @PostMapping(value=UrlConstant.Banner.CREATE_BANNER,consumes = "multipart/form-data")
+    public ResponseEntity<?> createBanner( @Valid @ModelAttribute BannerDto bannerDto){
+        return VsResponseUtil.success(bannerService.createBanner(bannerDto));
+    }
+
 }

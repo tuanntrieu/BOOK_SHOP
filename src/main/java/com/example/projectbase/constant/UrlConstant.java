@@ -99,6 +99,7 @@ public class UrlConstant {
         public static final String GET_BANNERS = PRE_FIX + "/get-banners";
         public static final String UPDATE_BANNER = PRE_FIX + "/update-banner/{bannerId}";
         public static final String DELETE_BANNER = PRE_FIX + "/delete-banner/{bannerId}";
+        public static final String CREATE_BANNER = PRE_FIX + "/create-banner";
 
         private Banner() {
         }
@@ -111,7 +112,7 @@ public class UrlConstant {
         public static final String BUY_NOW = PRE_FIX + "/buy-now/{customerId}";
 
         public static final String CANCEL_ORDER = PRE_FIX + "/cancel-order/{customerId}/{billId}";
-        public static final String CONFIRM_ORDER=PRE_FIX+"/confirm-order/{billId}";
+        public static final String CONFIRM_ORDER = PRE_FIX + "/confirm-order/{billId}";
         public static final String BUY_AGAIN = PRE_FIX + "/buy-again/{customerId}/{billId}";
 
         public static final String GET_BILLS = PRE_FIX + "/get-bills/{customerId}";

@@ -12,4 +12,6 @@ public interface BannerService {
     CommonResponseDto updateBanner(int bannerId, BannerDto bannerDto);
 
     CommonResponseDto deleteBanner(int bannerId);
+
+    Banner createBanner(BannerDto bannerDto);
 }

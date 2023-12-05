@@ -41,4 +41,11 @@ public class BannerServiceImpl implements BannerService {
         bannerRepository.delete(banner);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
+
+    @Override
+    public Banner createBanner(BannerDto bannerDto) {
+        Banner banner = new Banner();
+        banner.setImage(uploadFileUtil.uploadFile(bannerDto.getMultipartFile()));
+        return bannerRepository.save(banner);
+    }
 }
