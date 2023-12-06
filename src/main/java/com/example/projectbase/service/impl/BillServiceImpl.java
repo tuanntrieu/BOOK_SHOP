@@ -67,7 +67,7 @@ public class BillServiceImpl implements BillService {
         bill.setCustomer(customer);
         billRepository.save(bill);
         int total = bill.getFeeShip();
-        for (int productId : requestDto.getListproductId()) {
+        for (int productId : requestDto.getListProductId()) {
             Optional<ProductFromCartResponseDto> product = cartDetailRepository.getProductFromCart(cart.get().getId(), productId);
             if (product.isEmpty()) {
                 throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_PRODUCT, new String[]{String.valueOf(productId)});
