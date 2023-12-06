@@ -1,6 +1,7 @@
 package com.example.projectbase.domain.entity;
 
 
+import com.example.projectbase.domain.entity.common.DateAuditing;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CartDetail {
+public class CartDetail extends DateAuditing {
     public CartDetail(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
