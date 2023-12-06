@@ -17,8 +17,8 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Customer c SET c.name=?2, c.phonenumber=?3, c.address=?4, c.lastModifiedDate=CURRENT_TIMESTAMP WHERE c.id=?1")
-    void  updateCustomer(int id,String name,String phoneNumber,String address );
+    @Query("UPDATE Customer c SET c.name=?2, c.phonenumber=?3, c.address=?4, c.lastModifiedDate=CURRENT_TIMESTAMP, c.avatar=?5 WHERE c.id=?1")
+    void  updateCustomer(int id,String name,String phoneNumber,String address,String avatar );
 
 
     @Query("SELECT c FROM Customer c")

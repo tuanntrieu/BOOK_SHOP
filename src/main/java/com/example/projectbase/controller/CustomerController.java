@@ -23,8 +23,8 @@ public class CustomerController {
 
     @PreAuthorize("hasAnyRole('USER')")
     @Operation(summary = "API update customer")
-    @PutMapping(UrlConstant.Customer.UPDATE_CUSTOMER)
-    public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @Valid @RequestBody CustomerDto customerDto) {
+    @PutMapping(value=UrlConstant.Customer.UPDATE_CUSTOMER,consumes = "multipart/form-data")
+    public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @Valid @ModelAttribute CustomerDto customerDto) {
         return VsResponseUtil.success(customerService.updateCustomer(customerId, customerDto));
     }
 

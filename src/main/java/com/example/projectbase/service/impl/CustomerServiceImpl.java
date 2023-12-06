@@ -16,6 +16,7 @@ import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.CustomerRepository;
 import com.example.projectbase.service.CustomerService;
 import com.example.projectbase.util.PaginationUtil;
+import com.example.projectbase.util.UploadFileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final UploadFileUtil uploadFileUtil;
 
     @Override
     public Customer createCustomer(CustomerDto customerDto) {
@@ -45,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(id)});
         }
 
-        customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress());
+        customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress(),uploadFileUtil.uploadFile(customerDto.getAvatar()));
         return new CommonResponseDto(true,SuccessMessage.UPDATE);
     }
 

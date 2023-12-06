@@ -32,6 +32,8 @@ public class Customer extends DateAuditing {
 
     private String address;
 
+    private String avatar;
+
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
     @JsonIgnore

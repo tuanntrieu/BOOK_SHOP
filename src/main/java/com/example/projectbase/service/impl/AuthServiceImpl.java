@@ -137,7 +137,7 @@ public class AuthServiceImpl implements AuthService {
                 User user = userMapper.toUser(newUser);
                 user.setPassword(passwordEncoder.encode(newUser.getPassword()));
                 user.setRole(roleRepository.findByRoleName(RoleConstant.USER));
-                user.setCustomer(customerService.createCustomer(new CustomerDto(newUser.getUsername(), null, null)));
+                user.setCustomer(customerService.createCustomer(new CustomerDto(newUser.getUsername(), null, null,null)));
                 cartService.createCartForCustomer(new CartDto(user.getCustomer().getId()));
 
                 DataMailDto mailDto = new DataMailDto();
