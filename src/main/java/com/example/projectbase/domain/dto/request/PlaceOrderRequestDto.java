@@ -22,5 +22,5 @@ public class PlaceOrderRequestDto {
 
     private String address;
 
-    List<Integer> listproductId;
+    List<Integer> listProductId;
 }
