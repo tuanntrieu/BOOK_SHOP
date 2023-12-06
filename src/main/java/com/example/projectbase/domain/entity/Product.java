@@ -20,7 +20,7 @@ public class Product extends DateAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id",insertable = false, updatable = false, nullable = false)
-    private int productID;
+    private int productId;
 
     private  String name;
 

@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetProductsResponseDto {
 
-    private int productID;
+    private int productId;
 
     private  String name;
 
@@ -34,8 +34,8 @@ public class GetProductsResponseDto {
 
     private int selled;
 
-    public GetProductsResponseDto(int productID, String name, String image, int quantity, int price, float discount) {
-        this.productID = productID;
+    public GetProductsResponseDto(int productId, String name, String image, int quantity, int price, float discount) {
+        this.productId = productId;
         this.name = name;
         this.image = image;
         this.quantity = quantity;
@@ -43,8 +43,8 @@ public class GetProductsResponseDto {
         this.discount = discount;
     }
 
-    public GetProductsResponseDto(int productID, String name, String image, int price, float discount, int quantity) {
-        this.productID = productID;
+    public GetProductsResponseDto(int productId, String name, String image, int price, float discount, int quantity) {
+        this.productId = productId;
         this.name = name;
         this.image = image;
         this.price = price;

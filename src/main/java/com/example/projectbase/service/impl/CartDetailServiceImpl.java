@@ -53,7 +53,7 @@ public class CartDetailServiceImpl implements CartDetailService {
                 if(tmp.getQuantity()+cartDetailDto.getQuantity()>product.getQuantity()){
                     throw new InsufficientStockException(ErrorMessage.Product.ERR_INSUFFICIENT_STOCK);
                 }
-                cartDetailRepository.updateCartInfor(cart.get().getId(),product.getProductID(),cartDetailDto.getQuantity()+tmp.getQuantity());
+                cartDetailRepository.updateCartInfor(cart.get().getId(),product.getProductId(),cartDetailDto.getQuantity()+tmp.getQuantity());
                 return new CommonResponseDto(true, SuccessMessage.ADD_PRODUCT_TO_CART);
             }
         }
@@ -96,7 +96,7 @@ public class CartDetailServiceImpl implements CartDetailService {
             throw new InsufficientStockException(ErrorMessage.Product.ERR_INSUFFICIENT_STOCK);
         }
 
-        cartDetailRepository.updateCartInfor(cart.get().getId(), product.getProductID(), cartDetailDto.getQuantity());
+        cartDetailRepository.updateCartInfor(cart.get().getId(), product.getProductId(), cartDetailDto.getQuantity());
 
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }

@@ -67,7 +67,7 @@ public class BillServiceImpl implements BillService {
         bill.setCustomer(customer);
         billRepository.save(bill);
         int total = bill.getFeeShip();
-        for (int productId : requestDto.getListProductId()) {
+        for (int productId : requestDto.getListproductId()) {
             Optional<ProductFromCartResponseDto> product = cartDetailRepository.getProductFromCart(cart.get().getId(), productId);
             if (product.isEmpty()) {
                 throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_PRODUCT, new String[]{String.valueOf(productId)});
@@ -109,7 +109,7 @@ public class BillServiceImpl implements BillService {
         billRepository.save(bill);
         int total = bill.getFeeShip();
 
-        productRepository.updateQuantity(product.getProductID(), product.getQuantity() - requestDto.getQuantity());
+        productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
         total += (product.getPrice() - product.getDiscount());
@@ -128,7 +128,7 @@ public class BillServiceImpl implements BillService {
         {
             billRepository.updateStatus(customerId,billId, StatusConstant.CANCELLED);
             for(BillDetail bt : bill.getBillDetail()){
-                productRepository.updateQuantity(bt.getProduct().getProductID(),bt.getProduct().getQuantity()+bt.getQuantity());
+                productRepository.updateQuantity(bt.getProduct().getProductId(),bt.getProduct().getQuantity()+bt.getQuantity());
             }
             return new CommonResponseDto(true, SuccessMessage.CANCEL);
         }
@@ -143,7 +143,7 @@ public class BillServiceImpl implements BillService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
         billRepository.updateStatus(customerId,billId, StatusConstant.ORDERED);
         for(BillDetail bt : bill.getBillDetail()){
-            productRepository.updateQuantity(bt.getProduct().getProductID(),bt.getProduct().getQuantity()-bt.getQuantity());
+            productRepository.updateQuantity(bt.getProduct().getProductId(),bt.getProduct().getQuantity()-bt.getQuantity());
         }
         return new CommonResponseDto(true, SuccessMessage.ORDER);
 
