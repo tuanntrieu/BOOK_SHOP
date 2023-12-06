@@ -75,7 +75,7 @@ public class BillServiceImpl implements BillService {
             BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill,product.get().getQuantity());
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-            total += (product.get().getPrice() - product.get().getDiscount());
+            total += (product.get().getPrice() - product.get().getDiscount()*product.get().getPrice()/100);
             productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
@@ -112,7 +112,7 @@ public class BillServiceImpl implements BillService {
         productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
-        total += (product.getPrice() - product.getDiscount());
+        total += (product.getPrice() - product.getDiscount()*product.getPrice()/100);
 
         bill.setTotal(total);
         billRepository.save(bill);
@@ -141,11 +141,11 @@ public class BillServiceImpl implements BillService {
     public CommonResponseDto buyAgain(int customerId, int billId) {
         Bill bill = billRepository.findById(billId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
-        billRepository.updateStatus(customerId,billId, StatusConstant.ORDERED);
+        billRepository.updateStatus(customerId,billId, StatusConstant.TO_PAY);
         for(BillDetail bt : bill.getBillDetail()){
             productRepository.updateQuantity(bt.getProduct().getProductId(),bt.getProduct().getQuantity()-bt.getQuantity());
         }
-        return new CommonResponseDto(true, SuccessMessage.ORDER);
+        return new CommonResponseDto(true, SuccessMessage.TO_PAY);
 
     }
 
