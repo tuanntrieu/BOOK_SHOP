@@ -1,6 +1,7 @@
 package com.example.projectbase.service;
 
 import com.example.projectbase.domain.dto.CartDetailDto;
+import com.example.projectbase.domain.dto.response.CartTotalResponseDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
@@ -11,6 +12,8 @@ public interface CartDetailService {
     CommonResponseDto addProductToCart(int customerId, CartDetailDto cartDetailDto);
 
     List<ProductFromCartResponseDto> getCartInfor(int customerId);
+
+    CartTotalResponseDto getCartTotal(int customerId);
 
     CommonResponseDto updateCartInfor(int customerId,CartDetailDto cartDetailDto);
 

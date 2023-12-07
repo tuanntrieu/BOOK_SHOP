@@ -43,8 +43,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public CurrentUserResponseDto getCurrentUser(UserPrincipal principal) {
     User user = userRepository.getUser(principal);
-    CurrentUserResponseDto currentUser=new CurrentUserResponseDto(user.getId(),user.getUsername(),user.getRole().getName(),user.getEmail(),user.getCustomer().getId(),user.getCustomer().getName(),user.getCustomer().getPhonenumber(),user.getCustomer().getAddress());
-    return currentUser;
+    return new CurrentUserResponseDto(user.getId(),user.getUsername(),user.getRole().getName(),user.getEmail(),user.getCustomer().getId(),user.getCustomer().getName(),user.getCustomer().getPhonenumber(),user.getCustomer().getAddress(), user.getCustomer().getAvatar());
   }
 
 }

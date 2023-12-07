@@ -23,6 +23,9 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Integer>
     @Query("UPDATE CartDetail cd SET cd.quantity=?3 WHERE cd.cart.id=?1 AND cd.product.productId=?2")
     void updateCartInfor(int cartId, int productId, int quantity);
 
+    @Query("SELECT COALESCE(SUM(cd.quantity), 0) FROM CartDetail cd WHERE cd.cart.id = ?1")
+    int getTotalProductsInCart(int cartId);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productId=?2")

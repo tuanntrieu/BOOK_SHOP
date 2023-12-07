@@ -39,4 +39,10 @@ public class CartController {
     public ResponseEntity<?>deleteProductFromCart(@PathVariable int customerId,@PathVariable int productId){
         return VsResponseUtil.success(cartDetailService.deleteProductFromCart(customerId,productId));
     }
+
+    @Operation(summary = "API get total products from cart")
+    @GetMapping(UrlConstant.Cart.GET_CART_TOTAL)
+    public ResponseEntity<?> getCartTotal(@PathVariable int customerId){
+        return VsResponseUtil.success(cartDetailService.getCartTotal(customerId));
+    }
 }

@@ -80,6 +80,7 @@ public class UrlConstant {
         public static final String GET_CART_INFOR = PRE_FIX + "/get-cart-infor/{customerId}";
         public static final String UPDATE_CART_INFOR = PRE_FIX + "/update-cart-infor/{customerId}";
         public static final String DELETE_PRODUCT_FROM_CART = PRE_FIX + "/delete-product-from-cart/{customerId}/{productId}";
+        public static final String GET_CART_TOTAL = PRE_FIX + "/total-product/{customerId}";
 
         private Cart() {
         }

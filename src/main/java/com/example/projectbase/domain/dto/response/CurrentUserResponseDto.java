@@ -1,6 +1,5 @@
 package com.example.projectbase.domain.dto.response;
 
-import com.example.projectbase.constant.ErrorMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,9 @@ public class CurrentUserResponseDto {
 
     private String name;
 
-     private String phonenumber;
+    private String phonenumber;
 
     private String address;
+
+    private String avatar;
 }
