@@ -18,6 +18,8 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+    Optional<Product> findByProductId(int productId);
+
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p")
     Page<GetProductsResponseDto> getProducts(Pageable pageable);
 
@@ -36,8 +38,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Product p SET p.quantity=?2 WHERE p.productId=?1 ")
-    void updateQuantity(int productId,int quantity);
+    void updateQuantity(int productId, int quantity);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% " )
-    List<ProductFromCartResponseDto>getProductSameAuthor(int productId,String author);
+    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.image,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% ")
+    List<ProductFromCartResponseDto> getProductSameAuthor(int productId, String author);
 }

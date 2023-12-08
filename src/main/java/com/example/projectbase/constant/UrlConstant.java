@@ -40,6 +40,11 @@ public class UrlConstant {
         public static final String PLACE_ORDER = PRE_FIX + "/{customerId}" + "/bill";
         public static final String BUY = PRE_FIX + "/{customerId}" + "/bill" + "/{billId}";
 
+        public static final String GET_FAVORITE_PRODUCTS = PRE_FIX + "/{customerId}/favorite-products";
+        public static final String CHECK_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
+        public static final String ADD_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
+        public static final String REMOVE_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
+
         private Customer() {
         }
     }

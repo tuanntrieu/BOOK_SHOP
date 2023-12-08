@@ -1,6 +1,6 @@
 package com.example.projectbase.repository;
 
-import com.example.projectbase.domain.dto.CustomerDto;
+import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,13 +13,12 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Transactional
     @Modifying
     @Query("UPDATE Customer c SET c.name=?2, c.phonenumber=?3, c.address=?4, c.lastModifiedDate=CURRENT_TIMESTAMP, c.avatar=?5 WHERE c.id=?1")
-    void  updateCustomer(int id,String name,String phoneNumber,String address,String avatar );
-
+    void updateCustomer(int id, String name, String phoneNumber, String address, String avatar);
 
     @Query("SELECT c FROM Customer c")
     Page<Customer> getCustomers(Pageable pageable);
@@ -27,4 +26,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     @Query("SELECT c FROM Customer c WHERE c.user.id=?1 ")
     Optional<Customer> getCustomerByUserId(String userId);
 
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId, p.name, p.image, p.price, p.discount, p.quantity) FROM Customer c JOIN c.favoriteProducts p WHERE c.id = ?1")
+    Page<GetProductsResponseDto> getFavoriteProducts(int customerId, Pageable pageable);
 }

@@ -58,4 +58,8 @@ public class Product extends DateAuditing {
     @OneToMany(mappedBy = "product",cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<CartDetail> cartDetails;
+
+    @ManyToMany(mappedBy = "favoriteProducts", cascade = CascadeType.MERGE)
+    @JsonIgnore
+    private List<Customer> favoriteByCustomers;
 }

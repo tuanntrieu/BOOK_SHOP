@@ -10,10 +10,11 @@ import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Customer;
-import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.domain.entity.Product;
 import com.example.projectbase.domain.mapper.CustomerMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.CustomerRepository;
+import com.example.projectbase.repository.ProductRepository;
 import com.example.projectbase.service.CustomerService;
 import com.example.projectbase.util.PaginationUtil;
 import com.example.projectbase.util.UploadFileUtil;
@@ -22,7 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final UploadFileUtil uploadFileUtil;
+    private final ProductRepository productRepository;
 
     @Override
     public Customer createCustomer(CustomerDto customerDto) {
@@ -47,8 +48,8 @@ public class CustomerServiceImpl implements CustomerService {
             throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(id)});
         }
 
-        customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress(),uploadFileUtil.uploadFile(customerDto.getAvatar()));
-        return new CommonResponseDto(true,SuccessMessage.UPDATE);
+        customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress(), uploadFileUtil.uploadFile(customerDto.getAvatar()));
+        return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
 
     @Override
@@ -67,26 +68,70 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CommonResponseDto deleteCustomer(int customerId) {
-        Customer customer=customerRepository.findById(customerId)
-                .orElseThrow(()->new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
         customerRepository.delete(customer);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
 
     @Override
     public Customer getCustomerByUser(String userId) {
-        Optional<Customer> customer=customerRepository.getCustomerByUserId(userId);
-        if(customer.isEmpty()){
-            throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{userId});
+        Optional<Customer> customer = customerRepository.getCustomerByUserId(userId);
+        if (customer.isEmpty()) {
+            throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{userId});
         }
         return customer.get();
     }
 
     @Override
     public Customer getById(int customerId) {
-        Customer customer=customerRepository.findById(customerId)
-                .orElseThrow(()->new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID,new String[]{String.valueOf(customerId)}));
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
 
         return customer;
+    }
+
+    @Override
+    public PaginationResponseDto<GetProductsResponseDto> getFavoriteProducts(int customerId, PaginationFullRequestDto request) {
+        Pageable pageable = PaginationUtil.buildPageable(request);
+        Page<GetProductsResponseDto> page = customerRepository.getFavoriteProducts(customerId, pageable);
+
+        PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), request.getSortBy(), request.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
+    }
+
+    @Override
+    public boolean checkFavoriteProduct(int customerId, int productId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+        return customer.getFavoriteProducts().contains(product);
+    }
+
+    @Override
+    public CommonResponseDto addFavoriteProduct(int customerId, int productId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+        customer.getFavoriteProducts().add(product);
+        customerRepository.save(customer);
+        return new CommonResponseDto(SuccessMessage.UPDATE);
+    }
+
+    @Override
+    public CommonResponseDto removeFavoriteProduct(int customerId, int productId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+        customer.getFavoriteProducts().remove(product);
+        customerRepository.save(customer);
+        return new CommonResponseDto(SuccessMessage.DELETE);
     }
 }

@@ -47,5 +47,11 @@ public class Customer extends DateAuditing {
     @JsonIgnore
     private List<Bill> bill = new ArrayList<>();
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "customer_favorite_products",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> favoriteProducts = new ArrayList<>();
 }
