@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.isEmpty()) {
             throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(id)});
         }
-
+        uploadFileUtil.destroyFileWithUrl(customer.get().getAvatar());
         customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress(), uploadFileUtil.uploadFile(customerDto.getAvatar()));
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }

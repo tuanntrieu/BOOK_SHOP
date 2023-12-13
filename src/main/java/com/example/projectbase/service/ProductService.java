@@ -8,6 +8,7 @@ import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,4 +32,8 @@ public interface ProductService {
     CommonResponseDto deleteProduct(int productId);
 
     List<ProductFromCartResponseDto> getProductsSameAuthor(int productId);
+
+    CommonResponseDto addImages(int productId,List<MultipartFile> files);
+
+    CommonResponseDto deleteImage(int productId, int imageId);
 }

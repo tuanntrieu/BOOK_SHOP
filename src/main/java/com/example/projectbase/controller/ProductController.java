@@ -14,9 +14,11 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestApiV1
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create product")
     @PostMapping(value=UrlConstant.Product.CREATE_PRODUCT,consumes = "multipart/form-data")
-    public ResponseEntity<?> createProduct(@Valid @ModelAttribute ProductDto productDto){
+    public ResponseEntity<?> createProduct(@Valid @ModelAttribute ProductDto productDto,@RequestParam MultipartFile featredImage,@RequestParam List<MultipartFile> files){
         return VsResponseUtil.success(productService.createProduct(productDto));
     }
 
@@ -74,9 +76,26 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable int productId){
         return VsResponseUtil.success(productService.deleteProduct(productId));
     }
+
+
     @Operation(summary = "API get products same author")
     @GetMapping(UrlConstant.Product.GET_PRODUCTS_SAME_AUTHOR)
     public ResponseEntity<?> getProductSameAuthor(@PathVariable int productId){
         return VsResponseUtil.success(productService.getProductsSameAuthor(productId));
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API add images")
+    @PatchMapping(value=UrlConstant.Product.ADD_IMAGE_FOR_PRODUCT,consumes = "multipart/form-data")
+    public ResponseEntity<?>addImage(@PathVariable int productId,@RequestParam List<MultipartFile> files){
+        return VsResponseUtil.success(productService.addImages(productId,files));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API delete images")
+    @DeleteMapping(UrlConstant.Product.DELETE_PRODUCT_IMAGE)
+    public ResponseEntity<?>deleteImage(@PathVariable int productId,@PathVariable int imageId){
+        return VsResponseUtil.success(productService.deleteImage(productId,imageId));
+    }
+
 }

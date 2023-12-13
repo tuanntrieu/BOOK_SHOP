@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface CartDetailRepository extends JpaRepository<CartDetail, Integer> {
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productId,cd.product.name,cd.product.image,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 ORDER BY cd.createdDate DESC")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productId,cd.product.name,cd.product.featuredImage,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 ORDER BY cd.createdDate DESC")
     List<ProductFromCartResponseDto> getCartInfor(int cartId);
 
     @Transactional
@@ -31,6 +31,6 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Integer>
     @Query("DELETE FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productId=?2")
     void deleteCartDetail(int cartId, int productId);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productId,cd.product.name,cd.product.image,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productId=?2")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(cd.product.productId,cd.product.name,cd.product.featuredImage,cd.product.price,cd.product.discount,cd.quantity) FROM CartDetail cd WHERE cd.cart.id=?1 AND cd.product.productId=?2")
     Optional<ProductFromCartResponseDto> getProductFromCart(int cartId, int productId);
 }

@@ -11,6 +11,6 @@ import org.mapstruct.Mapping;
 public interface ProductMapper {
 
 
-    @Mapping(target = "image", ignore = true)
+  //  @Mapping(target = "image", ignore = true)
     Product toProduct(ProductDto productDto);
 }

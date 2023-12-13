@@ -27,7 +27,6 @@ public class ProductDto {
     @Length(max = 100000)
     private String description;
 
-
     private MultipartFile image;
 
     @Max(value = 100)

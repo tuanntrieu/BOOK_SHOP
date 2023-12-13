@@ -30,6 +30,7 @@ public class BannerServiceImpl implements BannerService {
     public CommonResponseDto updateBanner(int bannerId, BannerDto bannerDto) {
         Banner banner = bannerRepository.findById(bannerId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerId)}));
+        uploadFileUtil.destroyFileWithUrl(banner.getImage());
         bannerRepository.updateBanner(banner.getId(), uploadFileUtil.uploadFile(bannerDto.getMultipartFile()));
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }

@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
@@ -25,12 +26,10 @@ public class Product extends DateAuditing {
     private  String name;
 
     @Column(nullable = false)
-    private String image;
+    private String featuredImage;
 
     private String author;
 
-    @Column(nullable = false)
-    private int quantity;
 
     @Column(nullable = false)
     private int price;
@@ -42,13 +41,17 @@ public class Product extends DateAuditing {
 
     private String size;
 
+    private int quantity;
+
     @Column(columnDefinition = "INTEGER DEFAULT 0")
     private int selled;
 
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    private List<ProductImage> images;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     @JsonIgnore
-    List<BillDetail> billDetail;
+    private List<BillDetail> billDetail;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)

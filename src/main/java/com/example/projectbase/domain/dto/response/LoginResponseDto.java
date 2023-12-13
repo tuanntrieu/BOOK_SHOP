@@ -23,17 +23,15 @@ public class LoginResponseDto {
 
   private String username;
 
-  private int customerId;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public LoginResponseDto(String accessToken, String refreshToken, String id, String username,int customerId,Collection<? extends GrantedAuthority> authorities) {
+  public LoginResponseDto(String accessToken, String refreshToken, String id, String username,Collection<? extends GrantedAuthority> authorities) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     this.id = id;
     this.authorities = authorities;
     this.username=username;
-    this.customerId=customerId;
   }
 
 }
