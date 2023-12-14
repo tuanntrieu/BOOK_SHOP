@@ -38,4 +38,6 @@ public interface ProductService {
     CommonResponseDto addImages(int productId,List<MultipartFile> files);
 
     CommonResponseDto deleteImage(int productId, int imageId);
+
+    CommonResponseDto uploadFeaturedImage(int productId,MultipartFile multipartFile);
 }

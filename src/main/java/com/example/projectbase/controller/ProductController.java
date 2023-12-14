@@ -77,7 +77,7 @@ public class ProductController {
         return VsResponseUtil.success(productService.updateProduct(productId,productDto));
     }
 
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API delete product")
     @DeleteMapping(UrlConstant.Product.DELETE_PRODUCT)
     public ResponseEntity<?> deleteProduct(@PathVariable int productId){
@@ -96,6 +96,13 @@ public class ProductController {
     @PatchMapping(value=UrlConstant.Product.ADD_IMAGE_FOR_PRODUCT,consumes = "multipart/form-data")
     public ResponseEntity<?>addImage(@PathVariable int productId,@RequestParam List<MultipartFile> files){
         return VsResponseUtil.success(productService.addImages(productId,files));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API upload featured image")
+    @PatchMapping(value=UrlConstant.Product.UPLOAD_FEATURED_IMAGE,consumes = "multipart/form-data")
+    public ResponseEntity<?>uploadFeaturedImage(@PathVariable int productId,@RequestParam MultipartFile file){
+        return VsResponseUtil.success(productService.uploadFeaturedImage(productId,file));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

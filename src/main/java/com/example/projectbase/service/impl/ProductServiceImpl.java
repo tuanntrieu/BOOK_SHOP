@@ -128,8 +128,6 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productMapper.toProduct(productDto);
 
-        product.setFeaturedImage(uploadFileUtil.uploadFile(productDto.getImage()));
-
         return productRepository.save(product);
     }
 
@@ -138,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
         ;
-        productRepository.updateProduct(productId, productDto.getName(), uploadFileUtil.uploadFile(productDto.getImage()), productDto.getAuthor(), productDto.getQuantity(), productDto.getPrice(), productDto.getDescription(), productDto.getDiscount(), productDto.getSize());
+        productRepository.updateProduct(productId, productDto.getName(), productDto.getAuthor(), productDto.getQuantity(), productDto.getPrice(), productDto.getDescription(), productDto.getDiscount(), productDto.getSize());
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
 
@@ -183,6 +181,17 @@ public class ProductServiceImpl implements ProductService {
         ;
         productImageRepository.deleteProductImage(productId,imageId);
         return new CommonResponseDto(true,SuccessMessage.DELETE);
+    }
+
+    @Override
+    public CommonResponseDto uploadFeaturedImage(int productId, MultipartFile multipartFile) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+        ;
+        product.setFeaturedImage(uploadFileUtil.uploadFile(multipartFile));
+        productRepository.save(product);
+        return new CommonResponseDto(true,SuccessMessage.UPDATE);
+
     }
 
 
