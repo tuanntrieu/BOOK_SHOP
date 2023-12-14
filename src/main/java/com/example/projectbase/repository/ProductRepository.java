@@ -23,6 +23,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p")
     Page<GetProductsResponseDto> getProducts(Pageable pageable);
 
+    @Query("SELECT p FROM Product p")
+    Page<Product> getAllForAdmin(Pageable pageable);
+
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.category.id=?1")
     Page<GetProductsResponseDto> getProductsByCategoryId(int categoryId, Pageable pageable);
 
@@ -30,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<GetProductsResponseDto> findProduct(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("UPDATE Product p SET p.name=?2,p.featuredImage=?3,p.author=?4,p.quantity=?5,p.price=?6,p.description=?7,p.discount=?8 ,p.size=?9 WHERE p.productId=?1 ")
-    void updateProduct(int productId, String name, String image, String author, int quantity, float price, String description, float discount, String size);
+    void updateProduct(int productId, String name, String image, String author, int quantity, int price, String description, float discount, String size);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p ORDER BY (p.price-p.discount*p.price/100) ASC")
     Page<GetProductsResponseDto> getProductsSortByTotal(Pageable pageable);

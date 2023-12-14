@@ -17,6 +17,8 @@ public interface ProductService {
 
     PaginationResponseDto<GetProductsResponseDto> getProducts(PaginationFullRequestDto request);
 
+    PaginationResponseDto<Product> getProductsForAdmin(PaginationFullRequestDto request);
+
     PaginationResponseDto<GetProductsResponseDto> getProductsSortByTotal(PaginationRequestDto request);
 
     Product getProductDetail(int productId);

@@ -52,6 +52,8 @@ public class UrlConstant {
     public static class Product {
         private static final String PRE_FIX = "/product";
         public static final String GET_PRODUCTS = PRE_FIX + "/get-products";
+        public static final String GET_PRODUCTS_ADMIN = PRE_FIX + "/get-products-admin";
+
         public static final String GET_PRODUCT_DETAIL = PRE_FIX + "/get-product-detail/{productId}";
         public static final String GET_PRODUCTS_BY_CATEGORY_ID = PRE_FIX + "/get-products-by-categoryId/{categoryId}";
         public static final String GET_PRODUCTS_SORT_BY_TOTAL = PRE_FIX + "/get-products-sort-by-total";

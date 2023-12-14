@@ -31,6 +31,13 @@ public class ProductController {
         return VsResponseUtil.success(productService.getProducts(requestDto));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API get all products for admin")
+    @GetMapping(UrlConstant.Product.GET_PRODUCTS_ADMIN)
+    public ResponseEntity<?> getProductsForAdmin(@Valid @ParameterObject PaginationFullRequestDto requestDto) {
+        return VsResponseUtil.success(productService.getProductsForAdmin(requestDto));
+    }
+
     @Operation(summary = "API get product sort by total")
     @GetMapping(UrlConstant.Product.GET_PRODUCTS_SORT_BY_TOTAL)
     public ResponseEntity<?> getProductSort(@Valid @ParameterObject PaginationRequestDto requestDto){

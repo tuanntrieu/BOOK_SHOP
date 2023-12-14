@@ -42,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
     private final UploadFileUtil uploadFileUtil;
     private final ProductImageRepository productImageRepository;
 
+
     @Override
     public PaginationResponseDto<GetProductsResponseDto> getProducts(PaginationFullRequestDto request) {
         Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.PRODUCT);
@@ -55,6 +56,20 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setMeta(pagingMeta);
         return responseDto;
 
+    }
+
+    @Override
+    public PaginationResponseDto<Product> getProductsForAdmin(PaginationFullRequestDto request) {
+        Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.PRODUCT);
+        Page<Product> page = productRepository.getAllForAdmin(pageable);
+
+
+        PaginationResponseDto<Product> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), request.getSortBy(), request.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
     }
 
     @Override
