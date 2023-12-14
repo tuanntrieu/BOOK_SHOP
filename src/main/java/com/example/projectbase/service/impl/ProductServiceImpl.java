@@ -188,6 +188,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
         ;
+        uploadFileUtil.destroyFileWithUrl(product.getFeaturedImage());
         product.setFeaturedImage(uploadFileUtil.uploadFile(multipartFile));
         productRepository.save(product);
         return new CommonResponseDto(true,SuccessMessage.UPDATE);
