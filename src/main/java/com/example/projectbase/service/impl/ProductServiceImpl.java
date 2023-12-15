@@ -129,6 +129,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getCate_id())}));
 
         Product product = new Product();
+        product.setName(requestDto.getName());
         product.setAuthor(requestDto.getAuthor());
         product.setCategory(category);
         product.setQuantity(requestDto.getQuantity());
@@ -140,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductImage> images=new ArrayList<>();
         for(String url: requestDto.getImages()){
             ProductImage productImage=new ProductImage();
+            productImage.setProduct(product);
             productImage.setUrl(url);
         }
         product.setFeaturedImage(requestDto.getImages().get(0));

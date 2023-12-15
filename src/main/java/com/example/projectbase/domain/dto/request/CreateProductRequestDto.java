@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProductRequestDto {
+    private String name;
     private String author;
     private int cate_id;
     private String description;
