@@ -11,10 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LastModifiedByDto {
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  private String avatar;
+    private String avatar;
 
 }

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +14,7 @@ public class GetProductsResponseDto {
 
     private int productId;
 
-    private  String name;
+    private String name;
 
     private String image;
 
@@ -49,7 +47,7 @@ public class GetProductsResponseDto {
         this.image = image;
         this.price = price;
         this.discount = discount;
-        this.quantity=quantity;
+        this.quantity = quantity;
     }
 
 

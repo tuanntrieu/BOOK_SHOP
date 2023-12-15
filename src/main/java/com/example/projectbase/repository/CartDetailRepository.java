@@ -1,6 +1,5 @@
 package com.example.projectbase.repository;
 
-import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.CartDetail;
 import org.springframework.data.jpa.repository.JpaRepository;

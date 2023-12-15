@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class InsufficientStockException extends RuntimeException{
+public class InsufficientStockException extends RuntimeException {
     private String message;
 
     private HttpStatus status;

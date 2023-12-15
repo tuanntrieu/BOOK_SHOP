@@ -20,13 +20,13 @@ public class BillDetail {
     private int id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "product_id",foreignKey = @ForeignKey(name = "FK_BILL_PRODUCT1"),referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "FK_BILL_PRODUCT1"), referencedColumnName = "product_id")
     private Product product;
 
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIgnore
-    @JoinColumn(name = "bill_id",foreignKey = @ForeignKey(name = "FK_BILL_PRODUCT"),referencedColumnName = "bill_id")
+    @JoinColumn(name = "bill_id", foreignKey = @ForeignKey(name = "FK_BILL_PRODUCT"), referencedColumnName = "bill_id")
     private Bill bill;
 
     @Column(nullable = false)

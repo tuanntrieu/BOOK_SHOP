@@ -13,12 +13,12 @@ import java.util.Map;
 @Getter
 public class DataMailDto {
 
-  private String to;
+    private String to;
 
-  private String subject;
+    private String subject;
 
-  private String content;
+    private String content;
 
-  private Map<String, Object> properties;
+    private Map<String, Object> properties;
 
 }

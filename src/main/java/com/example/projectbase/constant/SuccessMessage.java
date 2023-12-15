@@ -6,16 +6,16 @@ public class SuccessMessage {
     public static final String CHANGE_PASSWORD = "Change password successfully";
 
     public static final String GENERATE_CART = "Generate cart successfully";
-    public static final String ADD_PRODUCT_TO_CART="Add product to cart successfully";
+    public static final String ADD_PRODUCT_TO_CART = "Add product to cart successfully";
 
-    public static final String CREATE="Create successfully";
-    public static final String UPDATE="Update successfully";
-    public static final String DELETE="Delete successfully";
+    public static final String CREATE = "Create successfully";
+    public static final String UPDATE = "Update successfully";
+    public static final String DELETE = "Delete successfully";
 
-    public static final String TO_PAY="Wait for confirmation";
+    public static final String TO_PAY = "Wait for confirmation";
 
-    public static final String ORDER="Order successfully";
+    public static final String ORDER = "Order successfully";
 
-    public static final String CANCEL="Cancel successfully";
+    public static final String CANCEL = "Cancel successfully";
 
 }

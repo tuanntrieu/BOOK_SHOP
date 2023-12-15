@@ -20,10 +20,10 @@ import java.util.List;
 public class Product extends DateAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id",insertable = false, updatable = false, nullable = false)
+    @Column(name = "product_id", insertable = false, updatable = false, nullable = false)
     private int productId;
 
-    private  String name;
+    private String name;
 
     @Column(nullable = false)
     private String featuredImage;
@@ -46,19 +46,19 @@ public class Product extends DateAuditing {
     @Column(columnDefinition = "INTEGER DEFAULT 0")
     private int selled;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> images;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<BillDetail> billDetail;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="cate_id",foreignKey = @ForeignKey(name = "FK_CATEGORY_PRODUCT"),referencedColumnName = "cate_id")
+    @JoinColumn(name = "cate_id", foreignKey = @ForeignKey(name = "FK_CATEGORY_PRODUCT"), referencedColumnName = "cate_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<CartDetail> cartDetails;
 

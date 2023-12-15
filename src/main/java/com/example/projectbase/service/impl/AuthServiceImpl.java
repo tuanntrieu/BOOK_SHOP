@@ -10,7 +10,6 @@ import com.example.projectbase.domain.dto.request.*;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.LoginResponseDto;
 import com.example.projectbase.domain.dto.response.TokenRefreshResponseDto;
-import com.example.projectbase.domain.entity.Customer;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.domain.mapper.UserMapper;
 import com.example.projectbase.exception.DataIntegrityViolationException;
@@ -27,7 +26,10 @@ import com.example.projectbase.service.CustomerService;
 import com.example.projectbase.util.RandomPasswordUtil;
 import com.example.projectbase.util.SendMailUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -137,7 +139,7 @@ public class AuthServiceImpl implements AuthService {
                 User user = userMapper.toUser(newUser);
                 user.setPassword(passwordEncoder.encode(newUser.getPassword()));
                 user.setRole(roleRepository.findByRoleName(RoleConstant.USER));
-                user.setCustomer(customerService.createCustomer(new CustomerDto(newUser.getUsername(), null, null,null)));
+                user.setCustomer(customerService.createCustomer(new CustomerDto(newUser.getUsername(), null, null, null)));
                 cartService.createCartForCustomer(new CartDto(user.getCustomer().getId()));
 
                 DataMailDto mailDto = new DataMailDto();

@@ -13,24 +13,24 @@ import lombok.Setter;
 @Setter
 public class PaginationRequestDto {
 
-  @Parameter(description = "Page you want to retrieve (0..N)")
-  private Integer pageNum = CommonConstant.ZERO_INT_VALUE;
+    @Parameter(description = "Page you want to retrieve (0..N)")
+    private Integer pageNum = CommonConstant.ZERO_INT_VALUE;
 
-  @Parameter(description = "Number of records per page")
-  private Integer pageSize = CommonConstant.ZERO_INT_VALUE;
+    @Parameter(description = "Number of records per page")
+    private Integer pageSize = CommonConstant.ZERO_INT_VALUE;
 
-  public int getPageNum() {
-    if (pageNum < 1) {
-      pageNum = CommonConstant.ONE_INT_VALUE;
+    public int getPageNum() {
+        if (pageNum < 1) {
+            pageNum = CommonConstant.ONE_INT_VALUE;
+        }
+        return pageNum - 1;
     }
-    return pageNum - 1;
-  }
 
-  public int getPageSize() {
-    if (pageSize < 1) {
-      pageSize = CommonConstant.PAGE_SIZE_DEFAULT;
+    public int getPageSize() {
+        if (pageSize < 1) {
+            pageSize = CommonConstant.PAGE_SIZE_DEFAULT;
+        }
+        return pageSize;
     }
-    return pageSize;
-  }
 
 }

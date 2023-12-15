@@ -20,7 +20,7 @@ import java.util.List;
 public class Cart extends DateAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cart_id",updatable = false, nullable = false)
+    @Column(name = "cart_id", updatable = false, nullable = false)
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -28,6 +28,6 @@ public class Cart extends DateAuditing {
     private Customer customer;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
-            @JsonIgnore
+    @JsonIgnore
     List<CartDetail> cartDetails = new ArrayList<>();
 }

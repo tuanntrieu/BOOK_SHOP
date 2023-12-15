@@ -31,5 +31,5 @@ public interface CustomerService {
 
     int countCustomer();
 
-    String  uploadImage(MultipartFile multipartFile);
+    String uploadImage(MultipartFile multipartFile);
 }

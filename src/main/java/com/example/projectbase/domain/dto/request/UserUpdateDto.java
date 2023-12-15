@@ -14,8 +14,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class UserUpdateDto {
 
-  @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
-  private String name;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private String name;
 
 
 }

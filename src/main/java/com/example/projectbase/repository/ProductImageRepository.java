@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 
-public interface ProductImageRepository extends JpaRepository<ProductImage,Integer> {
+public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
 
     @Modifying
     @Transactional
     @Query("DELETE FROM ProductImage pi WHERE pi.product.productId=?1 AND pi.imageId=?2")
-    void deleteProductImage(int productId,int imageId);
+    void deleteProductImage(int productId, int imageId);
 }

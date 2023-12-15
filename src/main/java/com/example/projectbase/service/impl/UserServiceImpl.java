@@ -21,29 +21,29 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
-  @Override
-  public UserDto getUserById(String userId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId}));
-    return userMapper.toUserDto(user);
-  }
+    @Override
+    public UserDto getUserById(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId}));
+        return userMapper.toUserDto(user);
+    }
 
-  @Override
-  public PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request) {
-    //Pagination
-    Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.USER);
-    //Create Output
-    return new PaginationResponseDto<>(null, null);
-  }
+    @Override
+    public PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request) {
+        //Pagination
+        Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.USER);
+        //Create Output
+        return new PaginationResponseDto<>(null, null);
+    }
 
-  @Override
-  public CurrentUserResponseDto getCurrentUser(UserPrincipal principal) {
-    User user = userRepository.getUser(principal);
-    return new CurrentUserResponseDto(user.getId(),user.getUsername(),user.getRole().getName(),user.getEmail(),user.getCustomer().getId(),user.getCustomer().getName(),user.getCustomer().getPhonenumber(),user.getCustomer().getAddress(), user.getCustomer().getAvatar());
-  }
+    @Override
+    public CurrentUserResponseDto getCurrentUser(UserPrincipal principal) {
+        User user = userRepository.getUser(principal);
+        return new CurrentUserResponseDto(user.getId(), user.getUsername(), user.getRole().getName(), user.getEmail(), user.getCustomer().getId(), user.getCustomer().getName(), user.getCustomer().getPhonenumber(), user.getCustomer().getAddress(), user.getCustomer().getAvatar());
+    }
 
 }

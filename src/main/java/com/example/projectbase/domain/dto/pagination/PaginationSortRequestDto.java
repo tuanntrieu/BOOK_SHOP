@@ -14,14 +14,14 @@ import lombok.Setter;
 @Setter
 public class PaginationSortRequestDto extends PaginationRequestDto {
 
-  @Parameter(description = "The name of property want to sort")
-  private String sortBy = CommonConstant.EMPTY_STRING;
+    @Parameter(description = "The name of property want to sort")
+    private String sortBy = CommonConstant.EMPTY_STRING;
 
-  @Parameter(description = "Sorting criteria - Default sort order is descending")
-  private Boolean isAscending = Boolean.FALSE;
+    @Parameter(description = "Sorting criteria - Default sort order is descending")
+    private Boolean isAscending = Boolean.FALSE;
 
-  public String getSortBy(SortByDataConstant constant) {
-    return constant.getSortBy(sortBy);
-  }
+    public String getSortBy(SortByDataConstant constant) {
+        return constant.getSortBy(sortBy);
+    }
 
 }

@@ -10,17 +10,17 @@ import java.util.Objects;
 
 public class FileImageValidator implements ConstraintValidator<ValidFileImage, MultipartFile> {
 
-  @Override
-  public boolean isValid(MultipartFile file, ConstraintValidatorContext constraintValidatorContext) {
-    if (file != null) {
-      String contentType = file.getContentType();
-      return isSupportedContentType(Objects.requireNonNull(contentType));
+    @Override
+    public boolean isValid(MultipartFile file, ConstraintValidatorContext constraintValidatorContext) {
+        if (file != null) {
+            String contentType = file.getContentType();
+            return isSupportedContentType(Objects.requireNonNull(contentType));
+        }
+        return false;
     }
-    return false;
-  }
 
-  private boolean isSupportedContentType(String contentType) {
-    return CommonConstant.CONTENT_TYPE_IMAGE.contains(contentType.substring("image/".length()));
-  }
+    private boolean isSupportedContentType(String contentType) {
+        return CommonConstant.CONTENT_TYPE_IMAGE.contains(contentType.substring("image/".length()));
+    }
 
 }

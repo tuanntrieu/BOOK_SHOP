@@ -21,27 +21,28 @@ public class BannerController {
 
     @Operation(summary = "API get banners")
     @GetMapping(UrlConstant.Banner.GET_BANNERS)
-    public ResponseEntity<?>getBanners(){
+    public ResponseEntity<?> getBanners() {
         return VsResponseUtil.success(bannerService.getBanners());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API update banner")
-    @PutMapping(value=UrlConstant.Banner.UPDATE_BANNER,consumes = "multipart/form-data")
-    public ResponseEntity<?> updateBanner(@PathVariable int bannerId, @Valid @ModelAttribute BannerDto bannerDto){
-        return VsResponseUtil.success(bannerService.updateBanner(bannerId,bannerDto));
+    @PutMapping(value = UrlConstant.Banner.UPDATE_BANNER, consumes = "multipart/form-data")
+    public ResponseEntity<?> updateBanner(@PathVariable int bannerId, @Valid @ModelAttribute BannerDto bannerDto) {
+        return VsResponseUtil.success(bannerService.updateBanner(bannerId, bannerDto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API delete banner")
     @DeleteMapping(UrlConstant.Banner.DELETE_BANNER)
-    public ResponseEntity<?>deleteProductFromCart(@PathVariable int bannerId){
+    public ResponseEntity<?> deleteProductFromCart(@PathVariable int bannerId) {
         return VsResponseUtil.success(bannerService.deleteBanner(bannerId));
     }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create banner")
-    @PostMapping(value=UrlConstant.Banner.CREATE_BANNER,consumes = "multipart/form-data")
-    public ResponseEntity<?> createBanner( @Valid @ModelAttribute BannerDto bannerDto){
+    @PostMapping(value = UrlConstant.Banner.CREATE_BANNER, consumes = "multipart/form-data")
+    public ResponseEntity<?> createBanner(@Valid @ModelAttribute BannerDto bannerDto) {
         return VsResponseUtil.success(bannerService.createBanner(bannerDto));
     }
 

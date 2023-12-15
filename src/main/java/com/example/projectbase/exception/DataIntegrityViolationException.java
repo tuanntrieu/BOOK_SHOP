@@ -2,10 +2,10 @@ package com.example.projectbase.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class DataIntegrityViolationException extends RuntimeException{
-    private String message;
+public class DataIntegrityViolationException extends RuntimeException {
+    private final String message;
 
-    private HttpStatus status;
+    private final HttpStatus status;
 
     private String[] params;
 

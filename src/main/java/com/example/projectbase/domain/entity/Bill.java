@@ -2,7 +2,6 @@ package com.example.projectbase.domain.entity;
 
 
 import com.example.projectbase.domain.entity.common.DateAuditing;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.List;
 public class Bill extends DateAuditing {
 
     @Id
-    @Column(name = "bill_id",insertable = false, updatable = false, nullable = false)
+    @Column(name = "bill_id", insertable = false, updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -32,14 +31,12 @@ public class Bill extends DateAuditing {
 
     private int total;
 
-    @OneToMany(mappedBy = "bill",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     private List<BillDetail> billDetail;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id",foreignKey = @ForeignKey(name = "FK_CUSTOMER_BILL"),referencedColumnName = "customer_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "FK_CUSTOMER_BILL"), referencedColumnName = "customer_id")
     private Customer customer;
-
-
 
 
 }

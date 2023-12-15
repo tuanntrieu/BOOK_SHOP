@@ -16,15 +16,15 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(nullable = false)
-  private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-  @JsonIgnore
-  private Set<User> users = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
 
 }

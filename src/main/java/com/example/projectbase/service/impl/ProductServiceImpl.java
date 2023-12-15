@@ -26,13 +26,11 @@ import com.example.projectbase.util.UploadFileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -90,7 +88,6 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductDetail(int productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         return product;
     }
 
@@ -138,23 +135,23 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(requestDto.getDescription());
         product.setDiscount(requestDto.getDiscount());
 
-        List<ProductImage> images=new ArrayList<>();
-        for(String url: requestDto.getImages()){
-            ProductImage productImage=new ProductImage();
+        List<ProductImage> images = new ArrayList<>();
+        for (String url : requestDto.getImages()) {
+            ProductImage productImage = new ProductImage();
             productImage.setProduct(product);
             productImage.setUrl(url);
+            images.add(productImage);
         }
         product.setFeaturedImage(requestDto.getImages().get(0));
         product.setImages(images);
         productRepository.save(product);
-       return new CommonResponseDto(true,SuccessMessage.CREATE);
+        return new CommonResponseDto(true, SuccessMessage.CREATE);
     }
 
     @Override
     public CommonResponseDto updateProduct(int productId, ProductDto productDto) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         productRepository.updateProduct(productId, productDto.getName(), productDto.getAuthor(), productDto.getQuantity(), productDto.getPrice(), productDto.getDescription(), productDto.getDiscount(), productDto.getSize());
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
@@ -163,7 +160,6 @@ public class ProductServiceImpl implements ProductService {
     public CommonResponseDto deleteProduct(int productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         productRepository.delete(product);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
@@ -172,7 +168,6 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductFromCartResponseDto> getProductsSameAuthor(int productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         return productRepository.getProductSameAuthor(productId, product.getAuthor());
     }
 
@@ -180,7 +175,6 @@ public class ProductServiceImpl implements ProductService {
     public CommonResponseDto addImages(int productId, List<MultipartFile> files) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         List<ProductImage> images = new ArrayList<>();
         for (MultipartFile file : files) {
             ProductImage productImage = new ProductImage();
@@ -190,27 +184,25 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setImages(images);
         productRepository.save(product);
-        return new CommonResponseDto(true,SuccessMessage.UPDATE);
+        return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
 
     @Override
     public CommonResponseDto deleteImage(int productId, int imageId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
-        productImageRepository.deleteProductImage(productId,imageId);
-        return new CommonResponseDto(true,SuccessMessage.DELETE);
+        productImageRepository.deleteProductImage(productId, imageId);
+        return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
 
     @Override
     public CommonResponseDto uploadFeaturedImage(int productId, MultipartFile multipartFile) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-        ;
         uploadFileUtil.destroyFileWithUrl(product.getFeaturedImage());
         product.setFeaturedImage(uploadFileUtil.uploadFile(multipartFile));
         productRepository.save(product);
-        return new CommonResponseDto(true,SuccessMessage.UPDATE);
+        return new CommonResponseDto(true, SuccessMessage.UPDATE);
 
     }
 

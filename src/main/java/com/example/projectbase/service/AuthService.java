@@ -12,18 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface AuthService {
 
-  LoginResponseDto login(LoginRequestDto request);
+    LoginResponseDto login(LoginRequestDto request);
 
-  TokenRefreshResponseDto refresh(TokenRefreshRequestDto request);
+    TokenRefreshResponseDto refresh(TokenRefreshRequestDto request);
 
-  CommonResponseDto logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
+    CommonResponseDto logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
 
-  User register(RegisterRequestDto newUser);
+    User register(RegisterRequestDto newUser);
 
-  CommonResponseDto forgetPassword(ForgetPasswordRequestDto requestDto);
+    CommonResponseDto forgetPassword(ForgetPasswordRequestDto requestDto);
 
-  CommonResponseDto changPassword(ChangePasswordRequestDto requestDto,String username);
-
+    CommonResponseDto changPassword(ChangePasswordRequestDto requestDto, String username);
 
 
 }

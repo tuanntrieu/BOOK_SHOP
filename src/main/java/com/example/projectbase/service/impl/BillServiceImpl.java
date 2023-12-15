@@ -4,17 +4,14 @@ import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.constant.StatusConstant;
 import com.example.projectbase.constant.SuccessMessage;
-import com.example.projectbase.domain.dto.BillDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.request.BuyNowRequestDto;
 import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
-import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.*;
-import com.example.projectbase.domain.mapper.BillMapper;
 import com.example.projectbase.exception.InsufficientStockException;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.*;
@@ -72,10 +69,10 @@ public class BillServiceImpl implements BillService {
             if (product.isEmpty()) {
                 throw new NotFoundException(ErrorMessage.Cart.ERR_NOT_FOUND_PRODUCT, new String[]{String.valueOf(productId)});
             }
-            BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill,product.get().getQuantity());
+            BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill, product.get().getQuantity());
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-            total += (product.get().getPrice() - product.get().getDiscount()*product.get().getPrice()/100);
+            total += (product.get().getPrice() - product.get().getDiscount() * product.get().getPrice() / 100);
             productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
@@ -112,7 +109,7 @@ public class BillServiceImpl implements BillService {
         productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
-        total += (product.getPrice() - product.getDiscount()*product.getPrice()/100);
+        total += (product.getPrice() - product.getDiscount() * product.getPrice() / 100);
 
         bill.setTotal(total);
         billRepository.save(bill);
@@ -120,20 +117,18 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public CommonResponseDto cancelOrder(int customerId,int billId) {
+    public CommonResponseDto cancelOrder(int customerId, int billId) {
 
         Bill bill = billRepository.findById(billId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
-        if(bill.getStatus().equals(StatusConstant.TO_PAY))
-        {
-            billRepository.updateStatus(customerId,billId, StatusConstant.CANCELLED);
-            for(BillDetail bt : bill.getBillDetail()){
-                productRepository.updateQuantity(bt.getProduct().getProductId(),bt.getProduct().getQuantity()+bt.getQuantity());
+        if (bill.getStatus().equals(StatusConstant.TO_PAY)) {
+            billRepository.updateStatus(customerId, billId, StatusConstant.CANCELLED);
+            for (BillDetail bt : bill.getBillDetail()) {
+                productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() + bt.getQuantity());
             }
             return new CommonResponseDto(true, SuccessMessage.CANCEL);
-        }
-        else{
-            return new CommonResponseDto(false,ErrorMessage.Bill.NOT_ALLOW_TO_CANCEL);
+        } else {
+            return new CommonResponseDto(false, ErrorMessage.Bill.NOT_ALLOW_TO_CANCEL);
         }
     }
 
@@ -141,9 +136,9 @@ public class BillServiceImpl implements BillService {
     public CommonResponseDto buyAgain(int customerId, int billId) {
         Bill bill = billRepository.findById(billId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
-        billRepository.updateStatus(customerId,billId, StatusConstant.TO_PAY);
-        for(BillDetail bt : bill.getBillDetail()){
-            productRepository.updateQuantity(bt.getProduct().getProductId(),bt.getProduct().getQuantity()-bt.getQuantity());
+        billRepository.updateStatus(customerId, billId, StatusConstant.TO_PAY);
+        for (BillDetail bt : bill.getBillDetail()) {
+            productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() - bt.getQuantity());
         }
         return new CommonResponseDto(true, SuccessMessage.TO_PAY);
 
@@ -155,7 +150,7 @@ public class BillServiceImpl implements BillService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
         bill.setStatus(StatusConstant.ORDERED);
         billRepository.save(bill);
-        return new CommonResponseDto(true,SuccessMessage.ORDER);
+        return new CommonResponseDto(true, SuccessMessage.ORDER);
     }
 
     @Override

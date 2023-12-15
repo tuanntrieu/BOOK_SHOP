@@ -12,21 +12,21 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RestData<T> {
 
-  private RestStatus status;
+    private RestStatus status;
 
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private T message;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T message;
 
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private T data;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T data;
 
-  public RestData(T data) {
-    this.status = RestStatus.SUCCESS;
-    this.data = data;
-  }
+    public RestData(T data) {
+        this.status = RestStatus.SUCCESS;
+        this.data = data;
+    }
 
-  public static RestData<?> error(Object message) {
-    return new RestData<>(RestStatus.ERROR, message, null);
-  }
+    public static RestData<?> error(Object message) {
+        return new RestData<>(RestStatus.ERROR, message, null);
+    }
 
 }

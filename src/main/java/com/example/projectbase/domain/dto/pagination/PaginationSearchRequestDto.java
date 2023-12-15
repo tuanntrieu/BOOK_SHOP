@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 public class PaginationSearchRequestDto extends PaginationRequestDto {
 
-  @Parameter(description = "Keyword to search")
-  private String keyword = CommonConstant.EMPTY_STRING;
+    @Parameter(description = "Keyword to search")
+    private String keyword = CommonConstant.EMPTY_STRING;
 
-  public String getKeyword() {
-    return keyword.trim();
-  }
+    public String getKeyword() {
+        return keyword.trim();
+    }
 
 }

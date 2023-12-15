@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 public abstract class FlagUserDateAuditingDtoDto extends UserDateAuditingDto {
 
-  private Boolean deleteFlag;
+    private Boolean deleteFlag;
 
-  private Boolean activeFlag;
+    private Boolean activeFlag;
 
 }

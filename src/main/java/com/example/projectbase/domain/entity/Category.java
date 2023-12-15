@@ -19,16 +19,16 @@ import java.util.List;
 public class Category extends DateAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cate_id")
+    @Column(name = "cate_id")
     private int id;
 
-    @Column(name = "cate_name",nullable = false)
+    @Column(name = "cate_name", nullable = false)
     private String name;
 
     @Column(name = "cate_image")
     private String image;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-    private List<Product>products ;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> products;
 }

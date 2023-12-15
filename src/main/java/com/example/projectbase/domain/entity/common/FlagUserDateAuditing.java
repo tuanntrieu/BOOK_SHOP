@@ -14,10 +14,10 @@ import javax.persistence.MappedSuperclass;
 @Getter
 public abstract class FlagUserDateAuditing extends UserDateAuditing {
 
-  @Column(nullable = false)
-  private Boolean deleteFlag = Boolean.FALSE;
+    @Column(nullable = false)
+    private Boolean deleteFlag = Boolean.FALSE;
 
-  @Column(nullable = false)
-  private Boolean activeFlag = Boolean.TRUE;
+    @Column(nullable = false)
+    private Boolean activeFlag = Boolean.TRUE;
 
 }

@@ -24,7 +24,7 @@ public interface ProductService {
 
     Product getProductDetail(int productId);
 
-    PaginationResponseDto<GetProductsResponseDto> getProductsByCategoryId(int categoryId,PaginationFullRequestDto request);
+    PaginationResponseDto<GetProductsResponseDto> getProductsByCategoryId(int categoryId, PaginationFullRequestDto request);
 
     PaginationResponseDto<GetProductsResponseDto> findProduct(PaginationFullRequestDto request);
 
@@ -36,11 +36,11 @@ public interface ProductService {
 
     List<ProductFromCartResponseDto> getProductsSameAuthor(int productId);
 
-    CommonResponseDto addImages(int productId,List<MultipartFile> files);
+    CommonResponseDto addImages(int productId, List<MultipartFile> files);
 
     CommonResponseDto deleteImage(int productId, int imageId);
 
-    CommonResponseDto uploadFeaturedImage(int productId,MultipartFile multipartFile);
+    CommonResponseDto uploadFeaturedImage(int productId, MultipartFile multipartFile);
 
     int getQuantityProducts();
 }

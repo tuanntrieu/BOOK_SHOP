@@ -18,46 +18,48 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SendMailUtil {
 
-  private final JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-  private final TemplateEngine templateEngine;
+    private final TemplateEngine templateEngine;
 
-  /**
-   * Gửi mail với file html
-   * @param mail Thông tin của mail cần gửi
-   * @param template Tên file html trong folder resources/template
-   *                 Example: Index.html
-   */
-  public void sendEmailWithHTML(DataMailDto mail, String template) throws Exception {
-    MimeMessage message = mailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-        StandardCharsets.UTF_8.name());
-    helper.setTo(mail.getTo());
-    helper.setSubject(mail.getSubject());
-    Context context = new Context();
-    context.setVariables(mail.getProperties());
-    String htmlMsg = templateEngine.process(template, context);
-    helper.setText(htmlMsg, true);
-    mailSender.send(message);
-  }
-
-  /**
-   * Gửi mail với tệp đính kèm
-   * @param mail Thông tin của mail cần gửi
-   * @param files File cần gửi
-   */
-  public void sendMailWithAttachment(DataMailDto mail, MultipartFile[] files) throws MessagingException {
-    MimeMessage message = mailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-    helper.setTo(mail.getTo());
-    helper.setSubject(mail.getSubject());
-    helper.setText(mail.getContent());
-    if (files != null && files.length > 0) {
-      for (MultipartFile file : files) {
-        helper.addAttachment(Objects.requireNonNull(file.getOriginalFilename()), file);
-      }
+    /**
+     * Gửi mail với file html
+     *
+     * @param mail     Thông tin của mail cần gửi
+     * @param template Tên file html trong folder resources/template
+     *                 Example: Index.html
+     */
+    public void sendEmailWithHTML(DataMailDto mail, String template) throws Exception {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                StandardCharsets.UTF_8.name());
+        helper.setTo(mail.getTo());
+        helper.setSubject(mail.getSubject());
+        Context context = new Context();
+        context.setVariables(mail.getProperties());
+        String htmlMsg = templateEngine.process(template, context);
+        helper.setText(htmlMsg, true);
+        mailSender.send(message);
     }
-    mailSender.send(message);
-  }
+
+    /**
+     * Gửi mail với tệp đính kèm
+     *
+     * @param mail  Thông tin của mail cần gửi
+     * @param files File cần gửi
+     */
+    public void sendMailWithAttachment(DataMailDto mail, MultipartFile[] files) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        helper.setTo(mail.getTo());
+        helper.setSubject(mail.getSubject());
+        helper.setText(mail.getContent());
+        if (files != null && files.length > 0) {
+            for (MultipartFile file : files) {
+                helper.addAttachment(Objects.requireNonNull(file.getOriginalFilename()), file);
+            }
+        }
+        mailSender.send(message);
+    }
 
 }

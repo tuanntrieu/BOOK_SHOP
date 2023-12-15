@@ -3,6 +3,6 @@ package com.example.projectbase.constant;
 @FunctionalInterface
 public interface SortByInterface {
 
-  String getSortBy(String sortBy);
+    String getSortBy(String sortBy);
 
 }

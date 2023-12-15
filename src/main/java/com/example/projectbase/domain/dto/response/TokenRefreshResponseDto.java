@@ -10,15 +10,15 @@ import lombok.Setter;
 @Getter
 public class TokenRefreshResponseDto {
 
-  private String tokenType = CommonConstant.BEARER_TOKEN;
+    private String tokenType = CommonConstant.BEARER_TOKEN;
 
-  private String accessToken;
+    private String accessToken;
 
-  private String refreshToken;
+    private String refreshToken;
 
-  public TokenRefreshResponseDto(String accessToken, String refreshToken) {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
-  }
+    public TokenRefreshResponseDto(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 
 }

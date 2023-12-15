@@ -23,59 +23,59 @@ import org.springframework.web.cors.CorsConfiguration;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-    securedEnabled = true,
-    jsr250Enabled = true,
-    prePostEnabled = true
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final CustomUserDetailsServiceImpl customUserDetailsService;
+    private final CustomUserDetailsServiceImpl customUserDetailsService;
 
-  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.cors().configurationSource(request -> corsConfiguration())
-        .and().csrf().disable()
-        .authorizeRequests()
-            .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-            .antMatchers("/api/v1/auth/**").permitAll()
-            //.antMatchers(HttpMethod.GET, "/api/v1/product/**", "/api/v1/category/**").permitAll()
-            .antMatchers("/api/v1/product/get-products","/api/v1/product/get-products-by-categoryId/**", "/api/v1/product/get-product-detail/**","/api/v1/category/get-categories","/api/v1/product/find-product/**","/api/v1/get-products-sort-by-total/**","/api/v1/banner/get-banners/**","/api/v1/customer/get-by-user/**","/api/v1/customer/get-customer/**","/api/v1/product/get-products-same-author/**","/api/v1/bill/get-count-bill/**","/api/v1/customer/get-count-customer/**","/api/v1/bill/get-revenue/**","/api/v1/product/get-quantity/**").permitAll()
-            .anyRequest().authenticated()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().configurationSource(request -> corsConfiguration())
+                .and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
+                //.antMatchers(HttpMethod.GET, "/api/v1/product/**", "/api/v1/category/**").permitAll()
+                .antMatchers("/api/v1/product/get-products", "/api/v1/product/get-products-by-categoryId/**", "/api/v1/product/get-product-detail/**", "/api/v1/category/get-categories", "/api/v1/product/find-product/**", "/api/v1/get-products-sort-by-total/**", "/api/v1/banner/get-banners/**", "/api/v1/customer/get-by-user/**", "/api/v1/customer/get-customer/**", "/api/v1/product/get-products-same-author/**", "/api/v1/bill/get-count-bill/**", "/api/v1/customer/get-count-customer/**", "/api/v1/bill/get-revenue/**", "/api/v1/product/get-quantity/**").permitAll()
+                .anyRequest().authenticated()
 
-        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    http.exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint());
-    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-  }
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 
-  CorsConfiguration corsConfiguration() {
-    CorsConfiguration corsConfiguration = new CorsConfiguration();
-    corsConfiguration.addAllowedOrigin("*");
-    corsConfiguration.addAllowedHeader("*");
-    corsConfiguration.setAllowCredentials(Boolean.FALSE);
-    corsConfiguration.addAllowedMethod(HttpMethod.GET);
-    corsConfiguration.addAllowedMethod(HttpMethod.POST);
-    corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
-    corsConfiguration.addAllowedMethod(HttpMethod.PUT);
-    corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
-    return corsConfiguration;
-  }
+    CorsConfiguration corsConfiguration() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.setAllowCredentials(Boolean.FALSE);
+        corsConfiguration.addAllowedMethod(HttpMethod.GET);
+        corsConfiguration.addAllowedMethod(HttpMethod.POST);
+        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+        corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+        return corsConfiguration;
+    }
 
-  @Bean
-  @Override
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
-  }
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
 }

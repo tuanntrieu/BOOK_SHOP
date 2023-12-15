@@ -16,12 +16,12 @@ import javax.persistence.MappedSuperclass;
 @Getter
 public abstract class UserDateAuditing extends DateAuditing {
 
-  @CreatedBy
-  @Column(updatable = false)
-  private String createdBy;
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
 
-  @LastModifiedBy
-  @Column(nullable = false)
-  private String lastModifiedBy;
+    @LastModifiedBy
+    @Column(nullable = false)
+    private String lastModifiedBy;
 
 }

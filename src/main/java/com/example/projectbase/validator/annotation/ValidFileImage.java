@@ -12,10 +12,10 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = {FileImageValidator.class})
 public @interface ValidFileImage {
 
-  String message() default "invalid.file-image";
+    String message() default "invalid.file-image";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
 }

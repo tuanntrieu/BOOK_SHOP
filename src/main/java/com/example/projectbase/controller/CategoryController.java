@@ -4,7 +4,6 @@ import com.example.projectbase.base.RestApiV1;
 import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.CategoryDto;
-import com.example.projectbase.domain.dto.CustomerDto;
 import com.example.projectbase.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +28,13 @@ public class CategoryController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create category")
     @PostMapping(UrlConstant.Category.CREATE_CATEGORY)
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return VsResponseUtil.success(categoryService.createCategory(categoryDto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API update category")
-    @PutMapping(value=UrlConstant.Category.UPDATE_CATEGORY , consumes = "multipart/form-data")
+    @PutMapping(value = UrlConstant.Category.UPDATE_CATEGORY, consumes = "multipart/form-data")
     public ResponseEntity<?> updateCustomer(@PathVariable int categoryId, @Valid @ModelAttribute CategoryDto categoryDto) {
         return VsResponseUtil.success(categoryService.updateCategory(categoryId, categoryDto));
     }
@@ -43,7 +42,7 @@ public class CategoryController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API delete category")
     @DeleteMapping(UrlConstant.Category.DELETE_CATEGORY)
-    public ResponseEntity<?> deleteCategory(@PathVariable int categoryId){
+    public ResponseEntity<?> deleteCategory(@PathVariable int categoryId) {
         return VsResponseUtil.success(categoryService.deleteCategory(categoryId));
     }
 

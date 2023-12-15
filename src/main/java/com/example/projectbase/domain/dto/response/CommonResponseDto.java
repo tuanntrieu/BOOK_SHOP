@@ -12,12 +12,12 @@ import lombok.Setter;
 @Getter
 public class CommonResponseDto {
 
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Boolean status;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean status;
 
-  private String message;
+    private String message;
 
-  public CommonResponseDto(String message){
-    this.message = message;
-  }
+    public CommonResponseDto(String message) {
+        this.message = message;
+    }
 }

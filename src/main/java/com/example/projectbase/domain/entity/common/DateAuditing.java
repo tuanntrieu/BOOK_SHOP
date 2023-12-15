@@ -17,12 +17,12 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class DateAuditing {
 
-  @CreatedDate
-  @Column(nullable = false, updatable = false)
-  private LocalDateTime createdDate;
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
-  @LastModifiedDate
-  @Column(nullable = false)
-  private LocalDateTime lastModifiedDate;
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime lastModifiedDate;
 
 }

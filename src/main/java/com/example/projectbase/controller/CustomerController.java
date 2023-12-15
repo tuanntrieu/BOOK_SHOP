@@ -80,7 +80,7 @@ public class CustomerController {
 
     @Operation(summary = "API get count customer")
     @GetMapping(UrlConstant.Customer.GET_COUNT_CUSTOMER)
-    public ResponseEntity<?> getCountBill(){
+    public ResponseEntity<?> getCountBill() {
         return VsResponseUtil.success(customerService.countCustomer());
     }
 

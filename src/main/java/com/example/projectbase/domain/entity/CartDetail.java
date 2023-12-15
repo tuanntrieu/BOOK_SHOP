@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,15 +22,15 @@ public class CartDetail extends DateAuditing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cart_detail_id")
+    @Column(name = "cart_detail_id")
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id",foreignKey = @ForeignKey(name = "FK_CART_PRODUCT"),referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "FK_CART_PRODUCT"), referencedColumnName = "product_id")
     private Product product;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="cart_id",foreignKey = @ForeignKey(name="FK_CART_PRODUCT1"),referencedColumnName = "cart_id")
+    @JoinColumn(name = "cart_id", foreignKey = @ForeignKey(name = "FK_CART_PRODUCT1"), referencedColumnName = "cart_id")
     private Cart cart;
 
     private int quantity;

@@ -1,6 +1,5 @@
 package com.example.projectbase.service;
 
-import com.example.projectbase.domain.dto.BillDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.BuyNowRequestDto;
@@ -14,13 +13,13 @@ public interface BillService {
 
     CommonResponseDto buyNow(int customerId, BuyNowRequestDto requestDto);
 
-    CommonResponseDto cancelOrder(int customerId,int billId);
+    CommonResponseDto cancelOrder(int customerId, int billId);
 
-    CommonResponseDto buyAgain(int customerId,int billId);
+    CommonResponseDto buyAgain(int customerId, int billId);
 
     CommonResponseDto comfirmOrder(int billId);
 
-    PaginationResponseDto<Bill> getBills(int customerId,PaginationFullRequestDto request);
+    PaginationResponseDto<Bill> getBills(int customerId, PaginationFullRequestDto request);
 
     Bill getBillInfor(int billId);
 

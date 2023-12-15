@@ -3,7 +3,6 @@ package com.example.projectbase.service;
 import com.example.projectbase.domain.dto.CartDetailDto;
 import com.example.projectbase.domain.dto.response.CartTotalResponseDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
-import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 
 import java.util.List;
@@ -15,9 +14,9 @@ public interface CartDetailService {
 
     CartTotalResponseDto getCartTotal(int customerId);
 
-    CommonResponseDto updateCartInfor(int customerId,CartDetailDto cartDetailDto);
+    CommonResponseDto updateCartInfor(int customerId, CartDetailDto cartDetailDto);
 
-    CommonResponseDto deleteProductFromCart(int customerId,int productId);
+    CommonResponseDto deleteProductFromCart(int customerId, int productId);
 
 
 }

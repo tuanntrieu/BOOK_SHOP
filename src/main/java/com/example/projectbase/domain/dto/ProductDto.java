@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -27,7 +26,7 @@ public class ProductDto {
     @Length(max = 100000)
     private String description;
 
- //  private MultipartFile image;
+    //  private MultipartFile image;
 
     @Max(value = 100)
     @Min(value = 0)

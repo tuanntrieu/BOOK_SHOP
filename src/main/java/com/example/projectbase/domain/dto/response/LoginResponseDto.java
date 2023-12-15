@@ -13,25 +13,25 @@ import java.util.Collection;
 @Getter
 public class LoginResponseDto {
 
-  private String tokenType = CommonConstant.BEARER_TOKEN;
+    private String tokenType = CommonConstant.BEARER_TOKEN;
 
-  private String accessToken;
+    private String accessToken;
 
-  private String refreshToken;
+    private String refreshToken;
 
-  private String id;
+    private String id;
 
-  private String username;
+    private String username;
 
 
-  private Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
 
-  public LoginResponseDto(String accessToken, String refreshToken, String id, String username,Collection<? extends GrantedAuthority> authorities) {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
-    this.id = id;
-    this.authorities = authorities;
-    this.username=username;
-  }
+    public LoginResponseDto(String accessToken, String refreshToken, String id, String username, Collection<? extends GrantedAuthority> authorities) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.id = id;
+        this.authorities = authorities;
+        this.username = username;
+    }
 
 }

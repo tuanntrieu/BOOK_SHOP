@@ -14,17 +14,17 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="product_image")
+@Table(name = "product_image")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id",insertable = false, updatable = false, nullable = false)
+    @Column(name = "image_id", insertable = false, updatable = false, nullable = false)
     private int imageId;
 
     private String url;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIgnore
-    @JoinColumn(name = "product_id",foreignKey = @ForeignKey(name = "FK_IMAGE_PRODUCT"),referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "FK_IMAGE_PRODUCT"), referencedColumnName = "product_id")
     private Product product;
 }

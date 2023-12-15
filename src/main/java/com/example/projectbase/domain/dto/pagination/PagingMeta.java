@@ -11,16 +11,16 @@ import lombok.Setter;
 @Getter
 public class PagingMeta {
 
-  private Long totalElements;
+    private Long totalElements;
 
-  private Integer totalPages;
+    private Integer totalPages;
 
-  private Integer pageNum;
+    private Integer pageNum;
 
-  private Integer pageSize;
+    private Integer pageSize;
 
-  private String sortBy;
+    private String sortBy;
 
-  private String sortType;
+    private String sortType;
 
 }

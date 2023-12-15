@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class TokenRefreshRequestDto {
 
-  @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
-  private String refreshToken;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private String refreshToken;
 
 }

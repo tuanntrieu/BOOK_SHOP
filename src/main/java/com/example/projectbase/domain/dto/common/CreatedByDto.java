@@ -11,12 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreatedByDto {
 
-  private String id;
+    private String id;
 
-  private String firstName;
+    private String firstName;
 
-  private String lastName;
+    private String lastName;
 
-  private String avatar;
+    private String avatar;
 
 }

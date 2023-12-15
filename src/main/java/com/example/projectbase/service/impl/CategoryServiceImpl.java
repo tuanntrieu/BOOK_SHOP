@@ -5,7 +5,6 @@ import com.example.projectbase.constant.SuccessMessage;
 import com.example.projectbase.domain.dto.CategoryDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Category;
-
 import com.example.projectbase.domain.mapper.CategoryMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.CategoryRepository;
@@ -27,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category createCategory(CategoryDto categoryDto) {
 
-        Category category=categoryMapper.toCategory(categoryDto);
+        Category category = categoryMapper.toCategory(categoryDto);
         category.setImage(uploadFileUtil.uploadFile(categoryDto.getMultipartFile()));
         return categoryRepository.save(category);
     }
