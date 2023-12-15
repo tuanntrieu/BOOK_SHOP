@@ -45,4 +45,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% ")
     List<ProductFromCartResponseDto> getProductSameAuthor(int productId, String author);
+
+    @Query("SELECT SUM(p.quantity) FROM Product p")
+    int getQuantityProducts();
 }

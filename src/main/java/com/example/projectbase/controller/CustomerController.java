@@ -76,4 +76,11 @@ public class CustomerController {
     public ResponseEntity<?> removeFavoriteProduct(@PathVariable int customerId, @PathVariable int productId) {
         return VsResponseUtil.success(customerService.removeFavoriteProduct(customerId, productId));
     }
+
+    @Operation(summary = "API get count customer")
+    @GetMapping(UrlConstant.Customer.GET_COUNT_CUSTOMER)
+    public ResponseEntity<?> getCountBill(){
+        return VsResponseUtil.success(customerService.countCustomer());
+    }
+
 }

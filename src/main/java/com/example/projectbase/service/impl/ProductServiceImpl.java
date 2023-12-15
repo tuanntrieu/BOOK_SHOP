@@ -195,5 +195,10 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public int getQuantityProducts() {
+        return productRepository.getQuantityProducts();
+    }
+
 
 }

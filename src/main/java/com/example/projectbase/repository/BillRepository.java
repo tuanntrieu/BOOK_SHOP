@@ -20,4 +20,10 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT b FROM Bill b WHERE b.customer.id=?1")
     Page<Bill> getBills(int customerId, Pageable pageable);
+
+    @Query("SELECT COUNT(b) FROM Bill b WHERE b.status = 'Đặt hàng thành công'")
+    int countBill();
+
+    @Query("SELECT SUM(b.total) FROM Bill b WHERE b.status = 'Đã giao'")
+    long getRevenue();
 }

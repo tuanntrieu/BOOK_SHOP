@@ -44,7 +44,7 @@ public class UrlConstant {
         public static final String CHECK_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
         public static final String ADD_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
         public static final String REMOVE_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
-
+        public static final String GET_COUNT_CUSTOMER = PRE_FIX + "/get-count-customer";
         private Customer() {
         }
     }
@@ -66,6 +66,7 @@ public class UrlConstant {
         public static final String ADD_IMAGE_FOR_PRODUCT = PRE_FIX + "/add-image/{productId}";
         public static final String DELETE_PRODUCT_IMAGE=PRE_FIX+"/delete-image/{productId}/{imageId}";
         public static final String UPLOAD_FEATURED_IMAGE= PRE_FIX + "/upload-featured-image/{productId}";
+        public static final String GET_QUANTITY_PRODUCTS= PRE_FIX + "/get-quantity";
 
 
 
@@ -129,6 +130,11 @@ public class UrlConstant {
 
         public static final String GET_BILLS = PRE_FIX + "/get-bills/{customerId}";
         public static final String GET_BILL_INFOR = PRE_FIX + "/get-bill-infor/{billId}";
+
+        public static final String GET_COUNT_BILL = PRE_FIX + "/get-count-bill";
+        public static final String GET_REVENUE = PRE_FIX + "/get-revenue";
+
+
     }
 
 }

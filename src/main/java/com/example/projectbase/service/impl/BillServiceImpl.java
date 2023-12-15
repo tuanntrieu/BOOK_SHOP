@@ -180,5 +180,15 @@ public class BillServiceImpl implements BillService {
         return bill;
     }
 
+    @Override
+    public int countBill() {
+        return billRepository.countBill();
+    }
+
+    @Override
+    public long getRevenue() {
+        return billRepository.getRevenue();
+    }
+
 
 }

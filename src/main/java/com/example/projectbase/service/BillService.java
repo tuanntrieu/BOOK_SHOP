@@ -23,4 +23,8 @@ public interface BillService {
     PaginationResponseDto<Bill> getBills(int customerId,PaginationFullRequestDto request);
 
     Bill getBillInfor(int billId);
+
+    int countBill();
+
+    long getRevenue();
 }

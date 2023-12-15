@@ -27,4 +27,6 @@ public interface CustomerService {
     CommonResponseDto addFavoriteProduct(int customerId, int productId);
 
     CommonResponseDto removeFavoriteProduct(int customerId, int productId);
+
+    int countCustomer();
 }

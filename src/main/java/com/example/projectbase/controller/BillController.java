@@ -72,4 +72,17 @@ public class BillController {
         return VsResponseUtil.success(billService.comfirmOrder(billId));
     }
 
+    @Operation(summary = "API get count bill")
+    @GetMapping(UrlConstant.Bill.GET_COUNT_BILL)
+    public ResponseEntity<?> getCountBill(){
+        return VsResponseUtil.success(billService.countBill());
+    }
+
+    @Operation(summary = "API get revenue")
+    @GetMapping(UrlConstant.Bill.GET_REVENUE)
+    public ResponseEntity<?> getRevenue(){
+        return VsResponseUtil.success(billService.getRevenue());
+    }
+
+
 }

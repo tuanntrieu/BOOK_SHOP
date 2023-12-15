@@ -112,4 +112,10 @@ public class ProductController {
         return VsResponseUtil.success(productService.deleteImage(productId,imageId));
     }
 
+    @Operation(summary = "API get quantity products")
+    @GetMapping(UrlConstant.Product.GET_QUANTITY_PRODUCTS)
+    public ResponseEntity<?> getRevenue(){
+        return VsResponseUtil.success(productService.getQuantityProducts());
+    }
+
 }

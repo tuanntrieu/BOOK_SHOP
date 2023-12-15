@@ -134,4 +134,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer);
         return new CommonResponseDto(SuccessMessage.DELETE);
     }
+
+    @Override
+    public int countCustomer() {
+        return customerRepository.countCustomer();
+    }
 }

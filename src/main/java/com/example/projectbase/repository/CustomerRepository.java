@@ -28,4 +28,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId, p.name, p.featuredImage, p.price, p.discount, p.quantity) FROM Customer c JOIN c.favoriteProducts p WHERE c.id = ?1")
     Page<GetProductsResponseDto> getFavoriteProducts(int customerId, Pageable pageable);
+
+    @Query("SELECT COUNT(c) FROM Customer c")
+    int countCustomer();
 }
