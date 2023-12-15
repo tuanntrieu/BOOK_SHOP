@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -138,5 +139,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public int countCustomer() {
         return customerRepository.countCustomer();
+    }
+
+    @Override
+    public String uploadImage(MultipartFile multipartFile) {
+        return uploadFileUtil.uploadFile(multipartFile);
     }
 }

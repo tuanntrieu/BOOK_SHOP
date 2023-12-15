@@ -45,6 +45,7 @@ public class UrlConstant {
         public static final String ADD_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
         public static final String REMOVE_FAVORITE_PRODUCT = PRE_FIX + "/{customerId}/favorite-products/{productId}";
         public static final String GET_COUNT_CUSTOMER = PRE_FIX + "/get-count-customer";
+        public static final String UPLOAD_IMAGE = PRE_FIX + "/upload-image";
         private Customer() {
         }
     }

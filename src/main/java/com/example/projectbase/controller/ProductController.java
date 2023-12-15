@@ -6,6 +6,7 @@ import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.ProductDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
+import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
 import com.example.projectbase.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -65,9 +66,9 @@ public class ProductController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create product")
-    @PostMapping(value=UrlConstant.Product.CREATE_PRODUCT,consumes = "multipart/form-data")
-    public ResponseEntity<?> createProduct(@Valid @ModelAttribute ProductDto productDto,@RequestParam MultipartFile featredImage,@RequestParam List<MultipartFile> files){
-        return VsResponseUtil.success(productService.createProduct(productDto));
+    @PostMapping(value=UrlConstant.Product.CREATE_PRODUCT)
+    public ResponseEntity<?> createProduct(@Valid @RequestBody CreateProductRequestDto requestDto){
+        return VsResponseUtil.success(productService.createProduct(requestDto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

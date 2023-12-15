@@ -4,6 +4,7 @@ import com.example.projectbase.domain.dto.ProductDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
@@ -27,7 +28,7 @@ public interface ProductService {
 
     PaginationResponseDto<GetProductsResponseDto> findProduct(PaginationFullRequestDto request);
 
-    Product createProduct(ProductDto productDto);
+    CommonResponseDto createProduct(CreateProductRequestDto requestDto);
 
     CommonResponseDto updateProduct(int productId, ProductDto productDto);
 

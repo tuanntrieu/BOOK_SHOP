@@ -8,6 +8,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
+import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
@@ -25,6 +26,7 @@ import com.example.projectbase.util.UploadFileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -122,13 +124,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product createProduct(ProductDto productDto) {
-        Category category = categoryRepository.findById(productDto.getCate_id())
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productDto.getCate_id())}));
+    public CommonResponseDto createProduct(CreateProductRequestDto requestDto) {
+        Category category = categoryRepository.findById(requestDto.getCate_id())
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getCate_id())}));
 
-        Product product = productMapper.toProduct(productDto);
+        Product product = new Product();
+        product.setAuthor(requestDto.getAuthor());
+        product.setCategory(category);
+        product.setQuantity(requestDto.getQuantity());
+        product.setPrice(requestDto.getPrice());
+        product.setSize(requestDto.getSize());
+        product.setDescription(requestDto.getDescription());
+        product.setDiscount(requestDto.getDiscount());
 
-        return productRepository.save(product);
+        List<ProductImage> images=new ArrayList<>();
+        for(String url: requestDto.getImages()){
+            ProductImage productImage=new ProductImage();
+            productImage.setUrl(url);
+        }
+        product.setFeaturedImage(requestDto.getImages().get(0));
+        product.setImages(images);
+        productRepository.save(product);
+       return new CommonResponseDto(true,SuccessMessage.CREATE);
     }
 
     @Override

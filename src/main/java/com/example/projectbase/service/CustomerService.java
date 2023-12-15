@@ -6,6 +6,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Customer;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface CustomerService {
     Customer createCustomer(CustomerDto customerDto);
@@ -29,4 +30,6 @@ public interface CustomerService {
     CommonResponseDto removeFavoriteProduct(int customerId, int productId);
 
     int countCustomer();
+
+    String  uploadImage(MultipartFile multipartFile);
 }

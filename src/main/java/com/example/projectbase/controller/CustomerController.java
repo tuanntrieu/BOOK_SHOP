@@ -12,6 +12,7 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -81,6 +82,13 @@ public class CustomerController {
     @GetMapping(UrlConstant.Customer.GET_COUNT_CUSTOMER)
     public ResponseEntity<?> getCountBill(){
         return VsResponseUtil.success(customerService.countCustomer());
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @Operation(summary = "API upload image")
+    @PostMapping(value = UrlConstant.Customer.UPLOAD_IMAGE, consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadImage(@RequestParam MultipartFile file) {
+        return VsResponseUtil.success(customerService.uploadImage(file));
     }
 
 }
