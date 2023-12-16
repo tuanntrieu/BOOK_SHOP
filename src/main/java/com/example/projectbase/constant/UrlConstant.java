@@ -132,6 +132,8 @@ public class UrlConstant {
 
         public static final String GET_COUNT_BILL = PRE_FIX + "/get-count-bill";
         public static final String GET_REVENUE = PRE_FIX + "/get-revenue";
+        public static final String GET_COUNT_BILL_TO_PAY = PRE_FIX + "/get-count-bill-to-pay";
+        public static final String GET_BILLS_TO_PAY = PRE_FIX + "/get-bills-to-pay";
 
 
     }

@@ -71,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CommonResponseDto deleteCustomer(int customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(customerId)}));
+        uploadFileUtil.destroyFileWithUrl(customer.getAvatar());
         customerRepository.delete(customer);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }

@@ -111,6 +111,7 @@ public class ProductController {
         return VsResponseUtil.success(productService.deleteImage(productId, imageId));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get quantity products")
     @GetMapping(UrlConstant.Product.GET_QUANTITY_PRODUCTS)
     public ResponseEntity<?> getRevenue() {

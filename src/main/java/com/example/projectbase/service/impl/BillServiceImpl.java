@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -183,6 +184,16 @@ public class BillServiceImpl implements BillService {
     @Override
     public long getRevenue() {
         return billRepository.getRevenue();
+    }
+
+    @Override
+    public int getCoutBillToPay() {
+        return billRepository.getCountBillToPay();
+    }
+
+    @Override
+    public List<Bill> getBillsToPay() {
+        return billRepository.getBillsToPay();
     }
 
 

@@ -7,6 +7,8 @@ import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Bill;
 
+import java.util.List;
+
 
 public interface BillService {
     CommonResponseDto placeOrderFromCart(int customerId, PlaceOrderRequestDto requestDto);
@@ -26,4 +28,8 @@ public interface BillService {
     int countBill();
 
     long getRevenue();
+
+    int getCoutBillToPay();
+
+    List<Bill> getBillsToPay();
 }

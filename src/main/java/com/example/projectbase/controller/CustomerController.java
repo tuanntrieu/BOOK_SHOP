@@ -78,6 +78,7 @@ public class CustomerController {
         return VsResponseUtil.success(customerService.removeFavoriteProduct(customerId, productId));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get count customer")
     @GetMapping(UrlConstant.Customer.GET_COUNT_CUSTOMER)
     public ResponseEntity<?> getCountBill() {

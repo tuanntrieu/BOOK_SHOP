@@ -32,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE (p.name LIKE %:keyword%) OR (p.category.name LIKE %:keyword%)")
     Page<GetProductsResponseDto> findProduct(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("UPDATE Product p SET p.name=?2,p.author=?3,p.quantity=?4,p.price=?5,p.description=?6,p.discount=?7 ,p.size=?8 WHERE p.productId=?1 ")
+    @Query("UPDATE Product p SET p.name=?2,p.author=?3,p.quantity=?4,p.price=?5,p.description=?6,p.discount=?7 ,p.size=?8,p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
     void updateProduct(int productId, String name, String author, int quantity, int price, String description, float discount, String size);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p ORDER BY (p.price-p.discount*p.price/100) ASC")
@@ -40,7 +40,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Product p SET p.quantity=?2 WHERE p.productId=?1 ")
+    @Query("UPDATE Product p SET p.quantity=?2 , p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
     void updateQuantity(int productId, int quantity);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% ")

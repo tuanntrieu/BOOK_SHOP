@@ -71,16 +71,32 @@ public class BillController {
         return VsResponseUtil.success(billService.comfirmOrder(billId));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get count bill")
     @GetMapping(UrlConstant.Bill.GET_COUNT_BILL)
     public ResponseEntity<?> getCountBill() {
         return VsResponseUtil.success(billService.countBill());
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get revenue")
     @GetMapping(UrlConstant.Bill.GET_REVENUE)
     public ResponseEntity<?> getRevenue() {
         return VsResponseUtil.success(billService.getRevenue());
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @Operation(summary = "API get revenue")
+    @GetMapping(UrlConstant.Bill.GET_COUNT_BILL_TO_PAY)
+    public ResponseEntity<?> getCountBillToPay() {
+        return VsResponseUtil.success(billService.getCoutBillToPay());
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @Operation(summary = "API get revenue")
+    @GetMapping(UrlConstant.Bill.GET_BILLS_TO_PAY)
+    public ResponseEntity<?> getBillsToPay() {
+        return VsResponseUtil.success(billService.getBillsToPay());
     }
 
 

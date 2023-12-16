@@ -191,6 +191,10 @@ public class ProductServiceImpl implements ProductService {
     public CommonResponseDto deleteImage(int productId, int imageId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
+
+        ProductImage productImage=productImageRepository.findById(imageId)
+                        .orElseThrow(()->new NotFoundException(ErrorMessage.ProductImage.ERR_NOT_FOUND_ID,new String[]{String.valueOf(imageId)}));
+        uploadFileUtil.destroyFileWithUrl(productImage.getUrl());
         productImageRepository.deleteProductImage(productId, imageId);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
@@ -210,6 +214,7 @@ public class ProductServiceImpl implements ProductService {
     public int getQuantityProducts() {
         return productRepository.getQuantityProducts();
     }
+
 
 
 }

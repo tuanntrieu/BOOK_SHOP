@@ -9,13 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Bill b SET b.status=?3 WHERE b.id=?2 AND b.customer.id=?1 ")
+    @Query("UPDATE Bill b SET b.status=?3,b.lastModifiedDate=CURRENT_TIMESTAMP WHERE b.id=?2 AND b.customer.id=?1 ")
     void updateStatus(int customerId, int billId, String status);
 
     @Query("SELECT b FROM Bill b WHERE b.customer.id=?1")
@@ -26,4 +27,10 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT SUM(b.total) FROM Bill b WHERE b.status = 'Đã giao'")
     long getRevenue();
+
+    @Query("SELECT COUNT(b) FROM Bill b WHERE b.status='Chờ xử lý'")
+    int getCountBillToPay();
+
+    @Query("SELECT b FROM Bill b WHERE b.status='Chờ xử lý' ORDER BY b.lastModifiedDate DESC")
+    List<Bill> getBillsToPay();
 }
