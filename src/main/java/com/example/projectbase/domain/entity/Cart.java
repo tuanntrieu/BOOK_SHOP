@@ -23,7 +23,7 @@ public class Cart extends DateAuditing {
     @Column(name = "cart_id", updatable = false, nullable = false)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "FK_CUSTOMER_CART"))
     private Customer customer;
 

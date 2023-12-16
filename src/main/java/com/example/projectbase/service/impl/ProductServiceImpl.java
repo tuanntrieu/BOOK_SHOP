@@ -127,10 +127,32 @@ public class ProductServiceImpl implements ProductService {
         Product product;
         if (requestDto.getId() == -1) {
             product = new Product();
+            List<ProductImage> images = new ArrayList<>();
+            for (String url : requestDto.getImages()) {
+                ProductImage productImage = new ProductImage();
+                productImage.setProduct(product);
+                productImage.setUrl(url);
+                images.add(productImage);
+            }
+            product.setFeaturedImage(requestDto.getImages().get(0));
+            product.setImages(images);
         } else {
             product = productRepository.findById(requestDto.getId())
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getId())}));
 
+            List<ProductImage> images = product.getImages();
+            for(ProductImage pi:images){
+                productImageRepository.deleteProductImage(product.getProductId(),pi.getImageId());
+                uploadFileUtil.destroyFileWithUrl(pi.getUrl());
+            }
+            for (String url : requestDto.getImages()) {
+                ProductImage productImage = new ProductImage();
+                productImage.setProduct(product);
+                productImage.setUrl(url);
+                images.add(productImage);
+            }
+            product.setFeaturedImage(requestDto.getImages().get(0));
+            product.setImages(images);
         }
 
 
@@ -143,15 +165,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(requestDto.getDescription());
         product.setDiscount(requestDto.getDiscount());
 
-        List<ProductImage> images = new ArrayList<>();
-        for (String url : requestDto.getImages()) {
-            ProductImage productImage = new ProductImage();
-            productImage.setProduct(product);
-            productImage.setUrl(url);
-            images.add(productImage);
-        }
-        product.setFeaturedImage(requestDto.getImages().get(0));
-        product.setImages(images);
+
         productRepository.save(product);
         return new CommonResponseDto(true, SuccessMessage.CREATE);
     }
