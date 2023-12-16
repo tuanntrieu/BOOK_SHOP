@@ -124,8 +124,16 @@ public class ProductServiceImpl implements ProductService {
     public CommonResponseDto createProduct(CreateProductRequestDto requestDto) {
         Category category = categoryRepository.findById(requestDto.getCate_id())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getCate_id())}));
+        Product product;
+        if (requestDto.getId() == -1) {
+            product = new Product();
+        } else {
+            product = productRepository.findById(requestDto.getId())
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getId())}));
 
-        Product product = new Product();
+        }
+
+
         product.setName(requestDto.getName());
         product.setAuthor(requestDto.getAuthor());
         product.setCategory(category);
@@ -192,8 +200,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
 
-        ProductImage productImage=productImageRepository.findById(imageId)
-                        .orElseThrow(()->new NotFoundException(ErrorMessage.ProductImage.ERR_NOT_FOUND_ID,new String[]{String.valueOf(imageId)}));
+        ProductImage productImage = productImageRepository.findById(imageId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.ProductImage.ERR_NOT_FOUND_ID, new String[]{String.valueOf(imageId)}));
         uploadFileUtil.destroyFileWithUrl(productImage.getUrl());
         productImageRepository.deleteProductImage(productId, imageId);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
@@ -214,7 +222,6 @@ public class ProductServiceImpl implements ProductService {
     public int getQuantityProducts() {
         return productRepository.getQuantityProducts();
     }
-
 
 
 }
