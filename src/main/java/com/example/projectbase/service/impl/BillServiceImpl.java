@@ -10,6 +10,7 @@ import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.request.BuyNowRequestDto;
 import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
+import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
 import com.example.projectbase.domain.entity.*;
 import com.example.projectbase.exception.InsufficientStockException;
@@ -194,6 +195,21 @@ public class BillServiceImpl implements BillService {
     @Override
     public List<Bill> getBillsToPay() {
         return billRepository.getBillsToPay();
+    }
+
+    @Override
+    public PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto) {
+        Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.BILL);
+
+        Page<GetProductsResponseDto> page = billRepository.getAllBill(pageable);
+
+        PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
+
     }
 
 

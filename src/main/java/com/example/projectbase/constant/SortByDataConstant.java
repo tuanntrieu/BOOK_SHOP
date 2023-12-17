@@ -48,7 +48,7 @@ public enum SortByDataConstant implements SortByInterface {
     BILL {
         @Override
         public String getSortBy(String sortBy) {
-            return "createdDate";
+            return "lastModifiedDate";
         }
     }
 

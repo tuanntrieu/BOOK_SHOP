@@ -32,4 +32,6 @@ public interface BillService {
     int getCoutBillToPay();
 
     List<Bill> getBillsToPay();
+
+    PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto);
 }

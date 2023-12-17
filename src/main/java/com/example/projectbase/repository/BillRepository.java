@@ -33,4 +33,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT b FROM Bill b WHERE b.status='Chờ xử lý' ORDER BY b.lastModifiedDate DESC")
     List<Bill> getBillsToPay();
+
+    @Query("SELECT b FROM Bill b ")
+    Page getAllBill(Pageable pageable);
 }
