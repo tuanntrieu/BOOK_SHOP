@@ -243,7 +243,7 @@ public class BillServiceImpl implements BillService {
                 statuss = StatusConstant.ORDERED;
             }
         }
-        Page<GetProductsResponseDto> page = billRepository.getBillsByStatus(pageable, statuss);
+        Page<GetProductsResponseDto> page = billRepository.getBillsByStatus(statuss,pageable);
         PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());
         PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());

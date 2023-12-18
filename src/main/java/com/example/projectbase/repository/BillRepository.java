@@ -37,6 +37,6 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query("SELECT b FROM Bill b ")
     Page getAllBill(Pageable pageable);
 
-    @Query("SELECT b FROM Bill  b WHERE b.status=?2")
-    Page getBillsByStatus(Pageable pageable, String status);
+    @Query("SELECT b FROM Bill  b WHERE b.status=?1")
+    Page getBillsByStatus( String status,Pageable pageable);
 }
