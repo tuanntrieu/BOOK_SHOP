@@ -106,4 +106,11 @@ public class BillController {
         return VsResponseUtil.success(billService.getAllBills(requestDto));
     }
 
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @Operation(summary = "API get bills by status")
+    @GetMapping(UrlConstant.Bill.GET_BILLS_BY_STATUS)
+    public ResponseEntity<?> getAllBills(@ParameterObject PaginationFullRequestDto requestDto,String status) {
+        return VsResponseUtil.success(billService.getBillsByStatus(requestDto,status));
+    }
+
 }
