@@ -7,7 +7,8 @@ import com.example.projectbase.domain.entity.Category;
 import java.util.List;
 
 public interface CategoryService {
-    Category createCategory(CategoryDto categoryDto);
+
+    Category createCategory(int categoryId, CategoryDto categoryDto);
 
     List<Category> getCategories();
 

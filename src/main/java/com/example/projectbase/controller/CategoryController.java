@@ -28,8 +28,8 @@ public class CategoryController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create category")
     @PostMapping(UrlConstant.Category.CREATE_CATEGORY)
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
-        return VsResponseUtil.success(categoryService.createCategory(categoryDto));
+    public ResponseEntity<?> createCategory(@PathVariable int categoryId, @Valid @RequestBody CategoryDto categoryDto) {
+        return VsResponseUtil.success(categoryService.createCategory(categoryId, categoryDto));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

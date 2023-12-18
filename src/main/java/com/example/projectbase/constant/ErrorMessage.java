@@ -65,7 +65,8 @@ public class ErrorMessage {
         public static final String ERR_NOT_FOUND_ID = "exception.bill.not.found.id";
         public static final String NOT_ALLOW_TO_CANCEL = "exception.bill.not.allow.to.cancel";
     }
-    public static class ProductImage{
+
+    public static class ProductImage {
         public static final String ERR_NOT_FOUND_ID = "exception.product.image.not.found.id";
     }
 

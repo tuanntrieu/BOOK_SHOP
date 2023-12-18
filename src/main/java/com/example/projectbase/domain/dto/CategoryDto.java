@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,5 +12,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class CategoryDto {
     private String name;
 
-    private MultipartFile multipartFile;
+    private String image;
 }

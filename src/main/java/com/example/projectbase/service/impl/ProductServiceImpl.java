@@ -141,8 +141,8 @@ public class ProductServiceImpl implements ProductService {
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(requestDto.getId())}));
 
             List<ProductImage> images = product.getImages();
-            for(ProductImage pi:images){
-                productImageRepository.deleteProductImage(product.getProductId(),pi.getImageId());
+            for (ProductImage pi : images) {
+                productImageRepository.deleteProductImage(product.getProductId(), pi.getImageId());
                 uploadFileUtil.destroyFileWithUrl(pi.getUrl());
             }
             for (String url : requestDto.getImages()) {

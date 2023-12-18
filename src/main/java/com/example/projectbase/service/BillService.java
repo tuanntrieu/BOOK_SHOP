@@ -35,5 +35,5 @@ public interface BillService {
 
     PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto);
 
-    PaginationResponseDto getBillsByStatus(PaginationFullRequestDto requestDto,String status);
+    PaginationResponseDto getBillsByStatus(PaginationFullRequestDto requestDto, String status);
 }

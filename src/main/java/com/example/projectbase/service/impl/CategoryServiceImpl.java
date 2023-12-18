@@ -9,7 +9,6 @@ import com.example.projectbase.domain.mapper.CategoryMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.CategoryRepository;
 import com.example.projectbase.service.CategoryService;
-import com.example.projectbase.util.UploadFileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +19,21 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final UploadFileUtil uploadFileUtil;
     private final CategoryMapper categoryMapper;
 
     @Override
-    public Category createCategory(CategoryDto categoryDto) {
-
-        Category category = categoryMapper.toCategory(categoryDto);
-        category.setImage(uploadFileUtil.uploadFile(categoryDto.getMultipartFile()));
+    public Category createCategory(int categoryId, CategoryDto categoryDto) {
+        Category category;
+        if (categoryId == -1) {
+            category = categoryMapper.toCategory(categoryDto);
+        } else {
+            category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(categoryId)}));
+            category.setName(categoryDto.getName());
+            if (!categoryDto.getImage().isEmpty()) {
+                category.setImage(categoryDto.getImage());
+            }
+        }
         return categoryRepository.save(category);
     }
 
@@ -40,8 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CommonResponseDto updateCategory(int categoryId, CategoryDto categoryDto) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(categoryId)}));
-        String image = uploadFileUtil.uploadFile(categoryDto.getMultipartFile());
-        categoryRepository.updateCategory(categoryId, categoryDto.getName(), image);
+        categoryRepository.updateCategory(categoryId, categoryDto.getName(), categoryDto.getImage());
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }
 

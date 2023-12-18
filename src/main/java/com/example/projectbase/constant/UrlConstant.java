@@ -76,8 +76,8 @@ public class UrlConstant {
 
     public static class Category {
         private static final String PRE_FIX = "/category";
-        public static final String CREATE_CATEGORY = PRE_FIX + "/create-category";
-        public static final String UPDATE_CATEGORY = PRE_FIX + "update-category/{categoryId}";
+        public static final String CREATE_CATEGORY = PRE_FIX + "/create-category/{categoryId}";
+        public static final String UPDATE_CATEGORY = PRE_FIX + "/update-category/{categoryId}";
         public static final String DELETE_CATEGORY = PRE_FIX + "/delete-category/{categoryId}";
         public static final String GET_CATEGORIES = PRE_FIX + "/get-categories";
 
@@ -137,7 +137,7 @@ public class UrlConstant {
 
         public static final String GET_BILLS_BY_STATUS = PRE_FIX + "/get-bills-by-status";
 
-        public static final String GET_ALL_BILLS=PRE_FIX+"/get-all-bills";
+        public static final String GET_ALL_BILLS = PRE_FIX + "/get-all-bills";
 
 
     }
