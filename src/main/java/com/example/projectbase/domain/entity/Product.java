@@ -53,7 +53,7 @@ public class Product extends DateAuditing {
     @JsonIgnore
     private List<BillDetail> billDetail;
 
-    @JsonIgnore
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cate_id", foreignKey = @ForeignKey(name = "FK_CATEGORY_PRODUCT"), referencedColumnName = "cate_id")
     private Category category;
