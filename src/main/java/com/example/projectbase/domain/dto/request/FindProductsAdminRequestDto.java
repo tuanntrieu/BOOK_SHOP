@@ -1,10 +1,13 @@
 package com.example.projectbase.domain.dto.request;
 
 import com.example.projectbase.constant.CommonConstant;
+import com.example.projectbase.constant.ErrorMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -12,17 +15,23 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FindProductsAdminRequestDto {
 
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
     private String name;
 
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
     private String categoryName;
 
-    private int startQuantity= CommonConstant.ZERO_INT_VALUE;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private int startQuantity;
 
-    private int endQuantity=CommonConstant.HUNDRED_INT_VALUE;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private int endQuantity;
 
-    private int startSelled=CommonConstant.HUNDRED_INT_VALUE;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private int startSelled;
 
-    private int endSelled=CommonConstant.HUNDRED_INT_VALUE;
+    @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
+    private int endSelled;
 
 
 

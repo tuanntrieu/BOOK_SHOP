@@ -242,7 +242,7 @@ public class ProductServiceImpl implements ProductService {
     public PaginationResponseDto<Product> findProductsAdmin(PaginationFullRequestDto requestDto, FindProductsAdminRequestDto request) {
         Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.PRODUCT);
 
-        Page<Product> page =productRepository.findProductsAdmin(pageable,request.getName(),request.getCategoryName(),request.getStartQuantity(),request.getEndQuantity(),request.getStartSelled(),request.getEndSelled());
+        Page<Product> page =productRepository.findProductsAdmin(request.getName(),request.getCategoryName(),request.getStartQuantity(),request.getEndQuantity(),request.getStartSelled(),request.getEndSelled(),pageable);
         PaginationResponseDto<Product> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());
 
