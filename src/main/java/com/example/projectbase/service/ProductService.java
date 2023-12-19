@@ -5,6 +5,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
+import com.example.projectbase.domain.dto.request.FindProductsAdminRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
@@ -43,4 +44,6 @@ public interface ProductService {
     CommonResponseDto uploadFeaturedImage(int productId, MultipartFile multipartFile);
 
     int getQuantityProducts();
+
+    PaginationResponseDto<Product> findProductsAdmin(PaginationFullRequestDto requestDto,FindProductsAdminRequestDto request);
 }

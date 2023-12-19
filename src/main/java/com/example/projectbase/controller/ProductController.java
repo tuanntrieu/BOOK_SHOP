@@ -7,6 +7,7 @@ import com.example.projectbase.domain.dto.ProductDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
+import com.example.projectbase.domain.dto.request.FindProductsAdminRequestDto;
 import com.example.projectbase.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -116,6 +117,14 @@ public class ProductController {
     @GetMapping(UrlConstant.Product.GET_QUANTITY_PRODUCTS)
     public ResponseEntity<?> getRevenue() {
         return VsResponseUtil.success(productService.getQuantityProducts());
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @Operation(summary = "API find products admin")
+    @GetMapping(UrlConstant.Product.FIND_PRODUCTS_ADMIN)
+    public ResponseEntity<?> findProductsAdmin(@ParameterObject PaginationFullRequestDto requestDto, @RequestBody FindProductsAdminRequestDto request) {
+
+        return VsResponseUtil.success(productService.findProductsAdmin(requestDto, request));
     }
 
 }

@@ -48,4 +48,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT SUM(p.quantity) FROM Product p")
     int getQuantityProducts();
+
+    @Query("SELECT p FROM Product p WHERE (p.name LIKE %?2%) AND(p.category.name=?3) AND (p.quantity IN (?4,?5)) AND (p.selled IN (?6,?7)) ")
+    Page<Product> findProductsAdmin(Pageable pageable,String name,String catrName,int startQuan,int endQuan,int startSell,int endSell);
 }

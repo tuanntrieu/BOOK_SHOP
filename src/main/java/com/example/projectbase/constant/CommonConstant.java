@@ -8,6 +8,8 @@ public class CommonConstant {
 
     public static final Integer ZERO_INT_VALUE = 0;
     public static final Integer ONE_INT_VALUE = 1;
+    public static final Integer HUNDRED_INT_VALUE = 100;
+
     public static final Long ZERO_VALUE = 0L;
     public static final Long ONE_VALUE = 1L;
 

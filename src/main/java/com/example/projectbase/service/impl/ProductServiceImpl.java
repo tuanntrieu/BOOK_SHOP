@@ -9,6 +9,7 @@ import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.request.CreateProductRequestDto;
+import com.example.projectbase.domain.dto.request.FindProductsAdminRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.dto.response.ProductFromCartResponseDto;
@@ -235,6 +236,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int getQuantityProducts() {
         return productRepository.getQuantityProducts();
+    }
+
+    @Override
+    public PaginationResponseDto<Product> findProductsAdmin(PaginationFullRequestDto requestDto, FindProductsAdminRequestDto request) {
+        Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.PRODUCT);
+
+        Page<Product> page =productRepository.findProductsAdmin(pageable,request.getName(),request.getCategoryName(),request.getStartQuantity(),request.getEndQuantity(),request.getStartSelled(),request.getEndSelled());
+        PaginationResponseDto<Product> responseDto = new PaginationResponseDto<>();
+        responseDto.setItems(page.getContent());
+
+        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
     }
 
 
