@@ -44,11 +44,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CommonResponseDto updateCustomer(int id, CustomerDto customerDto) {
-        Optional<Customer> customer = customerRepository.findById((id));
-        if (customer.isEmpty()) {
-            throw new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(id)});
+        Customer customer = customerRepository.findById((id))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Customer.ERR_NOT_FOUND_ID, new String[]{String.valueOf(id)}));
+        if (customer.getAvatar() != null) {
+            uploadFileUtil.destroyFileWithUrl(customer.getAvatar());
         }
-        uploadFileUtil.destroyFileWithUrl(customer.get().getAvatar());
         customerRepository.updateCustomer(id, customerDto.getName(), customerDto.getPhonenumber(), customerDto.getAddress(), customerDto.getAvatar());
         return new CommonResponseDto(true, SuccessMessage.UPDATE);
     }

@@ -40,8 +40,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Product p SET p.quantity=?2 , p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
-    void updateQuantity(int productId, int quantity);
+    @Query("UPDATE Product p SET p.quantity=?2 ,p.selled=?3, p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
+    void updateQuantity(int productId, int quantity,int selled);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% ")
     List<ProductFromCartResponseDto> getProductSameAuthor(int productId, String author);
