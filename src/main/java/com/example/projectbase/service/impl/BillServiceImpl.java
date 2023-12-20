@@ -218,6 +218,7 @@ public class BillServiceImpl implements BillService {
 
         String statuss = "";
 
+        Page<GetProductsResponseDto> page;
         switch (status) {
             case "to_pay": {
                 statuss = StatusConstant.TO_PAY;
@@ -239,11 +240,16 @@ public class BillServiceImpl implements BillService {
                 statuss = StatusConstant.CANCELLED;
                 break;
             }
+
             default: {
                 statuss = StatusConstant.ORDERED;
             }
         }
-        Page<GetProductsResponseDto> page = billRepository.getBillsByStatus(statuss,pageable);
+        if(status.equals("")){
+            page = billRepository.getAllBill(pageable);
+        }else{
+            page = billRepository.getBillsByStatus(statuss,pageable);
+        }
         PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());
         PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());
