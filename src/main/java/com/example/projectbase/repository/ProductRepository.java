@@ -20,22 +20,22 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Optional<Product> findByProductId(int productId);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity,p.category) FROM Product p")
     Page<GetProductsResponseDto> getProducts(Pageable pageable);
 
     @Query("SELECT p FROM Product p")
     Page<Product> getAllForAdmin(Pageable pageable);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.category.id=?1")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity,p.category) FROM Product p WHERE p.category.id=?1")
     Page<GetProductsResponseDto> getProductsByCategoryId(int categoryId, Pageable pageable);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE (p.name LIKE %:keyword%) OR (p.category.name LIKE %:keyword%)")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity,p.category) FROM Product p WHERE (p.name LIKE %:keyword%) OR (p.category.name LIKE %:keyword%)")
     Page<GetProductsResponseDto> findProduct(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("UPDATE Product p SET p.name=?2,p.author=?3,p.quantity=?4,p.price=?5,p.description=?6,p.discount=?7 ,p.size=?8,p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
     void updateProduct(int productId, String name, String author, int quantity, int price, String description, float discount, String size);
 
-    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p ORDER BY (p.price-p.discount*p.price/100) ASC")
+    @Query("SELECT new com.example.projectbase.domain.dto.response.GetProductsResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity,p.category) FROM Product p ORDER BY (p.price-p.discount*p.price/100) ASC")
     Page<GetProductsResponseDto> getProductsSortByTotal(Pageable pageable);
 
     @Transactional
