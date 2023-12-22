@@ -67,7 +67,7 @@ public class UrlConstant {
         public static final String DELETE_PRODUCT_IMAGE = PRE_FIX + "/delete-image/{productId}/{imageId}";
         public static final String UPLOAD_FEATURED_IMAGE = PRE_FIX + "/upload-featured-image/{productId}";
         public static final String GET_QUANTITY_PRODUCTS = PRE_FIX + "/get-quantity";
-        public static final String FIND_PRODUCTS_ADMIN=PRE_FIX+"/find-products-admin";
+        public static final String FIND_PRODUCTS_ADMIN = PRE_FIX + "/find-products-admin";
 
 
         private Product() {

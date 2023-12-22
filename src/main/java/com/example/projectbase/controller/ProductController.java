@@ -50,7 +50,6 @@ public class ProductController {
         return VsResponseUtil.success(productService.getProductDetail(productId));
     }
 
-
     @Operation(summary = "API get products by categoryId")
     @GetMapping(UrlConstant.Product.GET_PRODUCTS_BY_CATEGORY_ID)
     public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId, @ParameterObject @Valid PaginationFullRequestDto requestDto) {
@@ -83,7 +82,6 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable int productId) {
         return VsResponseUtil.success(productService.deleteProduct(productId));
     }
-
 
     @Operation(summary = "API get products same author")
     @GetMapping(UrlConstant.Product.GET_PRODUCTS_SAME_AUTHOR)
@@ -123,7 +121,6 @@ public class ProductController {
     @Operation(summary = "API find products admin")
     @GetMapping(UrlConstant.Product.FIND_PRODUCTS_ADMIN)
     public ResponseEntity<?> findProductsAdmin(@ParameterObject PaginationFullRequestDto requestDto, @RequestBody FindProductsAdminRequestDto request) {
-
         return VsResponseUtil.success(productService.findProductsAdmin(requestDto, request));
     }
 

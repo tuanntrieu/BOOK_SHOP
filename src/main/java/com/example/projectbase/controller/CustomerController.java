@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API update customer")
     @PutMapping(value = UrlConstant.Customer.UPDATE_CUSTOMER)
     public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @Valid @RequestBody CustomerDto customerDto) {

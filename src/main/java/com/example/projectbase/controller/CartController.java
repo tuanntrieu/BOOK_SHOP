@@ -25,20 +25,21 @@ public class CartController {
         return VsResponseUtil.success(cartDetailService.getCartInfor(customerId));
     }
 
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API update cart infor")
     @PutMapping(UrlConstant.Cart.UPDATE_CART_INFOR)
     public ResponseEntity<?> updateCartInfor(@PathVariable int customerId, @Valid @RequestBody CartDetailDto cartDetailDto) {
         return VsResponseUtil.success(cartDetailService.updateCartInfor(customerId, cartDetailDto));
     }
 
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API delete product from cart")
     @DeleteMapping(UrlConstant.Cart.DELETE_PRODUCT_FROM_CART)
     public ResponseEntity<?> deleteProductFromCart(@PathVariable int customerId, @PathVariable int productId) {
         return VsResponseUtil.success(cartDetailService.deleteProductFromCart(customerId, productId));
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API get total products from cart")
     @GetMapping(UrlConstant.Cart.GET_CART_TOTAL)
     public ResponseEntity<?> getCartTotal(@PathVariable int customerId) {

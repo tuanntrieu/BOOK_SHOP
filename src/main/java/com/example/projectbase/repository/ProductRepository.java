@@ -41,7 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Product p SET p.quantity=?2 ,p.selled=?3, p.lastModifiedDate=CURRENT_TIMESTAMP WHERE p.productId=?1 ")
-    void updateQuantity(int productId, int quantity,int selled);
+    void updateQuantity(int productId, int quantity, int selled);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.ProductFromCartResponseDto(p.productId,p.name,p.featuredImage,p.price,p.discount,p.quantity) FROM Product p WHERE p.productId <> ?1 AND p.author LIKE %?2% ")
     List<ProductFromCartResponseDto> getProductSameAuthor(int productId, String author);
@@ -50,5 +50,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     int getQuantityProducts();
 
     @Query("SELECT p FROM Product p WHERE (p.name LIKE %?1%) AND(p.category.name=?2) AND (p.quantity IN (?3,?4)) AND (p.selled IN (?5,?6)) ")
-    Page<Product> findProductsAdmin(String name,String catrName,int startQuan,int endQuan,int startSell,int endSell,Pageable pageable);
+    Page<Product> findProductsAdmin(String name, String catrName, int startQuan, int endQuan, int startSell, int endSell, Pageable pageable);
 }

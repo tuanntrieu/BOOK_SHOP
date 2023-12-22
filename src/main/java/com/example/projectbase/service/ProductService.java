@@ -45,5 +45,5 @@ public interface ProductService {
 
     int getQuantityProducts();
 
-    PaginationResponseDto<Product> findProductsAdmin(PaginationFullRequestDto requestDto,FindProductsAdminRequestDto request);
+    PaginationResponseDto<Product> findProductsAdmin(PaginationFullRequestDto requestDto, FindProductsAdminRequestDto request);
 }
