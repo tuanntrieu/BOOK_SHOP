@@ -22,42 +22,42 @@ public class BillController {
 
     private final BillService billService;
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API order from cart")
     @PostMapping(UrlConstant.Bill.ORDER_FROM_CART)
     public ResponseEntity<?> orderFromCart(@PathVariable int customerId, @Valid @RequestBody PlaceOrderRequestDto requestDto) {
         return VsResponseUtil.success(billService.placeOrderFromCart(customerId, requestDto));
     }
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API buy now")
     @PostMapping(UrlConstant.Bill.BUY_NOW)
     public ResponseEntity<?> buyNow(@PathVariable int customerId, @Valid @RequestBody BuyNowRequestDto requestDto) {
         return VsResponseUtil.success(billService.buyNow(customerId, requestDto));
     }
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API cancel order")
     @PatchMapping(UrlConstant.Bill.CANCEL_ORDER)
     public ResponseEntity<?> cancelOrder(@PathVariable int customerId, @PathVariable int billId) {
         return VsResponseUtil.success(billService.cancelOrder(customerId, billId));
     }
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API buy again")
     @PatchMapping(UrlConstant.Bill.BUY_AGAIN)
     public ResponseEntity<?> buyAgain(@PathVariable int customerId, @PathVariable int billId) {
         return VsResponseUtil.success(billService.buyAgain(customerId, billId));
     }
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API get bills")
     @GetMapping(UrlConstant.Bill.GET_BILLS)
     public ResponseEntity<?> getBills(@PathVariable int customerId, @ParameterObject PaginationFullRequestDto requestDto) {
         return VsResponseUtil.success(billService.getBills(customerId, requestDto));
     }
 
-    @PreAuthorize(value = "hasAnyRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API get bill infor")
     @GetMapping(UrlConstant.Bill.GET_BILL_INFOR)
     public ResponseEntity<?> getBillInfor(@PathVariable int billId) {
@@ -102,15 +102,7 @@ public class BillController {
     @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get all bills")
     @GetMapping(UrlConstant.Bill.GET_ALL_BILLS)
-    public ResponseEntity<?> getAllBills(@ParameterObject PaginationFullRequestDto requestDto) {
-        return VsResponseUtil.success(billService.getAllBills(requestDto));
+    public ResponseEntity<?> getAllBills(@ParameterObject PaginationFullRequestDto requestDto, @RequestParam String status) {
+        return VsResponseUtil.success(billService.getAllBills(requestDto, status));
     }
-
-    @PreAuthorize(value = "hasAnyRole('ADMIN')")
-    @Operation(summary = "API get bills by status")
-    @GetMapping(UrlConstant.Bill.GET_BILLS_BY_STATUS)
-    public ResponseEntity<?> getAllBills(@ParameterObject PaginationFullRequestDto requestDto,@RequestParam String status) {
-        return VsResponseUtil.success(billService.getBillsByStatus(requestDto, status));
-    }
-
 }

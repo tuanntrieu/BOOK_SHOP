@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class CartDetailController {
     private final CartDetailService cartDetailService;
 
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "API add product to cart")
     @PostMapping(UrlConstant.CartDetail.ADD_PRODUCT_TO_CART)
     public ResponseEntity<?> addProductToCart(@PathVariable int customerId, @Valid @RequestBody CartDetailDto cartDetailDto) {

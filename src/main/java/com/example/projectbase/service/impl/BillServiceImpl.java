@@ -75,7 +75,7 @@ public class BillServiceImpl implements BillService {
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
             total += (product.get().getPrice() - product.get().getDiscount() * product.get().getPrice() / 100);
-            productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity(),product1.getSelled()+product.get().getQuantity());
+            productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity(), product1.getSelled() + product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
         }
@@ -108,7 +108,7 @@ public class BillServiceImpl implements BillService {
         billRepository.save(bill);
         int total = bill.getFeeShip();
 
-        productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity(),product.getSelled()+requestDto.getQuantity());
+        productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity(), product.getSelled() + requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
         total += (product.getPrice() - product.getDiscount() * product.getPrice() / 100);
@@ -126,7 +126,7 @@ public class BillServiceImpl implements BillService {
         if (bill.getStatus().equals(StatusConstant.TO_PAY)) {
             billRepository.updateStatus(customerId, billId, StatusConstant.CANCELLED);
             for (BillDetail bt : bill.getBillDetail()) {
-                productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() + bt.getQuantity(),bt.getProduct().getSelled()-bt.getQuantity());
+                productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() + bt.getQuantity(), bt.getProduct().getSelled() - bt.getQuantity());
             }
             return new CommonResponseDto(true, SuccessMessage.CANCEL);
         } else {
@@ -140,7 +140,7 @@ public class BillServiceImpl implements BillService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
         billRepository.updateStatus(customerId, billId, StatusConstant.TO_PAY);
         for (BillDetail bt : bill.getBillDetail()) {
-            productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() - bt.getQuantity(),bt.getProduct().getSelled()+bt.getQuantity());
+            productRepository.updateQuantity(bt.getProduct().getProductId(), bt.getProduct().getQuantity() - bt.getQuantity(), bt.getProduct().getSelled() + bt.getQuantity());
         }
         return new CommonResponseDto(true, SuccessMessage.TO_PAY);
 
@@ -198,57 +198,39 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto) {
+    public PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto, String status) {
         Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.BILL);
-
-        Page<GetProductsResponseDto> page = billRepository.getAllBill(pageable);
-
-        PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
-        responseDto.setItems(page.getContent());
-
-        PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());
-        responseDto.setMeta(pagingMeta);
-        return responseDto;
-
-    }
-
-    @Override
-    public PaginationResponseDto getBillsByStatus(PaginationFullRequestDto requestDto, String status) {
-        Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.BILL);
-
-        String statuss = "";
-
         Page<GetProductsResponseDto> page;
+        String statusConstant = "";
         switch (status) {
             case "to_pay": {
-                statuss = StatusConstant.TO_PAY;
+                statusConstant = StatusConstant.TO_PAY;
                 break;
             }
             case "to_receive": {
-                statuss = StatusConstant.TO_RECEIVE;
+                statusConstant = StatusConstant.TO_RECEIVE;
                 break;
             }
             case "ordered": {
-                statuss = StatusConstant.ORDERED;
+                statusConstant = StatusConstant.ORDERED;
                 break;
             }
             case "completed": {
-                statuss = StatusConstant.COMPLETED;
+                statusConstant = StatusConstant.COMPLETED;
                 break;
             }
             case "canceled": {
-                statuss = StatusConstant.CANCELLED;
+                statusConstant = StatusConstant.CANCELLED;
                 break;
             }
-
             default: {
-                statuss = StatusConstant.ORDERED;
+                statusConstant = StatusConstant.ORDERED;
             }
         }
-        if(status.equals("")){
+        if (status.equals("")) {
             page = billRepository.getAllBill(pageable);
-        }else{
-            page = billRepository.getBillsByStatus(statuss,pageable);
+        } else {
+            page = billRepository.getBillsByStatus(statusConstant, pageable);
         }
         PaginationResponseDto<GetProductsResponseDto> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());
@@ -256,6 +238,4 @@ public class BillServiceImpl implements BillService {
         responseDto.setMeta(pagingMeta);
         return responseDto;
     }
-
-
 }
