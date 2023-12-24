@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
     public PaginationResponseDto<Customer> getCustomers(PaginationFullRequestDto requestDto) {
 
         Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.CUSTOMER);
-        Page<Customer> page = customerRepository.getCustomers(pageable);
+        Page<Customer> page = customerRepository.getCustomers(requestDto.getKeyword(),pageable);
 
         PaginationResponseDto<Customer> responseDto = new PaginationResponseDto<>();
         responseDto.setItems(page.getContent());

@@ -2,6 +2,7 @@ package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.dto.response.GetProductsResponseDto;
 import com.example.projectbase.domain.entity.Customer;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,8 +21,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("UPDATE Customer c SET c.name=?2, c.phonenumber=?3, c.address=?4, c.lastModifiedDate=CURRENT_TIMESTAMP, c.avatar=?5 WHERE c.id=?1")
     void updateCustomer(int id, String name, String phoneNumber, String address, String avatar);
 
-    @Query("SELECT c FROM Customer c")
-    Page<Customer> getCustomers(Pageable pageable);
+    @Query("SELECT c FROM Customer c WHERE (c.name LIKE %:keyword%)")
+    Page<Customer> getCustomers(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("SELECT c FROM Customer c WHERE c.user.id=?1 ")
     Optional<Customer> getCustomerByUserId(String userId);
