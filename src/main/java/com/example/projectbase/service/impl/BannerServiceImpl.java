@@ -5,6 +5,7 @@ import com.example.projectbase.constant.SuccessMessage;
 import com.example.projectbase.domain.dto.BannerDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Banner;
+import com.example.projectbase.domain.mapper.BannerMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.BannerRepository;
 import com.example.projectbase.service.BannerService;
@@ -19,6 +20,7 @@ import java.util.List;
 public class BannerServiceImpl implements BannerService {
     private final BannerRepository bannerRepository;
     private final UploadFileUtil uploadFileUtil;
+    private final BannerMapper bannerMapper;
 
     @Override
     public List<Banner> getBanners() {
@@ -29,9 +31,11 @@ public class BannerServiceImpl implements BannerService {
     public CommonResponseDto updateBanner(int bannerId, BannerDto bannerDto) {
         Banner banner = bannerRepository.findById(bannerId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerId)}));
-        uploadFileUtil.destroyFileWithUrl(banner.getImage());
-        bannerRepository.updateBanner(banner.getId(), uploadFileUtil.uploadFile(bannerDto.getMultipartFile()));
-        return new CommonResponseDto(true, SuccessMessage.UPDATE);
+        if (banner.getImage() != null) {
+            uploadFileUtil.destroyFileWithUrl(banner.getImage());
+        }
+        bannerRepository.save(banner);
+        return new CommonResponseDto(SuccessMessage.UPDATE);
     }
 
     @Override
@@ -39,13 +43,12 @@ public class BannerServiceImpl implements BannerService {
         Banner banner = bannerRepository.findById(bannerId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerId)}));
         bannerRepository.delete(banner);
-        return new CommonResponseDto(true, SuccessMessage.DELETE);
+        return new CommonResponseDto(SuccessMessage.DELETE);
     }
 
     @Override
     public Banner createBanner(BannerDto bannerDto) {
-        Banner banner = new Banner();
-        banner.setImage(uploadFileUtil.uploadFile(bannerDto.getMultipartFile()));
+        Banner banner = bannerMapper.toBanner(bannerDto);
         return bannerRepository.save(banner);
     }
 }

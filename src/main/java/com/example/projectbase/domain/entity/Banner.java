@@ -17,9 +17,10 @@ public class Banner extends DateAuditing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "banner_id", nullable = true)
+    @Column(name = "banner_id")
     private int id;
 
     private String image;
 
+    private String url;
 }

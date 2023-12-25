@@ -27,8 +27,8 @@ public class BannerController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API update banner")
-    @PutMapping(value = UrlConstant.Banner.UPDATE_BANNER, consumes = "multipart/form-data")
-    public ResponseEntity<?> updateBanner(@PathVariable int bannerId, @Valid @ModelAttribute BannerDto bannerDto) {
+    @PutMapping(value = UrlConstant.Banner.UPDATE_BANNER)
+    public ResponseEntity<?> updateBanner(@PathVariable int bannerId, @Valid @RequestBody BannerDto bannerDto) {
         return VsResponseUtil.success(bannerService.updateBanner(bannerId, bannerDto));
     }
 
@@ -41,8 +41,8 @@ public class BannerController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "API create banner")
-    @PostMapping(value = UrlConstant.Banner.CREATE_BANNER, consumes = "multipart/form-data")
-    public ResponseEntity<?> createBanner(@Valid @ModelAttribute BannerDto bannerDto) {
+    @PostMapping(value = UrlConstant.Banner.CREATE_BANNER)
+    public ResponseEntity<?> createBanner(@Valid @RequestBody BannerDto bannerDto) {
         return VsResponseUtil.success(bannerService.createBanner(bannerDto));
     }
 

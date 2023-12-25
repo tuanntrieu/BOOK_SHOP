@@ -10,11 +10,4 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface BannerRepository extends JpaRepository<Banner, Integer> {
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE Banner b SET b.image=?2,b.lastModifiedDate=CURRENT_TIMESTAMP WHERE b.image=?1")
-    void updateBanner(int bannerId, String image);
-
-
 }
