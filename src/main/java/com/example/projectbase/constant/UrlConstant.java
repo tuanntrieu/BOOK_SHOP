@@ -110,6 +110,7 @@ public class UrlConstant {
     public static class Banner {
         private static final String PRE_FIX = "/banner";
         public static final String GET_BANNERS = PRE_FIX + "/get-banners";
+        public static final String GET_BANNER = PRE_FIX + "/get-banner/{bannerId}";
         public static final String UPDATE_BANNER = PRE_FIX + "/update-banner/{bannerId}";
         public static final String DELETE_BANNER = PRE_FIX + "/delete-banner/{bannerId}";
         public static final String CREATE_BANNER = PRE_FIX + "/create-banner";

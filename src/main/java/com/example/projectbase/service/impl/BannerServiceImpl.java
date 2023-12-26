@@ -2,10 +2,8 @@ package com.example.projectbase.service.impl;
 
 import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SuccessMessage;
-import com.example.projectbase.domain.dto.BannerDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Banner;
-import com.example.projectbase.domain.mapper.BannerMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.BannerRepository;
 import com.example.projectbase.service.BannerService;
@@ -20,7 +18,12 @@ import java.util.List;
 public class BannerServiceImpl implements BannerService {
     private final BannerRepository bannerRepository;
     private final UploadFileUtil uploadFileUtil;
-    private final BannerMapper bannerMapper;
+
+    @Override
+    public Banner getBanner(int bannerId) {
+        return bannerRepository.findById(bannerId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerId)}));
+    }
 
     @Override
     public List<Banner> getBanners() {
@@ -28,7 +31,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public CommonResponseDto updateBanner(int bannerId, BannerDto bannerDto) {
+    public CommonResponseDto updateBanner(int bannerId, Banner bannerDto) {
         Banner banner = bannerRepository.findById(bannerId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerId)}));
         if (banner.getImage() != null) {
@@ -47,8 +50,19 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public Banner createBanner(BannerDto bannerDto) {
-        Banner banner = bannerMapper.toBanner(bannerDto);
+    public Banner createBanner(Banner bannerDto) {
+        Banner banner;
+        if (bannerDto.getId() == -1) {
+            banner = bannerDto;
+        } else {
+            banner = bannerRepository.findById(bannerDto.getId())
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.Banner.ERR_NOT_FOUND_ID, new String[]{String.valueOf(bannerDto.getId())}));
+            if (banner.getImage() != null) {
+                uploadFileUtil.destroyFileWithUrl(banner.getImage());
+            }
+            banner.setImage(bannerDto.getImage());
+            banner.setUrl(bannerDto.getUrl());
+        }
         return bannerRepository.save(banner);
     }
 }
