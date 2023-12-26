@@ -4,11 +4,9 @@ import com.example.projectbase.base.RestApiV1;
 import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.BannerDto;
-import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.service.BannerService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +21,8 @@ public class BannerController {
 
     @Operation(summary = "API get banners")
     @GetMapping(UrlConstant.Banner.GET_BANNERS)
-    public ResponseEntity<?> getBanners(@ParameterObject @Valid PaginationFullRequestDto requestDto) {
-        return VsResponseUtil.success(bannerService.getBanners(requestDto));
+    public ResponseEntity<?> getBanners() {
+        return VsResponseUtil.success(bannerService.getBanners());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

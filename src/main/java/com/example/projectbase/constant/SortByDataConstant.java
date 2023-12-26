@@ -42,7 +42,7 @@ public enum SortByDataConstant implements SortByInterface {
     CUSTOMER {
         @Override
         public String getSortBy(String sortBy) {
-            if(sortBy.equals("address"))
+            if (sortBy.equals("address"))
                 return "address";
             return "name";
         }
