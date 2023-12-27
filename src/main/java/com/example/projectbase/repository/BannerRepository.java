@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BannerRepository extends JpaRepository<Banner, Integer> {
 
-    @Query("SELECT b FROM Banner b")
+    @Query("SELECT b FROM Banner b ORDER BY b.viewOrder ASC, b.lastModifiedDate DESC")
     Page<Banner> getBanners(Pageable pageable);
 }

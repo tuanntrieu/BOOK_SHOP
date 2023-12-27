@@ -8,7 +8,6 @@ import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Banner;
-import com.example.projectbase.domain.entity.Customer;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.BannerRepository;
 import com.example.projectbase.service.BannerService;
@@ -18,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -79,6 +76,7 @@ public class BannerServiceImpl implements BannerService {
             }
             banner.setImage(bannerDto.getImage());
             banner.setUrl(bannerDto.getUrl());
+            banner.setViewOrder(bannerDto.getViewOrder());
         }
         return bannerRepository.save(banner);
     }

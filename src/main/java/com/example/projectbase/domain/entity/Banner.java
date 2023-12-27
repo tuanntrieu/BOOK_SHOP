@@ -23,4 +23,6 @@ public class Banner extends DateAuditing {
     private String image;
 
     private String url;
+
+    private int viewOrder;
 }
