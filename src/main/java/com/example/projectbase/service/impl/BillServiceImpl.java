@@ -17,12 +17,19 @@ import com.example.projectbase.exception.InsufficientStockException;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.*;
 import com.example.projectbase.service.BillService;
+import com.example.projectbase.util.ExcelExportUtil;
 import com.example.projectbase.util.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -237,5 +244,24 @@ public class BillServiceImpl implements BillService {
         PagingMeta pagingMeta = new PagingMeta(page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getSize(), requestDto.getSortBy(), requestDto.getIsAscending().toString());
         responseDto.setMeta(pagingMeta);
         return responseDto;
+    }
+
+    @Override
+    public CommonResponseDto getsBillSatistics(HttpServletResponse response, Date timeStart, Date timeEnd) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        String headerKey="Content-Disposition";
+        String headerValue="attachment;filename=BillStatistc.xlsx";
+        response.setHeader(headerKey,headerValue);
+
+        Timestamp timestamp1 = new Timestamp(timeStart.getTime());
+        Timestamp timestamp2 = new Timestamp(timeEnd.getTime());
+
+
+
+        List<Bill> bills=billRepository.getBillStatistics(timestamp1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),timestamp2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        ExcelExportUtil excelExportUtil=new ExcelExportUtil(bills);
+        excelExportUtil.exportDataToExcel(response);
+        return new CommonResponseDto(true,SuccessMessage.CREATE);
     }
 }

@@ -140,6 +140,7 @@ public class UrlConstant {
         public static final String GET_BILLS_BY_STATUS = PRE_FIX + "/get-bills-by-status";
 
         public static final String GET_ALL_BILLS = PRE_FIX + "/get-all-bills";
+        public static final String GET_STATISTC = PRE_FIX + "/get-statistic";
 
 
     }

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -39,4 +41,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT b FROM Bill  b WHERE b.status=?1")
     Page getBillsByStatus(String status, Pageable pageable);
+
+    @Query("SELECT b FROM Bill b WHERE b.createdDate >= ?1 AND b.createdDate <= ?2 ")
+    List<Bill> getBillStatistics(LocalDateTime timeStart, LocalDateTime timeEnd);
 }

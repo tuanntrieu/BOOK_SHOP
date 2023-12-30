@@ -7,6 +7,10 @@ import com.example.projectbase.domain.dto.request.PlaceOrderRequestDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
 import com.example.projectbase.domain.entity.Bill;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -34,4 +38,6 @@ public interface BillService {
     List<Bill> getBillsToPay();
 
     PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto, String status);
+
+    CommonResponseDto getsBillSatistics(HttpServletResponse response, Date timeStart, Date timeEnd) throws IOException;
 }
