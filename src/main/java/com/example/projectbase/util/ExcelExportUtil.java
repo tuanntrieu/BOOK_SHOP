@@ -109,9 +109,9 @@ public class ExcelExportUtil {
                 createCells(row,columnCount,tt,style2);
                 createCells(row,columnCount++,bill.getTotal() ,style2);
             }
-
         }
     }
+
     public void exportDataToExcel(HttpServletResponse response) throws IOException {
         createHeaderRow();
         writeData();

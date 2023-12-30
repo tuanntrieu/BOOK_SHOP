@@ -215,4 +215,51 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Override
+    public CommonResponseDto adminRegister(AdminRegisterRequestDto requestDto) {
+        boolean isUsernameExist = userRepository.existsAllByUsername(requestDto.getUsername());
+        boolean isEmailExist = userRepository.existsByEmail(requestDto.getEmail());
+
+        if (isUsernameExist) {
+            throw new DataIntegrityViolationException(ErrorMessage.Auth.ERR_DUPLICATE_USERNAME);
+        } else if (isEmailExist) {
+            throw new DataIntegrityViolationException(ErrorMessage.Auth.ERR_DUPLICATE_EMAIL);
+        } else {
+            if (!requestDto.getPassword().equals(requestDto.getRepeatPassword())) {
+                throw new InvalidException(ErrorMessage.INVALID_REPEAT_PASSWORD);
+            } else {
+                User user = new User();
+                user.setUsername(requestDto.getUsername());
+                user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+                user.setRole(roleRepository.findByRoleName(requestDto.getRoleName()));
+                if (requestDto.getRoleName().equals(RoleConstant.USER)) {
+                    user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), requestDto.getPhoneNumber(), requestDto.getAddress(), requestDto.getAvatar())));
+
+                }
+                else{
+                    user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), null,null,null)));
+
+                }
+                cartService.createCartForCustomer(new CartDto(user.getCustomer().getId()));
+
+                DataMailDto mailDto = new DataMailDto();
+                mailDto.setTo(requestDto.getEmail());
+                mailDto.setSubject("Đăng ký thành công");
+                Map<String, Object> properties = new HashMap<>();
+                properties.put("username", requestDto.getUsername());
+                properties.put("password", requestDto.getPassword());
+
+                mailDto.setProperties(properties);
+
+                try {
+                    sendMailUtil.sendEmailWithHTML(mailDto, "register.html");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                userRepository.save(user);
+                return new CommonResponseDto(true,SuccessMessage.CREATE);
+            }
+        }
+    }
+
 }

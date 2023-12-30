@@ -8,6 +8,7 @@ import com.example.projectbase.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -63,6 +64,13 @@ public class AuthController {
     @PostMapping(UrlConstant.Auth.LOGOUT)
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         return VsResponseUtil.success(authService.logout(request, response, authentication));
+    }
+
+    @Operation(summary = "API Admin Register")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping(UrlConstant.Auth.ADMIN_REGISTER)
+    public ResponseEntity<?> adminRegister(@Valid @RequestBody AdminRegisterRequestDto requestDto) {
+        return VsResponseUtil.success(authService.adminRegister(requestDto));
     }
 
 

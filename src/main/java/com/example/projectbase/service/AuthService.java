@@ -24,5 +24,7 @@ public interface AuthService {
 
     CommonResponseDto changPassword(ChangePasswordRequestDto requestDto, String username);
 
+    CommonResponseDto adminRegister(AdminRegisterRequestDto requestDto);
+
 
 }
