@@ -19,6 +19,13 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "API get category")
+    @GetMapping(UrlConstant.Category.GET_CATEGORY)
+    public ResponseEntity<?> getCategory(@Valid @PathVariable int categoryId) {
+        return VsResponseUtil.success(categoryService.getCategory(categoryId));
+    }
+
     @Operation(summary = "API get categories")
     @GetMapping(UrlConstant.Category.GET_CATEGORIES)
     public ResponseEntity<?> getCategories() {

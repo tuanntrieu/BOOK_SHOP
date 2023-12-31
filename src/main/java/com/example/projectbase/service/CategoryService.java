@@ -15,4 +15,6 @@ public interface CategoryService {
     CommonResponseDto updateCategory(int categoryId, CategoryDto categoryDto);
 
     CommonResponseDto deleteCategory(int categoryId);
+
+    Category getCategory(int categoryId);
 }

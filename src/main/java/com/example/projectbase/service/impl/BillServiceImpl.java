@@ -26,10 +26,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.ZoneId;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -208,32 +207,7 @@ public class BillServiceImpl implements BillService {
     public PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto, String status) {
         Pageable pageable = PaginationUtil.buildPageable(requestDto, SortByDataConstant.BILL);
         Page<GetProductsResponseDto> page;
-        String statusConstant = "";
-        switch (status) {
-            case "to_pay": {
-                statusConstant = StatusConstant.TO_PAY;
-                break;
-            }
-            case "to_receive": {
-                statusConstant = StatusConstant.TO_RECEIVE;
-                break;
-            }
-            case "ordered": {
-                statusConstant = StatusConstant.ORDERED;
-                break;
-            }
-            case "completed": {
-                statusConstant = StatusConstant.COMPLETED;
-                break;
-            }
-            case "canceled": {
-                statusConstant = StatusConstant.CANCELLED;
-                break;
-            }
-            default: {
-                statusConstant = StatusConstant.ORDERED;
-            }
-        }
+        String statusConstant = getStatusConstant(status);
         if (status.equals("")) {
             page = billRepository.getAllBill(pageable);
         } else {
@@ -250,18 +224,49 @@ public class BillServiceImpl implements BillService {
     public CommonResponseDto getsBillSatistics(HttpServletResponse response, Date timeStart, Date timeEnd) throws IOException {
 
         response.setContentType("application/octet-stream");
-        String headerKey="Content-Disposition";
-        String headerValue="attachment;filename=BillStatistc.xlsx";
-        response.setHeader(headerKey,headerValue);
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=BillStatistc.xlsx";
+        response.setHeader(headerKey, headerValue);
 
         Timestamp timestamp1 = new Timestamp(timeStart.getTime());
         Timestamp timestamp2 = new Timestamp(timeEnd.getTime());
 
-
-
-        List<Bill> bills=billRepository.getBillStatistics(timestamp1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),timestamp2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-        ExcelExportUtil excelExportUtil=new ExcelExportUtil(bills);
+        List<Bill> bills = billRepository.getBillStatistics(timestamp1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), timestamp2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        ExcelExportUtil excelExportUtil = new ExcelExportUtil(bills);
         excelExportUtil.exportDataToExcel(response);
-        return new CommonResponseDto(true,SuccessMessage.CREATE);
+        return new CommonResponseDto(true, SuccessMessage.CREATE);
+    }
+
+    @Override
+    public CommonResponseDto updateOrderStatus(int billId, String status) {
+        Bill bill = billRepository.findById(billId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
+        String newStatus = getStatusConstant(status);
+        bill.setStatus(newStatus);
+        billRepository.save(bill);
+        return new CommonResponseDto(SuccessMessage.UPDATE);
+    }
+
+    private String getStatusConstant(String status) {
+        switch (status) {
+            case "to_pay": {
+                return StatusConstant.TO_PAY;
+            }
+            case "to_receive": {
+                return StatusConstant.TO_RECEIVE;
+            }
+            case "ordered": {
+                return StatusConstant.ORDERED;
+            }
+            case "completed": {
+                return StatusConstant.COMPLETED;
+            }
+            case "canceled": {
+                return StatusConstant.CANCELLED;
+            }
+            default: {
+                return StatusConstant.ORDERED;
+            }
+        }
     }
 }

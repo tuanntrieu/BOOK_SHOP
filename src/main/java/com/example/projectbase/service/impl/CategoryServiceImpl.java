@@ -57,4 +57,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
         return new CommonResponseDto(true, SuccessMessage.DELETE);
     }
+
+    @Override
+    public Category getCategory(int categoryId) {
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.Category.ERR_NOT_FOUND_ID, new String[]{String.valueOf(categoryId)}));
+    }
 }

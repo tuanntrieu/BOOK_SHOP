@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @RestApiV1
 @RequiredArgsConstructor
@@ -115,5 +114,12 @@ public class BillController {
     @GetMapping(UrlConstant.Bill.GET_STATISTC)
     public ResponseEntity<?> getBillStatistic(HttpServletResponse response, @RequestParam Date timeStart, @RequestParam Date timeEnd) throws IOException {
         return VsResponseUtil.success(billService.getsBillSatistics(response, timeStart, timeEnd));
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN')")
+    @Operation(summary = "API update bill status")
+    @PutMapping(UrlConstant.Bill.UPDATE_STATUS)
+    public ResponseEntity<?> updateBillStatus(@PathVariable int billId, @RequestParam String newStatus) {
+        return VsResponseUtil.success(billService.updateOrderStatus(billId, newStatus));
     }
 }

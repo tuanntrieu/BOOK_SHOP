@@ -40,4 +40,6 @@ public interface BillService {
     PaginationResponseDto getAllBills(PaginationFullRequestDto requestDto, String status);
 
     CommonResponseDto getsBillSatistics(HttpServletResponse response, Date timeStart, Date timeEnd) throws IOException;
+
+    CommonResponseDto updateOrderStatus(int billId, String status);
 }
