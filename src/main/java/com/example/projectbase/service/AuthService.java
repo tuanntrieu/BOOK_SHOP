@@ -22,7 +22,7 @@ public interface AuthService {
 
     CommonResponseDto forgetPassword(ForgetPasswordRequestDto requestDto);
 
-    CommonResponseDto changPassword(ChangePasswordRequestDto requestDto, String username);
+    CommonResponseDto changePassword(ChangePasswordRequestDto requestDto, String username);
 
     CommonResponseDto adminRegister(AdminRegisterRequestDto requestDto);
 

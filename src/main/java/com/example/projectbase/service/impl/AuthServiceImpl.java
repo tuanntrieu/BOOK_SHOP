@@ -198,7 +198,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public CommonResponseDto changPassword(ChangePasswordRequestDto requestDto, String username) {
+    public CommonResponseDto changePassword(ChangePasswordRequestDto requestDto, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_USERNAME,
                         new String[]{username}));
@@ -211,6 +211,22 @@ public class AuthServiceImpl implements AuthService {
             }
             user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
             userRepository.save(user);
+
+            DataMailDto mailDto = new DataMailDto();
+            mailDto.setTo(user.getEmail());
+            mailDto.setSubject("Đổi mật khẩu thành công");
+
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("username", username);
+            properties.put("newPassword", requestDto.getPassword());
+
+            mailDto.setProperties(properties);
+
+            try {
+                sendMailUtil.sendEmailWithHTML(mailDto, "changePassword.html");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return new CommonResponseDto(true, SuccessMessage.CHANGE_PASSWORD);
         }
     }
@@ -234,11 +250,9 @@ public class AuthServiceImpl implements AuthService {
                 user.setRole(roleRepository.findByRoleName(requestDto.getRoleName()));
                 if (requestDto.getRoleName().equals(RoleConstant.USER)) {
                     user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), requestDto.getPhoneNumber(), requestDto.getAddress(), requestDto.getAvatar())));
-
                 }
                 else{
                     user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), null,null,null)));
-
                 }
                 cartService.createCartForCustomer(new CartDto(user.getCustomer().getId()));
 

@@ -55,7 +55,7 @@ public class AuthController {
     @Operation(summary = "API change password")
     @PatchMapping(UrlConstant.Auth.CHANGE_PASSWORD)
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequestDto requestDto, @PathVariable String username) {
-        return VsResponseUtil.success(authService.changPassword(requestDto, username));
+        return VsResponseUtil.success(authService.changePassword(requestDto, username));
 
 
     }
