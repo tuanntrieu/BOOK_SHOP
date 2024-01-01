@@ -80,7 +80,7 @@ public class BillServiceImpl implements BillService {
             BillDetail billDetail = new BillDetail(productRepository.findById(productId).get(), bill, product.get().getQuantity());
             Product product1 = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.Product.ERR_NOT_FOUND_ID, new String[]{String.valueOf(productId)}));
-            total += (product.get().getPrice() - product.get().getDiscount() * product.get().getPrice() / 100);
+            total += (product.get().getPrice() - product.get().getDiscount() * product.get().getPrice() / 100)*billDetail.getQuantity();
             productRepository.updateQuantity(productId, product1.getQuantity() - product.get().getQuantity(), product1.getSelled() + product.get().getQuantity());
             billDetailRepository.save(billDetail);
             cartDetailRepository.deleteCartDetail(cart.get().getId(), productId);
@@ -117,7 +117,7 @@ public class BillServiceImpl implements BillService {
         productRepository.updateQuantity(product.getProductId(), product.getQuantity() - requestDto.getQuantity(), product.getSelled() + requestDto.getQuantity());
         BillDetail billDetail = new BillDetail(product, bill, requestDto.getQuantity());
         billDetailRepository.save(billDetail);
-        total += (product.getPrice() - product.getDiscount() * product.getPrice() / 100);
+        total += (product.getPrice() - product.getDiscount() * product.getPrice() / 100)*requestDto.getQuantity();
 
         bill.setTotal(total);
         billRepository.save(bill);

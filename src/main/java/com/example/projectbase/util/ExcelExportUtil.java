@@ -1,10 +1,7 @@
 package com.example.projectbase.util;
 import com.example.projectbase.domain.entity.Bill;
 import com.example.projectbase.domain.entity.BillDetail;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -84,11 +81,18 @@ public class ExcelExportUtil {
         int rowCount=2;
         CellStyle style1=workbook.createCellStyle();
         CellStyle style2= workbook.createCellStyle();
+        CellStyle style3= workbook.createCellStyle();
         XSSFFont font= workbook.createFont();
+        XSSFFont font2= workbook.createFont();
         font.setFontHeight(14);
         style1.setFont(font);
         font.setItalic(true);
         style2.setFont(font);
+        font.setFontHeight(14);
+        font2.setFontHeight(14);
+        font2.setBold(true);
+        font2.setColor(IndexedColors.RED.getIndex());
+        style3.setFont(font2);
         for(Bill bill:bills){
             Row row= sheet.createRow(rowCount++);
             int columnCount=0;
@@ -99,15 +103,19 @@ public class ExcelExportUtil {
             createCells(row,columnCount++,bill.getCustomer().getAddress(),style1);
             createCells(row,columnCount++,bill.getStatus(),style1);
             createCells(row,columnCount++,bill.getFeeShip(),style1);
+
+
+            if(bill.getBillDetail().size()!=1)
+            sheet.addMergedRegion(new CellRangeAddress(rowCount-1,rowCount+bill.getBillDetail().size()-2,12,12));
+            createCells(row,12,bill.getTotal(),style3);
             for (BillDetail bt:bill.getBillDetail()){
+                int columnCount1=columnCount;
+                createCells(row,columnCount1++,bt.getProduct().getName(),style2);
+                createCells(row,columnCount1++,bt.getQuantity(), style2);
+                createCells(row,columnCount1++,bt.getProduct().getPrice(), style2);
+                createCells(row,columnCount1++,bt.getProduct().getDiscount(),style2);
+                createCells(row,columnCount1++,bt.getQuantity()*(bt.getProduct().getPrice()-bt.getProduct().getPrice()*bt.getProduct().getDiscount()/100),style2);
                 row= sheet.createRow(rowCount++);
-                createCells(row,columnCount++,bt.getProduct().getName(),style2);
-                createCells(row,columnCount++,bt.getQuantity(), style2);
-                createCells(row,columnCount++,bt.getProduct().getPrice(), style2);
-                createCells(row,columnCount++,bt.getProduct().getDiscount(),style2);
-                float tt=bt.getQuantity()*bt.getProduct().getPrice()-bt.getProduct().getDiscount();
-                createCells(row,columnCount,tt,style2);
-                createCells(row,columnCount++,bill.getTotal() ,style2);
             }
         }
     }
