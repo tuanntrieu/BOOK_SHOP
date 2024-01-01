@@ -212,8 +212,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public int getCoutBillToPay() {
-        return billRepository.getCountBillToPay();
+    public int getCoutBillByStatus(String status) {
+        return billRepository.getCountBillByStatus(status);
     }
 
     @Override

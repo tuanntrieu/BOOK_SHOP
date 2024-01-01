@@ -90,9 +90,9 @@ public class BillController {
 
     @PreAuthorize(value = "hasAnyRole('ADMIN')")
     @Operation(summary = "API get revenue")
-    @GetMapping(UrlConstant.Bill.GET_COUNT_BILL_TO_PAY)
-    public ResponseEntity<?> getCountBillToPay() {
-        return VsResponseUtil.success(billService.getCoutBillToPay());
+    @GetMapping(UrlConstant.Bill.GET_BILLS_BY_STATUS)
+    public ResponseEntity<?> getCountBillToPay(@RequestParam String status) {
+        return VsResponseUtil.success(billService.getCoutBillByStatus(status));
     }
 
     @PreAuthorize(value = "hasAnyRole('ADMIN')")

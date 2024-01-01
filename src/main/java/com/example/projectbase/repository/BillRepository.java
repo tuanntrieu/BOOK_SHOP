@@ -30,8 +30,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query("SELECT SUM(b.total) FROM Bill b WHERE b.status = 'Đã giao'")
     long getRevenue();
 
-    @Query("SELECT COUNT(b) FROM Bill b WHERE b.status='Chờ xử lý'")
-    int getCountBillToPay();
+    @Query("SELECT COUNT(b) FROM Bill b WHERE b.status=?1")
+    int getCountBillByStatus(String status);
 
     @Query("SELECT b FROM Bill b WHERE b.status='Chờ xử lý' ORDER BY b.lastModifiedDate DESC")
     List<Bill> getBillsToPay();

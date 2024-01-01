@@ -33,7 +33,7 @@ public interface BillService {
 
     long getRevenue();
 
-    int getCoutBillToPay();
+    int getCoutBillByStatus(String status);
 
     List<Bill> getBillsToPay();
 
