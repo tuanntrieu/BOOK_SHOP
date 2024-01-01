@@ -4,6 +4,7 @@ import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.constant.StatusConstant;
 import com.example.projectbase.constant.SuccessMessage;
+import com.example.projectbase.domain.dto.common.DataMailDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
@@ -19,6 +20,7 @@ import com.example.projectbase.repository.*;
 import com.example.projectbase.service.BillService;
 import com.example.projectbase.util.ExcelExportUtil;
 import com.example.projectbase.util.PaginationUtil;
+import com.example.projectbase.util.SendMailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +31,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -42,6 +46,7 @@ public class BillServiceImpl implements BillService {
 
     private final CartDetailRepository cartDetailRepository;
 
+    private final SendMailUtil sendMailUtil;
 
     private final ProductRepository productRepository;
 
@@ -158,6 +163,19 @@ public class BillServiceImpl implements BillService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.Bill.ERR_NOT_FOUND_ID, new String[]{String.valueOf(billId)}));
         bill.setStatus(StatusConstant.ORDERED);
         billRepository.save(bill);
+        DataMailDto mailDto = new DataMailDto();
+        mailDto.setTo(bill.getCustomer().getUser().getEmail());
+        mailDto.setSubject("Đăng ký thành công");
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("billId", bill.getCustomer().getUser().getUsername());
+
+        mailDto.setProperties(properties);
+
+        try {
+            sendMailUtil.sendEmailWithHTML(mailDto, "OrderSuccessfully.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new CommonResponseDto(true, SuccessMessage.ORDER);
     }
 

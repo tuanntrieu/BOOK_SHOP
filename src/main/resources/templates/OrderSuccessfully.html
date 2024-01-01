@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận đơn hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        b {
+            color: red;
+        }
+
+        /* Responsive CSS */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 10px;
+            }
+
+            .footer {
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Đặt hàng thành công</h1>
+    </div>
+    <div class="content">
+        <p>Xin chào,</p>
+        <p>Đơn hàng  <b th:text="${billId}"></b> của bạn đã được xác nhận.</p>
+        <p>Hãy quay lại trang web để kiểm tra chi tiết và chú ý thời gian nhận hàng dự kiến.</p>
+        <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi.</p>
+    </div>
+    <div class="footer">
+        &copy; 2023 BOOK360 Đã xác nhận.
+    </div>
+</div>
+</body>
+</html>
