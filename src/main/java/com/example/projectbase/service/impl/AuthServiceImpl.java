@@ -250,9 +250,8 @@ public class AuthServiceImpl implements AuthService {
                 user.setRole(roleRepository.findByRoleName(requestDto.getRoleName()));
                 if (requestDto.getRoleName().equals(RoleConstant.USER)) {
                     user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), requestDto.getPhoneNumber(), requestDto.getAddress(), requestDto.getAvatar())));
-                }
-                else{
-                    user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), null,null,null)));
+                } else {
+                    user.setCustomer(customerService.createCustomer(new CustomerDto(requestDto.getUsername(), null, null, null)));
                 }
                 cartService.createCartForCustomer(new CartDto(user.getCustomer().getId()));
 
@@ -271,7 +270,7 @@ public class AuthServiceImpl implements AuthService {
                     e.printStackTrace();
                 }
                 userRepository.save(user);
-                return new CommonResponseDto(true,SuccessMessage.CREATE);
+                return new CommonResponseDto(true, SuccessMessage.CREATE);
             }
         }
     }

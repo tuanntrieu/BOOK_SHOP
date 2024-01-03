@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 

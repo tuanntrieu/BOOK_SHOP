@@ -39,6 +39,9 @@ public class UploadFileUtil {
     }
 
     public void destroyFileWithUrl(String url) {
+        if (url == null || url.isEmpty()) {
+            return;
+        }
         int startIndex = url.lastIndexOf("/") + 1;
         int endIndex = url.lastIndexOf(".");
         String publicId = url.substring(startIndex, endIndex);

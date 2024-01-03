@@ -2,10 +2,12 @@ package com.example.projectbase;
 
 import com.example.projectbase.config.properties.AdminInfoProperties;
 import com.example.projectbase.constant.RoleConstant;
+import com.example.projectbase.domain.dto.CustomerDto;
 import com.example.projectbase.domain.entity.Role;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.RoleRepository;
 import com.example.projectbase.repository.UserRepository;
+import com.example.projectbase.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,8 @@ public class ProjectBaseApplication {
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
+
+    private final CustomerService customerService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -56,7 +60,7 @@ public class ProjectBaseApplication {
                 User admin = User.builder().username(userInfo.getUsername())
                         .password(passwordEncoder.encode(userInfo.getPassword()))
                         .email(userInfo.getEmail())
-                        .customer(null)
+                        .customer(customerService.createCustomer(new CustomerDto(userInfo.getUsername(), null, null, null)))
                         .role(roleRepository.findByRoleName(RoleConstant.ADMIN)).build();
                 userRepository.save(admin);
             }

@@ -10,7 +10,6 @@ import com.example.projectbase.domain.entity.Bill;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -33,7 +32,7 @@ public interface BillService {
 
     long getRevenue();
 
-    int getCoutBillByStatus(String status);
+    List<Integer> getCoutBillByStatus();
 
     List<Bill> getBillsToPay();
 

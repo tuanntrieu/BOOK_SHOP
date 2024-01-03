@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.security.PrivateKey;
 
 @Getter
 @Setter
@@ -26,7 +25,7 @@ public class AdminRegisterRequestDto {
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", message = ErrorMessage.INVALID_FORMAT_EMAIL)
     private String email;
 
-    private  String address;
+    private String address;
 
     private String username;
 

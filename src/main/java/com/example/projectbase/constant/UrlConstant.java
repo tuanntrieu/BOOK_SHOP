@@ -10,7 +10,8 @@ public class UrlConstant {
         public static final String LOGOUT = PRE_FIX + "/logout";
         public static final String FORGET_PASSWORD = PRE_FIX + "/forget-password";
         public static final String CHANGE_PASSWORD = PRE_FIX + "/change-password/{username}";
-        public static final String ADMIN_REGISTER=PRE_FIX+"/admin-register";
+        public static final String ADMIN_REGISTER = PRE_FIX + "/admin-register";
+
         private Auth() {
         }
     }
@@ -144,7 +145,6 @@ public class UrlConstant {
         public static final String GET_STATISTC = PRE_FIX + "/get-statistic";
 
         public static final String UPDATE_STATUS = PRE_FIX + "/update-status/{billId}";
-
 
 
     }
